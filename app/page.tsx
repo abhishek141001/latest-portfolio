@@ -4,6 +4,7 @@ import Image from "next/image"
 import { blogs } from "@/data/blogs"
 import { projects } from "@/data/projects"
 import { Metadata } from "next"
+import profileImage from "../assets/abhishekraj.jpg"
 
 export const metadata: Metadata = {
   title: "Abhishek Raj | Full Stack Developer",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U",
+        url: profileImage.src,
         width: 800,
         height: 800,
         alt: "Abhishek Raj",
@@ -69,7 +70,7 @@ export default function Home() {
           <div className="flex-1 flex justify-center md:justify-end mt-8 md:mt-0">
             <div className="rounded-2xl overflow-hidden border border-muted shadow-lg w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-white">
               <Image
-                src="https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
+                src={profileImage}
                 alt="Profile photo"
                 width={300}
                 height={300}
