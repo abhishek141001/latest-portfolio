@@ -1,211 +1,131 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code2, ExternalLink, Github, Laptop, Sparkles } from "lucide-react"
 import Link from "next/link"
-import { blogs } from "@/data/blogs"
-import linked2web from "@/assets/linked2web.png"
-import socialdocsai from "@/assets/socialdocsai.png"
 import Image from "next/image"
+import { blogs } from "@/data/blogs"
+import { projects } from "@/data/projects"
+import { Metadata } from "next"
 
-const featuredProjects = [
-  {
-    title: "Repurpose Linkedin Content on Website ",
-    description: "A full-stack web application to repurpose linkedin feed to your websie.",
-    technologies: ["Next.js", "MongoDB", "Linkedin Api", "Gemini"],
-    image: linked2web,
+export const metadata: Metadata = {
+  title: "Abhishek Raj | Full Stack Developer",
+  description: "Full stack developer passionate about building scalable products and solving business problems. Currently working at RegisterKaro, based in Gurgaon.",
+  openGraph: {
+    title: "Abhishek Raj | Full Stack Developer",
+    description: "Full stack developer passionate about building scalable products and solving business problems. Currently working at RegisterKaro, based in Gurgaon.",
+    url: "/",
+    type: "website",
+    images: [
+      {
+        url: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U",
+        width: 800,
+        height: 800,
+        alt: "Abhishek Raj",
+      },
+    ],
   },
-  {
-    title: "Youtube Analytics AI",
-    description: "A full-stack web application to analyze Youtube videos using AI.",
-    technologies: ["Next.js", "Node.js", "MongoDB", "Gemini"],
-    image: socialdocsai,
+  alternates: {
+    canonical: "/",
   },
-]
-
-const latestPosts = blogs.slice(0, 2)
+}
 
 export default function Home() {
+  const latestPosts = [...blogs]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5)
   return (
-    <div className="min-h-screen px-2 md:px-4 lg:px-20">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-background to-background/80 py-32">
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]" />
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-50"
-          style={{
-            maskImage: "radial-gradient(circle at center, white, transparent)",
-            WebkitMaskImage: "radial-gradient(circle at center, white, transparent)",
-          }}
-        />
-        <div className="container relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Hi, I'm{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
-                Abhishek Raj
-              </span>
-            </h1>
-            <p className="mt-6 text-xl text-muted-foreground">
-              Full Stack Developer specializing in building exceptional digital experiences.
-              I craft scalable applications with modern technologies.
+    <main className="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 bg-background">
+      <div className="container px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <section className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
+          {/* Text Side */}
+          <div className="flex-[2] flex flex-col items-center md:items-start text-center md:text-left space-y-4 sm:space-y-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">Hey, I am <span className="text-primary">Abhishek Raj</span></h1>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-pink-600">curious, tinkerer, and explorer</h2>
+            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
+              I am a <span className="font-semibold">full stack developer</span> passionate about building products that solve <span className="font-semibold">scalable</span> and <span className="font-semibold">business problems</span>. With a strong foundation in both frontend and backend technologies, I strive to create efficient and user-friendly solutions that make a real impact.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="gap-2">
-                <Link href="/projects">
-                  View Projects
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
+              Currently, I work at{' '}
+              <a href="https://registerkaro.in/" target="_blank" rel="noopener noreferrer" className="text-primary underline font-semibold">RegisterKaro</a>{' '}
+              where I build compliance tech as a full stack developer. My role involves contributing to business logic and product growth, ensuring we deliver robust solutions that meet our clients' needs while maintaining high standards of code quality and performance.
+            </p>
+            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
+              Beyond my technical work, I am deeply interested in{' '}
+              <a href="https://en.wikipedia.org/wiki/Entrepreneurship" target="_blank" rel="noopener noreferrer" className="text-primary underline font-semibold">entrepreneurship</a>{' '}
+              and love exploring new ideas. I believe in continuous learning and staying updated with the latest technologies and industry trends. Currently based in <span className="font-semibold">Gurgaon</span>, I'm always open to connecting with fellow developers and entrepreneurs to share knowledge and experiences.
+            </p>
+            <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start">
+              <Button asChild variant="outline" className="text-sm sm:text-base">
+                <Link href="https://x.com/ojhaabhishekraj/" target="_blank">X</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="gap-2">
-                <Link href="/contact">
-                  Get in Touch
-                  <Sparkles className="h-4 w-4" />
-                </Link>
+              <Button asChild variant="outline" className="text-sm sm:text-base">
+                <Link href="https://www.linkedin.com/in/abhishek-raj-69b55a230/" target="_blank">LinkedIn</Link>
               </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-      {/* Latest Blog Posts */}
-      <section className="border-t py-20">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-bold">Latest Posts</h2>
-              <Button asChild variant="ghost" className="gap-2">
-                <Link href="/blog">
-                  Read More
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+              <Button asChild variant="outline" className="text-sm sm:text-base">
+                <Link href="https://github.com/abhishek141001" target="_blank">GitHub</Link>
               </Button>
             </div>
-            <div className="mt-8 grid gap-8 md:grid-cols-2">
-              {latestPosts.map((post) => (
-                <Card key={post.title} className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <time dateTime={post.date}>
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </time>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                  <h3 className="mt-4 text-xl font-bold">{post.title}</h3>
-                  <p className="mt-2 text-muted-foreground">{post.excerpt}</p>
-                  <Button asChild variant="ghost" className="mt-4 gap-2">
-                    <Link href={`/blog/${post.slug}`}>
-                      Read Post
-                      <ExternalLink className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </Card>
-              ))}
+          </div>
+          {/* Image Side */}
+          <div className="flex-1 flex justify-center md:justify-end mt-8 md:mt-0">
+            <div className="rounded-2xl overflow-hidden border border-muted shadow-lg w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-white">
+              <Image
+                src="https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
+                alt="Profile photo"
+                width={300}
+                height={300}
+                className="object-cover w-full h-full"
+                priority
+              />
             </div>
-          </motion.div>
-        </div>
-      </section>
-       {/* Featured Projects */}
-       <section className="border-t py-20">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-bold">Featured Projects</h2>
-              <Button asChild variant="ghost" className="gap-2">
-                <Link href="/projects">
-                  View All
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <div className="mt-8 grid gap-8 md:grid-cols-2">
-              {featuredProjects.map((project, index) => (
-                <Card key={project.title} className="overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={800}
-                    height={450}
-                    className="aspect-video w-full object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold">{project.title}</h3>
-                    <p className="mt-2 text-muted-foreground">
-                      {project.description}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <Badge key={tech} variant="secondary">
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Skills Section */}
-      <section className="py-20">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h2 className="text-center text-3xl font-bold">What I Do</h2>
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
-              <Card className="p-6">
-                <Code2 className="h-12 w-12 text-primary" />
-                <h3 className="mt-4 text-xl font-bold">Web Development</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Building responsive and performant web applications using modern frameworks.
-                </p>
-              </Card>
-              <Card className="p-6">
-                <Laptop className="h-12 w-12 text-primary" />
-                <h3 className="mt-4 text-xl font-bold">Full Stack Solutions</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Developing end-to-end solutions with scalable architecture.
-                </p>
-              </Card>
-              <Card className="p-6">
-                <Github className="h-12 w-12 text-primary" />
-                <h3 className="mt-4 text-xl font-bold">Open Source</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Contributing to and maintaining open source projects.
-                </p>
-              </Card>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+        {/* Recent Blog Posts Section */}
+        <section className="w-full max-w-4xl mt-16 sm:mt-20">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 mb-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Recent blog posts</h2>
+            <Link href="/blog" className="text-primary underline text-sm font-medium">Full archive →</Link>
+          </div>
+          <ul className="divide-y divide-muted">
+            {latestPosts.map((post) => (
+              <li key={post.slug} className="flex flex-col sm:flex-row sm:items-center py-4">
+                <time className="text-muted-foreground text-sm mb-2 sm:mb-0 sm:w-32" dateTime={post.date}>
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                  })}
+                </time>
+                <Link href={`/blog/${post.slug}`} className="text-sm sm:text-base font-semibold hover:underline">
+                  {post.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-     
-
-      
-    </div>
+        {/* Projects Section */}
+        <section className="w-full max-w-4xl mt-16 sm:mt-20">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">Projects</h2>
+          <ul className="divide-y divide-muted">
+            {projects.map((project) => {
+              const link = project.liveUrl || project.githubUrl;
+              return (
+                <li key={project.title} className="py-4">
+                  {link ? (
+                    <a href={link} target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-semibold text-primary hover:underline">
+                      {project.title}
+                    </a>
+                  ) : (
+                    <span className="text-sm sm:text-base font-semibold text-primary">{project.title}</span>
+                  )}
+                  <p className="text-muted-foreground text-sm sm:text-base mt-1">{project.description}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </div>
+    </main>
   )
 }
