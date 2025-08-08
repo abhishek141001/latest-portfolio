@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { notFound } from 'next/navigation'
 import Link from "next/link"
 import { Metadata } from "next"
+import Script from "next/script"
 
 // Default avatar image URL
 const DEFAULT_AVATAR = "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
@@ -21,38 +22,96 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   
   if (!post) {
     return {
-      title: 'Blog Post Not Found',
-      description: 'The requested blog post could not be found.'
+      title: 'Blog Post Not Found | Abhishek Raj',
+      description: 'The requested blog post could not be found.',
+      robots: {
+        index: false,
+        follow: false,
+      }
     }
   }
 
+  // Clean content for meta description (remove markdown and limit length)
+  const cleanContent = post.content
+    .replace(/\*\*.*?\*\*/g, '') // Remove bold text
+    .replace(/##\s+/g, '') // Remove headings
+    .replace(/\n+/g, ' ') // Replace newlines with spaces
+    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+    .trim()
+    .substring(0, 160) // Limit to 160 characters for SEO
+
+  const metaDescription = cleanContent.length < post.content.length 
+    ? cleanContent + '...' 
+    : post.excerpt
+
+  const publishedDate = new Date(post.date).toISOString()
+  const modifiedDate = new Date().toISOString() // You could track this separately
+
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: `${post.title} | Abhishek Raj`,
+    description: metaDescription,
+    keywords: post.tags.join(', '),
+    authors: [{ name: post.author.name }],
+    creator: post.author.name,
+    publisher: 'Abhishek Raj',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL('https://ojhaabhishekraj.in'), // Replace with your actual domain
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
-      description: post.excerpt,
+      description: metaDescription,
       type: 'article',
-      publishedTime: post.date,
+      publishedTime: publishedDate,
+      modifiedTime: modifiedDate,
       authors: [post.author.name],
       tags: post.tags,
+      siteName: 'Abhishek Raj - Software Developer',
+      locale: 'en_US',
       images: post.coverImage ? [
         {
           url: post.coverImage,
           width: 1200,
           height: 630,
           alt: post.title,
+          type: 'image/jpeg',
         }
       ] : [],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.excerpt,
+      description: metaDescription,
+      creator: '@ojhaabhishekraj', // Replace with your Twitter handle
+      site: '@ojhaabhishekraj', // Replace with your Twitter handle
       images: post.coverImage ? [post.coverImage] : [],
     },
-    alternates: {
-      canonical: `/blog/${post.slug}`,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+   
+    other: {
+      'article:published_time': publishedDate,
+      'article:modified_time': modifiedDate,
+      'article:author': post.author.name,
+      'article:section': 'Technology',
+      'article:tag': post.tags.join(', '),
+      'og:image:width': '1200',
+      'og:image:height': '630',
+      'twitter:image:alt': post.title,
     },
   }
 }
@@ -70,8 +129,18 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   // Function to process content and identify subheadings
   const processContent = (content: string) => {
     return content.split("\n").map((paragraph, index) => {
+      // Check if the paragraph is a markdown heading (## Title)
+      if (/^##\s+.+$/.test(paragraph)) {
+        const headingText = paragraph.replace(/^##\s+/, "")
+        const headingId = headingText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+        return (
+          <h2 key={index} id={headingId} className="text-2xl font-bold mt-8 mb-4 text-primary scroll-mt-20">
+            {headingText}
+          </h2>
+        )
+      }
       // Check if the paragraph is a numbered subheading (e.g., "1. Title:")
-      if (/^\d+\.\s+.+:$/.test(paragraph)) {
+      else if (/^\d+\.\s+.+:$/.test(paragraph)) {
         const headingId = paragraph.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
         return (
           <h2 key={index} id={headingId} className="text-2xl font-bold mt-8 mb-4 text-primary scroll-mt-20">
@@ -81,9 +150,10 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       }
       // Check if the paragraph is a bullet point
       else if (paragraph.trim().startsWith("-")) {
+        const bulletText = paragraph.replace(/^-\s*/, "")
         return (
           <li key={index} className="ml-6 mb-2 list-disc">
-            {paragraph.replace(/^-\s*/, "")}
+            {processBoldText(bulletText)}
           </li>
         )
       }
@@ -91,7 +161,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       else if (paragraph.trim()) {
         return (
           <p key={index} className="mb-4 text-lg leading-relaxed">
-            {paragraph}
+            {processBoldText(paragraph)}
           </p>
         )
       }
@@ -100,8 +170,68 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     })
   }
 
+  // Function to process bold text (**text**)
+  const processBoldText = (text: string) => {
+    const parts = text.split(/(\*\*.*?\*\*)/g)
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const boldText = part.slice(2, -2)
+        return <strong key={index} className="font-bold">{boldText}</strong>
+      }
+      return part
+    })
+  }
+
+  // Generate structured data for SEO
+  const generateStructuredData = () => {
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": post.title,
+      "description": post.excerpt,
+      "image": post.coverImage,
+      "author": {
+        "@type": "Person",
+        "name": post.author.name,
+        "url": "https://ojhaabhishekraj.in", // Replace with your actual domain
+        "image": post.author.avatar
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Abhishek Raj",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ojhaabhishekraj.in/logo.png" // Replace with your actual logo URL
+        }
+      },
+      "datePublished": new Date(post.date).toISOString(),
+      "dateModified": new Date().toISOString(),
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://ojhaabhishekraj.in/blog/${post.slug}` // Replace with your actual domain
+      },
+      "keywords": post.tags.join(', '),
+      "articleSection": "Technology",
+      "wordCount": post.content.split(' ').length,
+      "timeRequired": post.readTime,
+      "inLanguage": "en-US"
+    }
+
+    return JSON.stringify(structuredData)
+  }
+
   return (
-    <article className="container py-12 md:py-16 px-2 md:px-4 lg:px-20">
+    <>
+      {/* Structured Data for SEO */}
+      <Script
+        id="structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: generateStructuredData(),
+        }}
+      />
+      
+      <article className="container py-12 md:py-16 px-2 md:px-4 lg:px-20">
       {/* Cover Image */}
       {post.coverImage && (
         <div className="relative w-full h-[300px] md:h-[400px] mb-8 rounded-lg overflow-hidden">
@@ -194,5 +324,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <p>Thank you for reading! Stay tuned for more articles.</p>
       </footer>
     </article>
+    </>
   )
 }
