@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer"
 import { Providers } from "./providers"
 import "./globals.css"
 import { Metadata } from "next"
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -55,6 +56,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
