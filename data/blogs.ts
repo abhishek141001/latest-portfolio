@@ -53,7 +53,7 @@ With features like Image Optimization, Font Optimization, and automatic code spl
       ],
       author: {
         name: "Abhishek Raj",
-        bio: "Abhishek Raj is a full-stack developer at RegisterKaro, specializing in scalable web applications and modern tech stacks.",
+        bio: "Abhishek Raj is a full-stack developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
       }
     },
@@ -86,7 +86,7 @@ Adopting TypeScript best practices, such as proper interface design and type org
       ],
       author: {
         name: "Abhishek Raj",
-        bio: "Abhishek Raj is a full-stack developer at RegisterKaro, specializing in scalable web applications and modern tech stacks.",
+        bio: "Abhishek Raj is a full-stack developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
       }
     },
@@ -119,7 +119,7 @@ Regular testing with screen readers and other assistive technologies is essentia
       ],
       author: {
         name: "Abhishek Raj",
-        bio: "Abhishek Raj is a full-stack developer at RegisterKaro, specializing in scalable web applications and modern tech stacks.",
+        bio: "Abhishek Raj is a full-stack developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://example.com/abhishek-avatar.jpg"
       }
     },
@@ -152,7 +152,7 @@ Regular performance monitoring and optimization are essential. Tools like Lighth
       ],
       author: {
         name: "Abhishek Raj",
-        bio: "Abhishek Raj is a full-stack developer at RegisterKaro, specializing in scalable web applications and modern tech stacks.",
+        bio: "Abhishek Raj is a full-stack developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
       }
     },
@@ -240,7 +240,7 @@ Regular performance monitoring and optimization are essential. Tools like Lighth
       ],
       author: {
         name: "Abhishek Raj",
-        bio: "Abhishek Raj is a full-stack developer at RegisterKaro, specializing in scalable web applications and modern tech stacks.",
+        bio: "Abhishek Raj is a full-stack developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
       }
     },
@@ -374,7 +374,7 @@ And if you fail? Fail fast, fail forward, and let each failure guide your next m
       ],
       author: {
         name: "Abhishek Raj",
-        bio: "Abhishek Raj is a full-stack developer at RegisterKaro, specializing in scalable web applications and modern tech stacks.",
+        bio: "Abhishek Raj is a full-stack developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
       }
     }
