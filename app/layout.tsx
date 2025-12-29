@@ -53,7 +53,8 @@ export default function RootLayout({
         <Providers>
           <div className="flex min-h-screen flex-col">
             <Navbar />
-<Script defer src="https://www.linked2web.com/embed.js" data-app-id="69404b831a8f8789767fa30a" data-api-url="https://linked2web-2-0-server-817687524421.asia-south2.run.app" data-token-endpoint="https://linked2web-2-0-server-817687524421.asia-south2.run.app/api/websites/69404b831a8f8789767fa30a/embed-token" data-theme="light"></Script>
+            <Script defer src="https://www.linked2web.com/embed.js" data-app-id="69404b831a8f8789767fa30a" data-api-url="https://linked2web-2-0-server-817687524421.asia-south2.run.app" data-token-endpoint="https://linked2web-2-0-server-817687524421.asia-south2.run.app/api/public/embed-token/69404b831a8f8789767fa30a" data-token="emb_5091c0cb3b75f15c0cad2559a5857f1b091e4b9af2295d9f6427d6c05e60e284" data-theme="light" data-enable-search="true" data-enable-chat="true" data-enable-form="false"></Script>
+{/* <Script defer src="https://www.linked2web.com/embed.js" data-app-id="69404b831a8f8789767fa30a" data-api-url="https://linked2web-2-0-server-817687524421.asia-south2.run.app" data-token-endpoint="https://linked2web-2-0-server-817687524421.asia-south2.run.app/api/websites/69404b831a8f8789767fa30a/embed-token" data-theme="light"></Script> */}
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
