@@ -5,6 +5,7 @@ import "./globals.css"
 import { Metadata } from "next"
 import { Analytics } from '@vercel/analytics/react'
 import Script from "next/script"
+import { ResumeVisitTracker } from "@/components/resume-visit-tracker"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://abhishekrajportfolio.vercel.app'),
@@ -57,6 +58,7 @@ export default function RootLayout({
           </div>
         </Providers>
         <Analytics />
+        <ResumeVisitTracker />
       </body>
     </html>
   )
