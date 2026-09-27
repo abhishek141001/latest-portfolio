@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://ojhaabhishekraj.in/sitemap.xml', // Replace with your actual domain
+    sitemap: 'https://abhishekrajportfolio.vercel.app/sitemap.xml',
   }
-} 
+}

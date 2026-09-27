@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { blogs } from '@/data/blogs'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://ojhaabhishekraj.in' // Replace with your actual domain
+  const baseUrl = 'https://abhishekrajportfolio.vercel.app'
 
   // Define your static routes
   const staticRoutes = [
@@ -27,4 +27,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   return [...staticRoutes, ...blogRoutes]
-} 
+}

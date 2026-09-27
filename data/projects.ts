@@ -1,4 +1,31 @@
-export const projects = [
+const allProjects = [
+  {
+    title: "FindMyFlat",
+    description: "A Gurugram rental-matching product that automates listing scraping and filtering to send fresh daily recommendations based on budget, commute, metro access, and monsoon-risk context.",
+    technologies: ["Next.js", "TypeScript", "Browser Automation", "Neon", "Resend"],
+    liveUrl: "https://findmyflat.space",
+    githubUrl: "https://github.com/abhishek141001/findmyflat",
+  },
+  {
+    title: "claude-says",
+    description: "A macOS CLI that reads Claude Code output aloud in real time, with local, Google Cloud, ElevenLabs, and Gemini narrator modes.",
+    technologies: ["Node.js", "Claude Code", "Text-to-Speech", "Gemini"],
+    liveUrl: "https://www.npmjs.com/package/claude-says",
+    githubUrl: "https://github.com/abhishek141001/claude-says",
+  },
+  {
+    title: "Awaaz Delhi",
+    description: "A mobile-first, verified noticeboard for Delhi student protests with live updates, practical guidance, and source-confidence labels.",
+    technologies: ["Next.js", "React", "TypeScript", "MongoDB"],
+    liveUrl: "https://new-channel-mocha.vercel.app",
+    githubUrl: "https://github.com/abhishek141001/new-channel",
+  },
+  {
+    title: "Terminal Coffee",
+    description: "A coffee-ordering platform across web, CLI, and SSH TUI, with Razorpay payments and Telegram order notifications.",
+    technologies: ["Node.js", "Express", "MongoDB", "Razorpay", "Telegram"],
+    githubUrl: "https://github.com/abhishek141001/coffee-ordering",
+  },
   {
     title: "Repurpose Linkedin Content on Website ",
     description: "A full-stack web application to repurpose linkedin feed to your websie.",
@@ -26,5 +53,34 @@ export const projects = [
     githubUrl: "https://github.com/abhishek141001/HR-automation",
     image: "data:image/jpeg;base64,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"
   },
-  // Add more projects here
-] 
+  {
+    title: "StackContext",
+    description: "A browser context bridge that turns web pages into structured Markdown or JSON for coding agents, with interaction timelines, screenshots, and capture history for handoff and debugging.",
+    technologies: ["Browser Automation", "AI", "Developer Tools"],
+    liveUrl: "https://stackcontext.space",
+  },
+  {
+    title: "Scrible",
+    description: "A Chrome and Firefox meeting recorder that captures tab and microphone audio, then creates timestamped transcripts, summaries, decisions, and action items with your choice of AI provider.",
+    technologies: ["Browser Extension", "AI", "Transcription"],
+    liveUrl: "https://scrible.space",
+  },
+]
+
+const projectPriority: Record<string, number> = {
+  StackContext: 0,
+  Scrible: 1,
+  FindMyFlat: 2,
+  "claude-says": 3,
+  "Terminal Coffee": 4,
+  "Awaaz Delhi": 5,
+}
+
+export const projects = allProjects.sort((a, b) => {
+  const priorityDifference =
+    (projectPriority[a.title] ?? 4) - (projectPriority[b.title] ?? 4)
+
+  if (priorityDifference !== 0) return priorityDifference
+  if (Boolean(a.liveUrl) !== Boolean(b.liveUrl)) return a.liveUrl ? -1 : 1
+  return a.title.localeCompare(b.title)
+})

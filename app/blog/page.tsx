@@ -1,7 +1,3 @@
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
 import Link from "next/link"
 import { blogs } from "@/data/blogs"
 import { Metadata } from "next"
@@ -20,67 +16,36 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Blog({ searchParams }: { searchParams?: { q?: string } }) {
-  const searchTerm = searchParams?.q?.toLowerCase() || ""
-  const filteredPosts = blogs.filter((post) =>
-    post.title.toLowerCase().includes(searchTerm)
+export default function Blog() {
+  const posts = [...blogs].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
   return (
-    <main className="container py-24 px-2 md:px-4 lg:px-20">
+    <main className="mx-auto max-w-[1100px] px-3 py-6 text-[13px] leading-5 sm:px-5">
       <section>
-        <h1 className="text-4xl font-bold mb-2">Blog</h1>
-        <p className="mb-8 text-xl text-muted-foreground">
-          Thoughts, insights, and technical articles about web development.
+        <h1 className="text-2xl font-bold">Writing</h1>
+        <p className="mt-1 text-muted-foreground">
+          Notes on building software, learning in public, and the work behind the work.
         </p>
-        <form className="mb-10 max-w-md" method="get" role="search" aria-label="Search blog posts">
-          <label htmlFor="search" className="sr-only">Search articles</label>
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="search"
-              name="q"
-              type="search"
-              placeholder="Search articles..."
-              defaultValue={searchTerm}
-              className="pl-9"
-              aria-label="Search articles"
-            />
-          </div>
-        </form>
-        <section className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {filteredPosts.length === 0 && (
-            <p className="col-span-full text-muted-foreground">No articles found.</p>
-          )}
-          {filteredPosts.map((post) => (
-            <article key={post.slug} className="h-full flex flex-col">
-              <Link href={`/blog/${post.slug}`} className="group" aria-label={`Read: ${post.title}`}>
-                <Card className="h-full p-6 transition-colors hover:bg-muted/50 flex flex-col">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <time dateTime={post.date}>
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </time>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                  <h2 className="mt-4 text-xl font-bold group-hover:text-primary transition-colors line-clamp-2">{post.title}</h2>
-                  <p className="mt-2 text-muted-foreground line-clamp-3">{post.excerpt}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </Card>
-              </Link>
-            </article>
+        <ol className="mt-5 divide-y border-y">
+          {posts.map((post, index) => (
+            <li key={post.slug} className="grid gap-1 py-3 sm:grid-cols-[2rem_minmax(0,1fr)_8rem] sm:gap-3">
+              <span className="text-muted-foreground">{index + 1}.</span>
+              <div>
+                <Link href={`/blog/${post.slug}`} className="font-semibold text-primary hover:underline" aria-label={`Read: ${post.title}`}>
+                  {post.title}
+                </Link>
+                <p className="mt-1 text-muted-foreground">{post.excerpt}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{post.tags.join(" · ")}</p>
+              </div>
+              <time className="text-xs text-muted-foreground" dateTime={post.date}>
+                {new Date(post.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                <br />{post.readTime}
+              </time>
+            </li>
           ))}
-        </section>
+        </ol>
       </section>
     </main>
   )

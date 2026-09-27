@@ -1,132 +1,187 @@
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import { ArrowUpRight, Github, Linkedin, Twitter } from "lucide-react"
 import { blogs } from "@/data/blogs"
 import { projects } from "@/data/projects"
 import { Metadata } from "next"
-import profileImage from "../assets/abhishekraj.jpg"
+import profileImage from "../assets/abhishekraj.png"
 
 export const metadata: Metadata = {
-  title: "Abhishek Raj | Full Stack Developer",
-  description: "Full stack developer passionate about building scalable products and solving business problems. Currently working at RegisterKaro, based in Gurgaon.",
-  openGraph: {
-    title: "Abhishek Raj | Full Stack Developer",
-    description: "Full stack developer passionate about building scalable products and solving business problems. Currently working at RegisterKaro, based in Gurgaon.",
-    url: "/",
-    type: "website",
-    images: [
-      {
-        url: profileImage.src,
-        width: 800,
-        height: 800,
-        alt: "Abhishek Raj",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "/",
-  },
+  title: "Abhishek Raj | Software Developer",
+  description: "Abhishek Raj builds tax engines, browser automations, scraping systems, and AI products.",
+  alternates: { canonical: "/" },
 }
+
+const work = [
+  { context: "REGISTERKARO", title: "Browser automation", description: "Authenticated flows with login and CAPTCHA steps for tens of thousands of client services annually — saving hundreds of manual hours every week." },
+  { context: "REGISTERKARO", title: "Tax & compliance engines", description: "Filing deadlines, GST-frequency rules, and 20+ service configurations across company types and registrations." },
+  { context: "REGISTERKARO", title: "Operations & AI", description: "Subscription workflows, MCA/GST checks, and AI systems for support, call analysis, sales intelligence, escalations, and lead scoring." },
+  { context: "PERSONAL BUILDING", title: "AI tools for developers", description: "StackContext turns browser work into structured context for coding agents, while claude-says makes long agent runs easier to follow." },
+  { context: "PERSONAL BUILDING", title: "AI-powered capture", description: "Scrible turns meetings into transcripts, summaries, decisions, and action items; FindMyFlat uses scraping and filtering to make rental search more useful." },
+]
+
+const featuredProjectTitles = new Set([
+  "StackContext",
+  "Scrible",
+  "FindMyFlat",
+  "claude-says",
+  "Terminal Coffee",
+  "Awaaz Delhi",
+])
+
+const socialLinks = [
+  { href: "https://github.com/abhishek141001", label: "GitHub", icon: Github },
+  { href: "https://www.linkedin.com/in/abhishek-raj-69b55a230/", label: "LinkedIn", icon: Linkedin },
+  { href: "https://x.com/ojhaabhishekraj", label: "X", icon: Twitter },
+]
+
+const reading = [
+  {
+    title: "Building Effective AI Agents",
+    source: "Anthropic Engineering",
+    note: "Useful patterns for deciding when a workflow is enough and when an agent is actually warranted.",
+    href: "https://www.anthropic.com/engineering/building-effective-agents",
+  },
+  {
+    title: "Writing effective tools for AI agents",
+    source: "Anthropic Engineering",
+    note: "Clear principles for tool boundaries, evaluation, and context design.",
+    href: "https://www.anthropic.com/engineering/writing-tools-for-agents",
+  },
+  {
+    title: "chrome.tabCapture",
+    source: "Chrome for Developers",
+    note: "The browser audio-capture API behind products such as Scrible.",
+    href: "https://developer.chrome.com/docs/extensions/reference/api/tabCapture",
+  },
+  {
+    title: "Demystifying evals for AI agents",
+    source: "Anthropic Engineering",
+    note: "How to test agent behavior before a workflow reaches production.",
+    href: "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+  },
+]
 
 export default function Home() {
   const latestPosts = [...blogs]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5)
+  const featuredProjects = projects.filter((project) => featuredProjectTitles.has(project.title))
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 bg-background">
-      <div className="container px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <section className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
-          {/* Text Side */}
-          <div className="flex-[2] flex flex-col items-center md:items-start text-center md:text-left space-y-4 sm:space-y-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">Hey, I am <span className="text-primary">Abhishek Raj</span></h1>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-pink-600">curious, tinkerer, and explorer</h2>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
-              I am a <span className="font-semibold">full stack developer</span> passionate about building products that solve <span className="font-semibold">scalable</span> and <span className="font-semibold">business problems</span>. With a strong foundation in both frontend and backend technologies, I strive to create efficient and user-friendly solutions that make a real impact.
+    <main className="mx-auto max-w-[1100px] px-3 py-5 text-[13px] leading-5 sm:px-5">
+      <section className="border-b pb-5">
+        <div className="flex items-start gap-3">
+          <Image
+            src={profileImage}
+            alt="Abhishek Raj"
+            width={48}
+            height={48}
+            className="h-12 w-12 shrink-0 rounded object-cover"
+            priority
+          />
+          <div>
+            <p className="text-xs text-muted-foreground">ABHISHEK RAJ / SOFTWARE DEVELOPER / NEW DELHI</p>
+            <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+              I build software that makes complex work less manual.
+            </h1>
+            <p className="mt-1 max-w-3xl text-muted-foreground">
+              Tax engines, browser automations, scraping systems, and AI products. Currently building compliance tech at RegisterKaro.
             </p>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
-              Currently, I work at{' '}
-              <a href="https://registerkaro.in/" target="_blank" rel="noopener noreferrer" className="text-primary underline font-semibold">RegisterKaro</a>{' '}
-              where I build compliance tech as a full stack developer. My role involves contributing to business logic and product growth, ensuring we deliver robust solutions that meet our clients' needs while maintaining high standards of code quality and performance.
-            </p>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
-              Beyond my technical work, I am deeply interested in{' '}
-              <a href="https://en.wikipedia.org/wiki/Entrepreneurship" target="_blank" rel="noopener noreferrer" className="text-primary underline font-semibold">entrepreneurship</a>{' '}
-              and love exploring new ideas. I believe in continuous learning and staying updated with the latest technologies and industry trends. Currently based in <span className="font-semibold">Gurgaon</span>, I'm always open to connecting with fellow developers and entrepreneurs to share knowledge and experiences.
-            </p>
-            <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start">
-              <Button asChild variant="outline" className="text-sm sm:text-base">
-                <Link href="https://x.com/ojhaabhishekraj/" target="_blank">X</Link>
-              </Button>
-              <Button asChild variant="outline" className="text-sm sm:text-base">
-                <Link href="https://www.linkedin.com/in/abhishek-raj-69b55a230/" target="_blank">LinkedIn</Link>
-              </Button>
-              <Button asChild variant="outline" className="text-sm sm:text-base">
-                <Link href="https://github.com/abhishek141001" target="_blank">GitHub</Link>
-              </Button>
-            </div>
           </div>
-          {/* Image Side */}
-          <div className="flex-1 flex justify-center md:justify-end mt-8 md:mt-0">
-            <div className="rounded-2xl overflow-hidden border border-muted shadow-lg w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-white">
-              <Image
-                src={profileImage}
-                alt="Profile photo"
-                width={300}
-                height={300}
-                className="object-cover w-full h-full"
-                priority
-              />
-            </div>
-          </div>
-        </section>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          {socialLinks.map(({ href, label, icon: Icon }) => (
+            <Link key={label} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+              <Icon className="h-3.5 w-3.5" /> {label}
+            </Link>
+          ))}
+          <Link href="/blog/btech-dropout-to-software-developer-my-real-story" className="text-primary hover:underline">
+            The BTech-dropout story →
+          </Link>
+        </div>
+      </section>
 
-        {/* Recent Blog Posts Section */}
-        <section className="w-full max-w-4xl mt-16 sm:mt-20">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 mb-6">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Recent blog posts</h2>
-            <Link href="/blog" className="text-primary underline text-sm font-medium">Full archive →</Link>
-          </div>
-          <ul className="divide-y divide-muted">
-            {latestPosts.map((post) => (
-              <li key={post.slug} className="flex flex-col sm:flex-row sm:items-center py-4">
-                <time className="text-muted-foreground text-sm mb-2 sm:mb-0 sm:w-32" dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                  })}
-                </time>
-                <Link href={`/blog/${post.slug}`} className="text-sm sm:text-base font-semibold hover:underline">
-                  {post.title}
-                </Link>
+      <section className="py-5">
+        <h2 className="font-bold">What I do</h2>
+        <ol className="mt-2 divide-y border-y">
+          {work.map(({ context, title, description }, index) => (
+            <li key={title} className="grid gap-1 py-2 sm:grid-cols-[2rem_7.5rem_12rem_minmax(0,1fr)] sm:gap-3">
+              <span className="text-muted-foreground">{index + 1}.</span>
+              <span className="text-[10px] font-bold tracking-wide text-primary">{context}</span>
+              <strong>{title}</strong>
+              <span className="text-muted-foreground">{description}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="py-5">
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="font-bold">Selected projects</h2>
+          <Link href="/projects" className="text-primary hover:underline">all projects →</Link>
+        </div>
+        <ol className="mt-2 divide-y border-y">
+          {featuredProjects.map((project, index) => {
+            const href = project.liveUrl || project.githubUrl
+            return (
+              <li key={project.title} className="grid gap-1 py-2 sm:grid-cols-[2rem_minmax(12rem,0.35fr)_minmax(0,1fr)_auto] sm:gap-3">
+                <span className="text-muted-foreground">{index + 1}.</span>
+                {href ? (
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                    {project.title}
+                  </a>
+                ) : <strong>{project.title}</strong>}
+                <span className="text-muted-foreground">{project.description}</span>
+                <span className="whitespace-nowrap text-xs text-muted-foreground">{project.technologies.slice(0, 3).join(" · ")}</span>
               </li>
-            ))}
-          </ul>
-        </section>
+            )
+          })}
+        </ol>
+      </section>
 
-        {/* Projects Section */}
-        <section className="w-full max-w-4xl mt-16 sm:mt-20">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">Projects</h2>
-          <ul className="divide-y divide-muted">
-            {projects.map((project) => {
-              const link = project.liveUrl || project.githubUrl;
-              return (
-                <li key={project.title} className="py-4">
-                  {link ? (
-                    <a href={link} target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-semibold text-primary hover:underline">
-                      {project.title}
-                    </a>
-                  ) : (
-                    <span className="text-sm sm:text-base font-semibold text-primary">{project.title}</span>
-                  )}
-                  <p className="text-muted-foreground text-sm sm:text-base mt-1">{project.description}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      </div>
+      <section className="border-y py-5">
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="font-bold">Writing</h2>
+          <Link href="/blog" className="text-primary hover:underline">all posts →</Link>
+        </div>
+        <ol className="mt-2">
+          {latestPosts.map((post, index) => (
+            <li key={post.slug} className="py-1">
+              <span className="mr-1 text-muted-foreground">{index + 1}.</span>
+              <Link href={`/blog/${post.slug}`} className="font-medium text-primary hover:underline">{post.title}</Link>
+              <span className="ml-2 text-xs text-muted-foreground">
+                ({new Date(post.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })})
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="py-5">
+        <div className="flex items-baseline justify-between gap-4">
+          <div>
+            <h2 className="font-bold">Reading shelf</h2>
+            <p className="text-xs text-muted-foreground">Resources I&apos;m exploring around agents, browser tooling, and reliable AI products.</p>
+          </div>
+        </div>
+        <ol className="mt-2 divide-y border-y">
+          {reading.map((item, index) => (
+            <li key={item.href} className="grid gap-1 py-2 sm:grid-cols-[2rem_minmax(12rem,0.35fr)_minmax(0,1fr)_10rem] sm:gap-3">
+              <span className="text-muted-foreground">{index + 1}.</span>
+              <a href={item.href} target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">
+                {item.title} <ArrowUpRight className="inline h-3 w-3" />
+              </a>
+              <span className="text-muted-foreground">{item.note}</span>
+              <span className="text-xs text-muted-foreground">{item.source}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <p className="py-5 text-muted-foreground">
+        Built from real work, not tutorial clones. <Link href="/contact" className="text-primary hover:underline">Let&apos;s talk</Link>.
+      </p>
     </main>
   )
 }

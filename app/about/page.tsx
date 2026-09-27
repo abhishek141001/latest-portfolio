@@ -1,11 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { FileDown } from "lucide-react"
-import Link from "next/link"
 
 const skills = [
   "JavaScript",
@@ -14,31 +11,40 @@ const skills = [
   "Next.js",
   "Node.js",
   "Express.js",
+  "SQL",
+  "PostgreSQL",
   "MongoDB",
+  "Redis",
   "Tailwind CSS",
-  "AWS (EC2, S3)",
+  "AWS",
+  "Docker",
+  "Vercel",
+  "OpenAI",
+  "Gemini",
   "Git",
   "GitHub",
-  "API Gateway",
-  "System Design",
-  "Microservices",
 ]
 
 const timeline = [
   {
-    year: "Present",
-    title: "Full Stack Developer",
-    description: "Building scalable web applications and microservices.",
+    year: "Mar 2025 — Present",
+    title: "Software Developer · RegisterKaro",
+    description: "Building tax and compliance engines, browser automations, subscription workflows, and AI systems for support, call analysis, sales intelligence, escalations, and lead scoring.",
   },
   {
-    year: "2022",
-    title: "Started Freelancing",
-    description: "Worked on various client projects using modern web technologies.",
+    year: "2024 — 2025",
+    title: "Freelance Software Developer",
+    description: "Built authenticated browser automations for data extraction, reporting, and high-volume workflows.",
   },
   {
-    year: "2021",
-    title: "Graduated in Computer Science",
-    description: "Completed Bachelor's degree with focus on web development.",
+    year: "Jul 2024 — Oct 2024",
+    title: "Jr. Software Developer · Gracia Marcom",
+    description: "Built and deployed client websites and landing pages, maintained production sites, and improved UI.",
+  },
+  {
+    year: "2020 — 2022",
+    title: "BTech · GNIOT",
+    description: "Attended BTech before choosing a self-directed path into software through real projects and production work.",
   },
 ]
 
@@ -52,18 +58,8 @@ export default function About() {
       >
         <h1 className="text-4xl font-bold">About Me</h1>
         <p className="mt-4 text-xl text-muted-foreground">
-          Entrepreneurial Full Stack Developer with a passion for building scalable, efficient web applications. 
-          Proficient in solving complex problems and delivering high-quality products.
+          I build products where correctness and speed both matter: tax engines, browser automations, and AI workflows. My approach is practical — understand the messy work first, then build software that makes it easier.
         </p>
-
-        <div className="mt-8">
-          <Link href="/resume.pdf" target="_blank">
-            <Button className="gap-2">
-              Download Resume
-              <FileDown className="h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
 
         <div className="mt-16">
           <h2 className="text-2xl font-bold">Skills</h2>

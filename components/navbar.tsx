@@ -1,11 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react"
 import { Code2, Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Youtube, Twitter, Linkedin, Github } from "lucide-react"
 
 const links = [
   { href: "/", label: "Home" },
@@ -14,47 +12,27 @@ const links = [
   { href: "/contact", label: "Contact" },
 ]
 
-const socials = [
-  { href: "https://youtube.com/", icon: Youtube, label: "YouTube" },
-  { href: "https://twitter.com/", icon: Twitter, label: "Twitter" },
-  { href: "https://linkedin.com/", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://github.com/", icon: Github, label: "GitHub" },
-]
-
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
   return (
-    <header
-      className={`px-2 md:px-4 lg:px-20 sticky top-0 z-50 border-b backdrop-blur-sm transition-colors ${
-        isScrolled ? "bg-background/80" : "bg-background/50"
-      }`}
-    >
-      <div className="container flex h-16 items-center justify-between gap-4">
+    <header className="border-b border-black/20 bg-[#ff6600]">
+      <div className="mx-auto flex h-9 max-w-[1100px] items-center justify-between gap-4 px-3 sm:px-5">
         {/* Logo/Name */}
         <Link href="/" className="flex items-center gap-2">
-          <Code2 className="h-6 w-6" />
-          <span className="text-lg font-bold">Abhishek Raj</span>
+          <Code2 className="h-4 w-4" />
+          <span className="text-sm font-bold">Abhishek Raj</span>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden gap-4 md:flex">
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className={`text-sm transition-colors hover:text-primary ${
-                pathname === href ? "text-foreground" : "text-muted-foreground"
+              className={`text-xs transition-colors hover:underline ${
+                pathname === href ? "font-bold text-black" : "text-black/80"
               }`}
             >
               {label}
@@ -64,23 +42,23 @@ export function Navbar() {
 
         {/* Mobile Burger Menu Button */}
         <button
-          className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+          className="rounded p-1.5 focus:outline-none focus:ring-2 focus:ring-black md:hidden"
           onClick={() => setMenuOpen((open) => !open)}
           aria-label="Toggle navigation menu"
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-4 w-4" />
         </button>
       </div>
       {/* Mobile Dropdown Menu */}
       {menuOpen && (
-        <nav className="md:hidden bg-background border-b px-4 pb-4">
-          <ul className="flex flex-col gap-3 mt-2">
+        <nav className="border-t border-black/20 bg-[#ff6600] px-3 pb-3 md:hidden">
+          <ul className="mt-2 flex flex-col gap-2">
             {links.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
-                  className={`block text-base transition-colors hover:text-primary ${
-                    pathname === href ? "text-foreground" : "text-muted-foreground"
+                  className={`block text-sm transition-colors hover:underline ${
+                    pathname === href ? "font-bold text-black" : "text-black/80"
                   }`}
                   onClick={() => setMenuOpen(false)}
                 >

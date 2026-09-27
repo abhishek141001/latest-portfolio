@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       address: false,
       telephone: false,
     },
-    metadataBase: new URL('https://ojhaabhishekraj.in'), // Replace with your actual domain
+    metadataBase: new URL('https://abhishekrajportfolio.vercel.app'),
     alternates: {
       canonical: `/blog/${post.slug}`,
     },
@@ -193,7 +193,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       "author": {
         "@type": "Person",
         "name": post.author.name,
-        "url": "https://ojhaabhishekraj.in", // Replace with your actual domain
+        "url": "https://abhishekrajportfolio.vercel.app",
         "image": post.author.avatar
       },
       "publisher": {
@@ -201,14 +201,14 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         "name": "Abhishek Raj",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://ojhaabhishekraj.in/logo.png" // Replace with your actual logo URL
+          "url": "https://abhishekrajportfolio.vercel.app/logo.png"
         }
       },
       "datePublished": new Date(post.date).toISOString(),
       "dateModified": new Date().toISOString(),
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://ojhaabhishekraj.in/blog/${post.slug}` // Replace with your actual domain
+        "@id": `https://abhishekrajportfolio.vercel.app/blog/${post.slug}`
       },
       "keywords": post.tags.join(', '),
       "articleSection": "Technology",

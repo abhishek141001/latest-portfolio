@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Providers } from "./providers"
@@ -7,22 +6,20 @@ import { Metadata } from "next"
 import { Analytics } from '@vercel/analytics/react'
 import Script from "next/script"
 
-const inter = Inter({ subsets: ["latin"] })
-
 export const metadata: Metadata = {
-  metadataBase: new URL('https://abhishekraj.dev'),
+  metadataBase: new URL('https://abhishekrajportfolio.vercel.app'),
   title: {
     default: 'Abhishek Raj',
     template: '%s | Abhishek Raj'
   },
-  description: 'Full stack developer passionate about building scalable products and solving business problems. Currently working at RegisterKaro, based in Gurgaon.',
-  keywords: ['Full Stack Developer', 'Web Development', 'React', 'Next.js', 'TypeScript', 'Node.js'],
+  description: 'Software developer building tax engines, browser automations, scraping systems, and AI products.',
+  keywords: ['Software Developer', 'Web Development', 'React', 'Next.js', 'TypeScript', 'Node.js'],
   authors: [{ name: 'Abhishek Raj' }],
   creator: 'Abhishek Raj',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://abhishekraj.dev',
+    url: 'https://abhishekrajportfolio.vercel.app',
     siteName: 'Abhishek Raj',
   },
   twitter: {
@@ -49,7 +46,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body>
         <Providers>
           <div className="flex min-h-screen flex-col">
             <Navbar />
