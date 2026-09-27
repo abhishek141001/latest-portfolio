@@ -16,6 +16,7 @@ const work = [
   { context: "REGISTERKARO", title: "Browser automation", description: "Authenticated flows with login and CAPTCHA steps for tens of thousands of client services annually — saving hundreds of manual hours every week." },
   { context: "REGISTERKARO", title: "Tax & compliance engines", description: "Filing deadlines, GST-frequency rules, and 20+ service configurations across company types and registrations." },
   { context: "REGISTERKARO", title: "Operations & AI", description: "Directly contributed to migrating 50K+ clients from WhatsApp and spreadsheets into internal ERP and customer-facing apps, with the new workflows used by 500+ employees daily; also built subscription, MCA/GST, and AI workflows." },
+  { context: "CLOUD & DEPLOYMENT", title: "Shipping to production", description: "AWS and S3-compatible object storage, Vercel deployments, Docker, and Linux VPS/Hostinger hosting for production applications." },
   { context: "PERSONAL BUILDING", title: "AI tools for developers", description: "StackContext turns browser work into structured context for coding agents, while claude-says makes long agent runs easier to follow." },
   { context: "PERSONAL BUILDING", title: "AI-powered capture", description: "Scrible turns meetings into transcripts, summaries, decisions, and action items; FindMyFlat uses scraping and filtering to make rental search more useful." },
 ]
