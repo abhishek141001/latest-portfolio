@@ -97,9 +97,6 @@ export default function Home() {
               <Icon className="h-3.5 w-3.5" /> {label}
             </Link>
           ))}
-          <Link href="/blog/btech-dropout-to-software-developer-my-real-story" className="text-primary hover:underline">
-            The BTech-dropout story →
-          </Link>
         </div>
       </section>
 

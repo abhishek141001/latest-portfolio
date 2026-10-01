@@ -44,9 +44,9 @@ const timeline = [
     description: "Built and deployed client websites and landing pages, maintained production sites, and improved UI.",
   },
   {
-    year: "2020 — 2022",
+    year: "2020 — 2024",
     title: "BTech · GNIOT",
-    description: "Attended BTech before choosing a self-directed path into software through real projects and production work.",
+    description: "Computer Science coursework alongside hands-on software projects and production work.",
   },
 ]
 
