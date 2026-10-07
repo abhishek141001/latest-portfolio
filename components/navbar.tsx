@@ -17,7 +17,7 @@ export function Navbar() {
   const pathname = usePathname()
 
   return (
-    <header className="border-b border-black/20 bg-[#ff6600]">
+    <header className="border-b border-white/15 bg-neutral-950 text-white">
       <div className="mx-auto flex h-9 max-w-[1100px] items-center justify-between gap-4 px-3 sm:px-5">
         {/* Logo/Name */}
         <Link href="/" className="flex items-center gap-2">
@@ -32,7 +32,7 @@ export function Navbar() {
               key={href}
               href={href}
               className={`text-xs transition-colors hover:underline ${
-                pathname === href ? "font-bold text-black" : "text-black/80"
+                pathname === href ? "font-bold text-white" : "text-white/70"
               }`}
             >
               {label}
@@ -42,7 +42,7 @@ export function Navbar() {
 
         {/* Mobile Burger Menu Button */}
         <button
-          className="rounded p-1.5 focus:outline-none focus:ring-2 focus:ring-black md:hidden"
+          className="rounded p-1.5 focus:outline-none focus:ring-2 focus:ring-white md:hidden"
           onClick={() => setMenuOpen((open) => !open)}
           aria-label="Toggle navigation menu"
         >
@@ -51,14 +51,14 @@ export function Navbar() {
       </div>
       {/* Mobile Dropdown Menu */}
       {menuOpen && (
-        <nav className="border-t border-black/20 bg-[#ff6600] px-3 pb-3 md:hidden">
+        <nav className="border-t border-white/15 bg-neutral-950 px-3 pb-3 md:hidden">
           <ul className="mt-2 flex flex-col gap-2">
             {links.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
                   className={`block text-sm transition-colors hover:underline ${
-                    pathname === href ? "font-bold text-black" : "text-black/80"
+                    pathname === href ? "font-bold text-white" : "text-white/70"
                   }`}
                   onClick={() => setMenuOpen(false)}
                 >

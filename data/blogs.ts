@@ -9,7 +9,16 @@ interface Blog {
   date: string;
   tags: string[];
   readTime: string;
+  format?: "Quick read" | "Deep dive";
   coverImage?: string;
+  sourceUrl?: string;
+  sourceLabel?: string;
+  figures?: {
+    afterHeading: string;
+    src: string;
+    alt: string;
+    caption: string;
+  }[];
   subheadings?: {
     id: string;
     title: string;
@@ -377,6 +386,427 @@ And if you fail? Fail fast, fail forward, and let each failure guide your next m
         bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur",
         avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
       }
+    },
+    {
+      slug: "ai-native-engineering-from-ai-assistance-to-ai-collaboration",
+      title: "AI-Native Engineering: Moving From AI Assistance to AI Collaboration",
+      excerpt: "AI-native engineering is not about handing a codebase to an agent. It is about redesigning the engineering loop so people and AI can plan, build, verify, and learn together.",
+      content: `Most teams using AI are measuring the wrong thing: lines of code generated. The metric that matters is time from a customer problem to a verified outcome. AI-native engineering is the practice of redesigning that entire path—not handing a ticket to a chatbot and hoping for the best.
+
+## The Shift: From Typing Faster to Learning Faster
+Autocomplete made individual developers faster. Coding agents change the unit of work: an engineer can now delegate codebase exploration, first-pass implementation, test creation, and documentation. But the bottleneck moves upstream. If the requirement is fuzzy, the context is stale, or the checks are weak, an agent just reaches the wrong destination sooner.
+
+The useful question is not "Can AI build this?" It is "What evidence would convince us this is safe to ship, and how quickly can we collect it?" That reframes AI as part of a delivery system.
+
+## The Loop I Would Actually Use
+For a medium-sized product change, use six explicit steps:
+
+- Write the outcome in one sentence and list three acceptance checks.
+- Give the agent only the relevant files, architecture notes, and constraints.
+- Ask for a plan before asking for an edit.
+- Make one bounded change, not a heroic repository-wide rewrite.
+- Run the smallest useful set of automated and manual checks.
+- Review the diff and the evidence separately.
+
+The detail people miss is the fourth step. Small diffs are not old-fashioned caution; they are how you keep AI work legible, reversible, and fast to verify.
+
+## Where AI Earns Its Keep
+AI is unusually good at turning scattered information into a starting point: mapping an unfamiliar module, locating duplicate logic, drafting tests around known behavior, or translating a migration plan into repetitive edits. It is less trustworthy when product intent is missing, authorization is involved, or the correct answer depends on a customer promise that only exists in someone's head.
+
+That makes senior engineering judgment more valuable, not less. The high-leverage work is framing the problem, choosing boundaries, identifying failure modes, and rejecting a plausible but wrong answer.
+
+## The Guardrail Test
+Before letting an agent touch a workflow, ask four questions. Can it see the relevant conventions? Can it prove its change works? Can a person understand the diff in minutes? Can the change be rolled back? If any answer is no, fix the engineering environment before adding more autonomy.
+
+Useful guardrails are boring: repository instructions, tests that actually fail for the right reason, scoped credentials, CI, preview environments, and a definition of done. Boring infrastructure is what turns AI speed into compounding speed.
+
+## A 30-Day Starting Point
+Pick one repeated, low-risk task: adding a validated form field, writing regression tests, or documenting an endpoint. Run it through the same agent workflow for a month. Track elapsed time to reviewed merge, rework, escaped defects, and how often the developer had to correct missing context. Then improve the weakest stage.
+
+The teams that win with AI will not generate the most code. They will build the fastest loop for turning uncertain work into trusted decisions.`,
+      date: "2025-09-17",
+      tags: ["AI-Native Engineering", "AI-Assisted Development", "AI Coding", "Software Engineering", "Developer Productivity", "Engineering Workflow"],
+      readTime: "6 min read",
+      coverImage: "/images/blog/ai-native-engineering.png",
+      figures: [{ afterHeading: "the-loop-i-would-actually-use", src: "/images/blog/agent-workflow-diagram.png", alt: "A visual workflow from goal and context to implementation, testing, and human review", caption: "A trustworthy AI workflow produces visible evidence at every stage—not just generated code." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "what-is-ai-native-engineering", title: "What Is AI-Native Engineering?", level: 1 },
+        { id: "the-engineering-loop-changes", title: "The Engineering Loop Changes", level: 1 },
+        { id: "build-the-guardrails-before-the-speed", title: "Build the Guardrails Before the Speed", level: 1 },
+        { id: "skills-that-matter-more-not-less", title: "Skills That Matter More, Not Less", level: 1 },
+        { id: "start-with-one-repeatable-workflow", title: "Start With One Repeatable Workflow", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "agentic-coding-workflows-that-ship-reliable-software",
+      title: "Agentic Coding Workflows: How to Ship Reliable Software With AI Agents",
+      excerpt: "A practical guide to using coding agents for planning, implementation, testing, and review without confusing generated output for finished software.",
+      content: `A coding agent that produces a thousand-line pull request in ten minutes has not saved you time if it takes two days to understand whether it is safe. Agentic coding works when the agent is treated like a fast junior collaborator with excellent recall and zero product intuition.
+
+## The Brief That Prevents Expensive Rework
+Give an agent a job it can finish and a reviewer can verify. A strong brief names the user-facing outcome, files or systems in scope, invariants that must not change, acceptance checks, and the command that proves success.
+
+Compare "fix checkout validation" with "reject an expired coupon before payment submission, preserve the API response shape, and add tests for expired, valid, and missing coupons." The second prompt is not more verbose for the sake of it. It removes three opportunities for the agent to invent product behavior.
+
+## Make Planning a Separate Deliverable
+For anything beyond a small edit, request a plan first. A useful plan identifies the existing pattern, the impacted files, the intended data flow, risks, and test strategy. Review this before the agent edits. Five minutes of correction at planning time can prevent an hour of code review.
+
+If the plan cannot name the relevant code paths, that is a signal to improve context—not a reason to let the agent search and rewrite more broadly.
+
+## The Two-Loop Method
+Use one loop for creation and another for proof. In the creation loop, the agent inspects, plans, and edits. In the proof loop, it runs type checks, tests, builds, and targeted browser or API checks; then it reports failures and evidence. Keep the loops distinct so a confident summary cannot disguise an untested change.
+
+For production work, I want the handoff to include: changed files, assumptions, commands run, results, and known gaps. This makes review asynchronous and makes failures teach the next run.
+
+## Review What Changed, Not How It Sounds
+AI explanations are cheap. Diffs are evidence. Review authorization paths, error handling, schema changes, dependencies, migrations, analytics, and tests that could pass without testing the intended behavior. Ask one ruthless question: is this the smallest change that satisfies the requirement?
+
+This is not mistrust of the tool. It is good engineering. The same standard applies to code written by a colleague at 2 a.m. or generated by an agent at 2 seconds.
+
+## A Safe Default Workflow
+Use agents freely for exploration, test drafts, refactors with strong test coverage, and mechanical migrations. Add human approval for secrets, permissions, payments, destructive operations, and public communication. Stop automatic retries when the evidence is ambiguous; escalation is a feature, not a failure.
+
+The goal is not autonomous shipping. The goal is a development loop where a developer spends more time making decisions and less time performing the mechanical work around them.`,
+      date: "2025-11-12",
+      tags: ["Agentic Coding", "Coding Agents", "AI Software Development", "AI Code Review", "AI Testing", "Developer Tools"],
+      readTime: "7 min read",
+      coverImage: "/images/blog/ai-native-engineering.png",
+      figures: [{ afterHeading: "the-two-loop-method", src: "/images/blog/agent-workflow-diagram.png", alt: "A build-and-verify workflow for agentic coding", caption: "Separate creation from proof so a confident summary can never substitute for verification." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "a-coding-agent-needs-a-clear-job", title: "A Coding Agent Needs a Clear Job", level: 1 },
+        { id: "plan-before-the-agent-edits", title: "Plan Before the Agent Edits", level: 1 },
+        { id: "verification-is-the-product", title: "Verification Is the Product", level: 1 },
+        { id: "review-the-diff-not-the-story", title: "Review the Diff, Not the Story", level: 1 },
+        { id: "a-simple-production-pattern", title: "A Simple Production Pattern", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "context-engineering-for-ai-agents-practical-guide",
+      title: "Context Engineering for AI Agents: A Practical Guide for Better Results",
+      excerpt: "Context engineering is the discipline of giving an AI agent the right information, tools, and constraints at the right moment—not simply filling its context window.",
+      content: `The most expensive sentence in AI engineering is: "The model is smart, but it doesn't understand our business." Usually the model is not the problem. We gave it a 200-page handbook, three stale chat summaries, and a tool called execute_action. Context engineering is how you stop doing that.
+
+## Context Is a Working Set, Not a Document Dump
+Prompt engineering is about the instruction. Context engineering is about everything available when an agent decides: task state, policies, retrieved facts, tool results, project conventions, user preferences, and memory. The design problem is ruthless selection: what must be present for the next decision, and what will distract it?
+
+More tokens do not equal more intelligence. Extra context can be stale, contradictory, expensive, or simply irrelevant. The useful target is the smallest trustworthy working set.
+
+## Build a Context Packet
+For a meaningful agent action, create a packet with six parts:
+
+- Objective: the user outcome and the exact decision being made.
+- Constraints: policies, boundaries, and non-negotiable rules.
+- Evidence: authoritative facts with source and freshness.
+- State: what has happened, what is pending, and what changed.
+- Tools: only the capabilities needed now, with clear descriptions.
+- Exit criteria: what success, escalation, and stop look like.
+
+This is a practical debugging tool. When an agent fails, inspect the packet before swapping the model. You can often see the missing fact or conflicting instruction immediately.
+
+## Separate Instructions, Facts, and Memory
+Instructions tell an agent how to behave. Facts describe the world right now. Memory preserves a compact record of useful past decisions. Mixing these together is how an old summary turns into a phantom policy.
+
+Store source-of-truth facts outside the conversation and retrieve them when needed. Use structured handoffs for long work: completed steps, validated evidence, unresolved questions, and recommended next action. A short, inspectable summary beats replaying a 100-message transcript.
+
+## RAG Is a Retrieval Problem Before It Is a Model Problem
+Retrieval-augmented generation can be excellent, but only when the system finds the right source at the right time. Test retrieval separately: did it return the current policy, the relevant paragraph, and enough provenance for a human to verify it? If not, better wording from the model only makes the wrong answer sound more credible.
+
+Start with a small, curated knowledge base. Improve source quality, metadata, ownership, freshness, and access control before adding complex chunking or a larger vector database.
+
+## The Shareable Rule
+Give the agent the context you would give a competent new teammate for the next 15 minutes of work—not your entire company history. Clear objective, current facts, allowed tools, and a way to prove the answer. That is context engineering in practice.`,
+      date: "2026-01-15",
+      tags: ["Context Engineering", "AI Agents", "Prompt Engineering", "RAG", "LLM Context Window", "Agent Memory", "AI Engineering"],
+      readTime: "9 min read",
+      coverImage: "/images/blog/context-engineering.png",
+      figures: [{ afterHeading: "build-a-context-packet", src: "/images/blog/context-packet-diagram.png", alt: "Selected context flowing into a compact AI decision workspace", caption: "The agent needs a curated working set: objective, constraints, evidence, state, tools, and exit criteria." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "prompt-engineering-is-only-the-beginning", title: "Prompt Engineering Is Only the Beginning", level: 1 },
+        { id: "design-a-context-budget", title: "Design a Context Budget", level: 1 },
+        { id: "separate-facts-instructions-and-memory", title: "Separate Facts, Instructions, and Memory", level: 1 },
+        { id: "retrieval-needs-evaluation-too", title: "Retrieval Needs Evaluation Too", level: 1 },
+        { id: "the-outcome-is-reliable-decisions", title: "The Outcome Is Reliable Decisions", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "when-to-use-subagents-ai-engineering",
+      title: "When to Use Subagents in AI Engineering—and When Not To",
+      excerpt: "Subagents can split research, implementation, testing, and review into focused work. The advantage comes from clear boundaries, not from adding more agents.",
+      content: `If one agent is confused, five agents are not a strategy. They are a group chat with a token budget. Subagents are powerful only when they take genuinely separate work off the critical path or provide an independent check that a single agent cannot.
+
+## The Litmus Test
+Before creating a subagent, finish this sentence: "I need a separate agent because it owns ________, and its output can be checked by ________." If you cannot fill both blanks, keep the work with one agent.
+
+Good uses include parallel codebase discovery, independent security review, research across separate sources, and a test-focused pass after implementation. Bad uses include splitting one linear task into artificial roles or asking several agents the same vague question.
+
+## Give Every Worker a Contract
+A subagent needs a narrow objective, allowed tools, relevant context, output schema, and a stop condition. "Map authentication: return entry points, data flow, risks, and file paths" is a contract. "Figure out auth" creates an expensive essay.
+
+Require evidence in the output: files inspected, source links, assumptions, confidence, and unanswered questions. That lets a parent agent or engineer compare work without trusting polished prose.
+
+## Fan Out, Then Make One Decision
+The useful pattern is fan out, synthesize, verify. Independent workers gather targeted evidence. One owner reconciles conflicts into a plan. A final check validates the plan against requirements. This keeps parallelism where it helps and keeps accountability in one place.
+
+Do not make the synthesizer blindly merge every recommendation. Conflicting answers should trigger a named escalation rule, not another round of agents debating each other.
+
+## What It Costs
+Subagents consume more than tokens. They introduce coordination, state-sharing, retries, and failure modes. Measure whether they improve completion quality, elapsed time, human intervention, or cost per successful task. If they do not, delete them.
+
+The best multi-agent system is usually smaller than the architecture diagram. Start with one agent. Add a subagent only when it owns a clear, independently verifiable responsibility.`,
+      date: "2026-03-05",
+      tags: ["Subagents", "Multi-Agent Systems", "AI Agent Orchestration", "Agentic Workflows", "AI Engineering", "Developer Productivity"],
+      readTime: "4 min read",
+      coverImage: "/images/blog/graph-engineering.png",
+      figures: [{ afterHeading: "fan-out-then-make-one-decision", src: "/images/blog/agent-orchestration-diagram.png", alt: "Specialist agents converge at a validation checkpoint before human approval", caption: "Parallel discovery is useful; accountability should still converge in one visible decision." }],
+      format: "Quick read",
+      subheadings: [
+        { id: "why-subagents-can-be-useful", title: "Why Subagents Can Be Useful", level: 1 },
+        { id: "give-every-subagent-a-contract", title: "Give Every Subagent a Contract", level: 1 },
+        { id: "use-parallelism-only-for-independent-work", title: "Use Parallelism Only for Independent Work", level: 1 },
+        { id: "avoid-the-multi-agent-theatre", title: "Avoid the Multi-Agent Theatre", level: 1 },
+        { id: "measure-the-advantage", title: "Measure the Advantage", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "mcp-tools-ai-agents-safe-integration",
+      title: "MCP and AI Agent Tools: Building Safe, Useful Integrations",
+      excerpt: "Tools turn an LLM from a conversational interface into a system that can inspect and act. The Model Context Protocol makes the integration layer clearer—but permissions still matter.",
+      content: `AI agents become genuinely useful when they can read live data and take carefully bounded actions. That may mean searching documentation, querying an issue tracker, reading a database through a safe interface, or opening a pull request. Tool integration is where an AI prototype meets the real world.
+
+## What MCP Changes
+The Model Context Protocol, commonly called MCP, gives tools and context providers a shared way to describe capabilities to AI applications. Instead of creating a custom integration for every model and client, teams can expose a consistent interface for resources, prompts, and tools.
+
+That interoperability is valuable, but it does not remove engineering responsibilities. A tool description is part of the agent's context; a poorly designed tool can still be confusing, overly broad, or unsafe.
+
+## Design Tools for Small, Verifiable Actions
+The best agent tools do one clear thing and return structured results. Prefer get_customer_order(orderId) over a generic database shell. Prefer create_draft_refund over send_refund. Small tools are easier for the model to choose correctly and easier for a human to audit.
+
+Make side effects explicit. Separate read operations from write operations, include dry-run support where possible, and return a clear record of what happened. Tool inputs should be validated by code, not trusted because an LLM supplied them.
+
+## Least Privilege Is the Default
+An agent should receive only the permissions needed for its current task. Use scoped credentials, allowlists, role-based access, sandboxed execution, and approval gates for consequential actions. Never put a secret in model-visible context when a scoped server-side tool can do the job.
+
+Treat external content as untrusted too. A web page, support ticket, or document may contain instructions intended to redirect an agent. Keep tool policy separate from retrieved content and validate decisions before execution.
+
+## Observability Makes Tools Operable
+Log tool calls, inputs, results, authorization decisions, latency, cost, and failures with appropriate redaction. This gives engineers a way to answer basic production questions: what did the agent see, which action did it take, and why did it fail?
+
+Start with read-only tools and a limited user group. Add write access only after you have a clear audit trail and a recovery plan.
+
+## An Integration Is a Product Surface
+MCP and agent tools are not plumbing to hide after a demo. They are part of your product's security and user experience. Good tool design gives AI agents useful capability while preserving the controls that make software trustworthy.
+
+## A Tool Design Test
+For every tool, write one sentence describing its allowed action, validate every input in code, and make the side effect visible in its result. If you cannot explain a tool's permission boundary in one breath, it is too broad for an agent.`,
+      date: "2026-05-21",
+      tags: ["Model Context Protocol", "MCP", "AI Agent Tools", "AI Integrations", "AI Agent Security", "Tool Calling", "LLM Applications"],
+      readTime: "7 min read",
+      coverImage: "/images/blog/ai-native-engineering.png",
+      figures: [{ afterHeading: "observability-makes-tools-operable", src: "/images/blog/agent-workflow-diagram.png", alt: "An AI workflow with verification checkpoints and a human review step", caption: "Tool calls should leave an auditable trail from intent to result." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "what-mcp-changes", title: "What MCP Changes", level: 1 },
+        { id: "design-tools-for-small-verifiable-actions", title: "Design Tools for Small, Verifiable Actions", level: 1 },
+        { id: "least-privilege-is-the-default", title: "Least Privilege Is the Default", level: 1 },
+        { id: "observability-makes-tools-operable", title: "Observability Makes Tools Operable", level: 1 },
+        { id: "an-integration-is-a-product-surface", title: "An Integration Is a Product Surface", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "graph-engineering-ai-agent-workflows",
+      title: "Graph Engineering for AI Agents: Design Workflows, Not Just Prompts",
+      excerpt: "Graph engineering makes an agent workflow explicit: its steps, state, branches, parallel work, approval gates, retries, and stopping conditions.",
+      content: `As AI tasks become multi-step, one open-ended agent loop becomes difficult to understand and even harder to debug. Graph engineering is a useful way to make the process visible. A workflow is represented as nodes that do work and edges that decide what happens next.
+
+## Why AI Agent Workflows Become Graphs
+Even a simple agent has a graph hiding inside it: receive a task, gather context, choose a tool, inspect the result, and either continue, ask for help, or finish. Naming those steps matters because it lets a team control where decisions happen and retain state safely.
+
+An explicit graph is particularly helpful for long-running, high-value workflows where failures, approvals, and handoffs must be recoverable.
+
+## Start With the Smallest Useful Graph
+Do not begin by turning every workflow into a complex multi-agent diagram. Start with the known path: intake, retrieve evidence, produce a draft, validate it, and request approval if needed. Use deterministic code for deterministic steps and reserve model judgment for ambiguity.
+
+Every node should have an input contract, output contract, timeout, and error policy. Every edge should answer a simple question: what evidence permits this transition?
+
+## State Is the Backbone
+Agent state should be explicit, compact, and durable. Store the task ID, current step, relevant artifacts, validation results, user approvals, and a concise work summary. Avoid relying on a giant conversation transcript as the only source of truth.
+
+Checkpoint state before an expensive call or irreversible action. Then a failed service, timeout, or human pause does not force the entire workflow to restart.
+
+## Fan Out, Fan In, and Human Gates
+Graphs make parallel work easier to reason about. Independent research or review tasks can fan out, then fan in to a synthesis step. But aggregation needs rules: define how conflicts are resolved, what counts as enough evidence, and when the workflow escalates to a person.
+
+Human approval is a first-class node, not an exception handler. It is appropriate for uncertain outputs and actions with financial, legal, security, or customer impact.
+
+## Optimize for Recovery, Not Autonomy
+The goal of graph engineering is not to make an AI system look autonomous. It is to create workflows that can be inspected, tested, paused, retried, and improved. When the path is clear, a graph is often simpler and safer than asking one agent to improvise indefinitely.
+
+## A Five-Question Graph Review
+Before adding a node, ask: what state enters, what state leaves, what can fail, who can approve it, and how does the workflow recover? If a node cannot answer those questions, it is not ready for production.`,
+      date: "2026-07-09",
+      tags: ["Graph Engineering", "AI Agents", "Agent Workflows", "Agent Orchestration", "Multi-Agent Systems", "LangGraph", "AI Automation"],
+      readTime: "8 min read",
+      coverImage: "/images/blog/graph-engineering.png",
+      figures: [{ afterHeading: "fan-out-fan-in-and-human-gates", src: "/images/blog/agent-orchestration-diagram.png", alt: "Several agent paths converge at a validation checkpoint and human approval gate", caption: "A good graph makes parallel work, safe stops, and human gates visible." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "why-ai-agent-workflows-become-graphs", title: "Why AI Agent Workflows Become Graphs", level: 1 },
+        { id: "start-with-the-smallest-useful-graph", title: "Start With the Smallest Useful Graph", level: 1 },
+        { id: "state-is-the-backbone", title: "State Is the Backbone", level: 1 },
+        { id: "fan-out-fan-in-and-human-gates", title: "Fan Out, Fan In, and Human Gates", level: 1 },
+        { id: "optimize-for-recovery-not-autonomy", title: "Optimize for Recovery, Not Autonomy", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "evaluating-ai-agents-production",
+      title: "How to Evaluate AI Agents in Production: Metrics That Actually Matter",
+      excerpt: "A production AI agent needs more than a clever demo. Evaluate task success, safety, latency, cost, recovery, and the quality of human handoffs.",
+      content: `An AI agent is easy to admire when it solves a hand-picked example. Production is different: inputs are incomplete, tools fail, policies change, and users ask for things you did not anticipate. Evaluation is the discipline that closes the gap between an impressive demo and a reliable product.
+
+## Start With a Task-Level Definition of Success
+Define success from the user's perspective. For a support agent, it may be a correct, policy-compliant resolution. For a coding agent, it may be a reviewed change that passes tests and does not create regressions. A fluent response is not enough.
+
+Build a small evaluation set from real, anonymized tasks. Include routine cases, edge cases, ambiguous requests, malicious instructions, missing data, and tool failures. Keep the set versioned as the product evolves.
+
+## Measure More Than Accuracy
+Track task success rate, groundedness or citation quality, tool-call correctness, human escalation rate, retry rate, latency, token cost, and recovery after a failure. The right metric depends on the workflow, but every metric should connect to a product or operational outcome.
+
+Segment results by task type, model version, prompt or policy version, and tool version. An aggregate score can hide a dangerous regression in one important path.
+
+## Use Both Offline and Online Evaluation
+Offline evaluation gives you a safe repeatable benchmark before release. Online evaluation shows what happens with real traffic, changing data, and actual user behavior. Use staged rollouts, sampled transcript review, user feedback, and monitoring to connect the two.
+
+When possible, compare the agent with the existing workflow, not an imaginary perfect answer. The question is whether it improves the experience safely and sustainably.
+
+## Evaluate the Whole System
+Most failures are not model failures alone. Retrieval may return outdated policy. A tool may be ambiguous. A workflow may skip an approval. Evaluation should trace the complete chain: context, model decision, tool selection, tool response, final output, and human action.
+
+This is also how teams find the highest-leverage fix. Often a clearer tool schema or better source document improves reliability more than changing models.
+
+## Make Evaluation Continuous
+AI behavior changes when models, prompts, tools, data, and users change. Run regression evaluations in CI where possible, monitor production continuously, and turn important failures into new test cases. Evaluation is not a launch checklist. It is an ongoing part of AI-native engineering.
+
+## The Friday-Morning Test
+Could you explain a bad decision to a customer using the input, source, tool call, version, and recovery action? If not, you have a demo with production traffic, not an operable agent.`,
+      date: "2026-08-26",
+      tags: ["AI Agent Evaluation", "LLM Evaluation", "AI Observability", "AI Agents in Production", "Agent Reliability", "AI Testing"],
+      readTime: "7 min read",
+      coverImage: "/images/blog/graph-engineering.png",
+      figures: [{ afterHeading: "evaluate-the-whole-system", src: "/images/blog/agent-orchestration-diagram.png", alt: "An agent workflow with validation, approval, and a safely stopped failure path", caption: "Evaluate the complete system: context, decision, tool use, outcome, and recovery." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "start-with-a-task-level-definition-of-success", title: "Start With a Task-Level Definition of Success", level: 1 },
+        { id: "measure-more-than-accuracy", title: "Measure More Than Accuracy", level: 1 },
+        { id: "use-both-offline-and-online-evaluation", title: "Use Both Offline and Online Evaluation", level: 1 },
+        { id: "evaluate-the-whole-system", title: "Evaluate the Whole System", level: 1 },
+        { id: "make-evaluation-continuous", title: "Make Evaluation Continuous", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "typed-decisions-vs-llms-jev-typesafe-ai",
+      title: "Typed Decisions vs LLMs: When You Don't Need a Billion-Parameter Model",
+      excerpt: "Not every AI workflow needs an LLM. For constrained decisions, typed outputs and parallel execution can be faster, cheaper, and easier to trust.",
+      content: `We're using billion-parameter LLMs to make decisions with just three possible answers. Why? That question is the starting point for a better way to design some AI systems: use the smallest, most deterministic approach that can solve the actual problem.
+
+This article expands on my original post about Jev by TypeSafe AI, which focuses on parallel decisions, typed outputs, and low-cost execution. The broader engineering idea matters even if the tools change.
+
+## Not Every Decision Needs an LLM
+Large language models are powerful when a task needs language understanding, synthesis, ambiguity handling, or open-ended generation. But many product decisions are constrained: approve or reject, choose one of three routes, validate a schema, apply a policy, or classify a known input.
+
+Using a general-purpose LLM for every one of those steps can add latency, cost, and nondeterminism without improving the outcome. Before adding a model call, ask: is this genuinely a language problem, or is it a rules, data, or classification problem with a small answer space?
+
+## Typed Outputs Are an Engineering Advantage
+Typed outputs force a system to return data in a known shape. Instead of asking an AI to respond with free-form text and hoping it follows a format, define the allowed fields and values. That makes the result easier to validate, test, store, and pass into the next step of a workflow.
+
+For example, a routing decision might return only a destination, confidence level, and reason code. Application code can reject invalid values before an action is taken. This turns AI output from a paragraph that needs interpretation into an interface that software can safely use.
+
+## Parallel Decisions Improve the Critical Path
+Some decisions do not depend on one another. A system can check eligibility, detect risk, and validate a payload at the same time, then combine the results. Parallelism reduces end-to-end waiting time when tasks are independent.
+
+The important caveat is independence. Parallel work is not free: it adds coordination, failure handling, and observability requirements. Use it where it shortens the path to a verified result, not simply because an AI workflow can call several workers.
+
+## Choose the Smallest Reliable System
+The best AI architecture is not the one with the largest model. It is the one that produces a correct, explainable result at an acceptable cost and latency. A practical decision ladder is: use normal application logic for deterministic rules, use constrained models or classifiers for narrow judgments, and use an LLM where language reasoning creates real value.
+
+This approach also makes systems easier to debug. When a typed, bounded decision fails, an engineer can see the inputs, rule or model version, and validation result. That is much harder when every operation is hidden inside an open-ended prompt.
+
+## A Useful Design Question
+For every LLM call, ask: what is the smallest set of valid answers, what evidence determines the answer, and how will the application verify it? If the answer space is tiny and the evidence is structured, a traditional function or typed decision engine may be the better tool.
+
+AI-native engineering is not about using an LLM everywhere. It is about matching the capability to the job—and saving expensive model reasoning for the problems that truly need it.
+
+## The 60-Second Architecture Check
+Write down the valid outputs, the evidence needed, and the cost of a wrong answer. If outputs are few and evidence is structured, start with normal code or a typed decision. Reach for an LLM only when language-based judgment changes the result.`,
+      date: "2026-09-22",
+      tags: ["Typed Outputs", "LLM Cost Optimization", "AI Decision Systems", "AI Agents", "Deterministic AI", "Parallel Processing", "AI Engineering"],
+      readTime: "4 min read",
+      coverImage: "/images/blog/context-engineering.png",
+      figures: [{ afterHeading: "typed-outputs-are-an-engineering-advantage", src: "/images/blog/context-packet-diagram.png", alt: "A structured decision workspace receiving only selected inputs", caption: "Constrained inputs and typed outputs make automated decisions easier to validate." }],
+      format: "Quick read",
+      sourceUrl: "https://x.com/ojhaabhishekraj/status/2102400361155993684",
+      sourceLabel: "Read the original post on X",
+      subheadings: [
+        { id: "not-every-decision-needs-an-llm", title: "Not Every Decision Needs an LLM", level: 1 },
+        { id: "typed-outputs-are-an-engineering-advantage", title: "Typed Outputs Are an Engineering Advantage", level: 1 },
+        { id: "parallel-decisions-improve-the-critical-path", title: "Parallel Decisions Improve the Critical Path", level: 1 },
+        { id: "choose-the-smallest-reliable-system", title: "Choose the Smallest Reliable System", level: 1 },
+        { id: "a-useful-design-question", title: "A Useful Design Question", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
+    },
+    {
+      slug: "ai-native-engineering-playbook-2026",
+      title: "The AI-Native Engineering Playbook: Context, Agents, Graphs, and Trust",
+      excerpt: "The durable advantage in AI-native engineering is not a single model or framework. It is a delivery system built around useful context, bounded agency, verification, and learning.",
+      content: `AI-native engineering is maturing from experimentation into a practical operating model. The tools will keep changing, but the underlying lesson is stable: reliable AI systems are designed as systems. They need context, clear responsibilities, safe capabilities, verification, and feedback.
+
+## Context Is the Foundation
+An AI agent cannot make a good decision without a current goal, relevant facts, constraints, and source-of-truth access. Context engineering should be treated as product and platform work, not as a last-minute prompt edit. Curated information, clear architecture, and trustworthy retrieval give every agent a better starting point.
+
+## Agency Must Be Bounded
+Give agents the smallest useful authority. Use tools with narrow inputs and predictable outputs. Separate reading from writing, add approval gates for meaningful side effects, and preserve an audit trail. Autonomy is valuable only when it is paired with accountability and recovery.
+
+## Use the Right Workflow Shape
+One agent is often enough for a focused task. Use subagents when responsibilities are independent and their outputs can be checked. Use a workflow graph when work has durable state, branches, parallel steps, retries, or human approvals. A more complicated architecture should earn its cost through better outcomes.
+
+## Verification Creates Trust
+AI-generated output is not the finish line. Tests, validators, source citations, policy checks, previews, code review, and production monitoring are how a team knows whether the work is correct. Design verification into the workflow rather than asking someone to inspect everything at the end.
+
+## Make Learning Part of Delivery
+Log failures safely, review representative runs, and turn recurring mistakes into better context, tools, tests, or policies. The organizations that compound value from AI will be the ones that learn from every interaction instead of repeatedly rediscovering the same failure modes.
+
+## The Practical Next Step
+Choose one workflow where quality can be measured: code maintenance, internal support, document processing, or research. Map the current process, identify the necessary context and guardrails, run a limited pilot, and evaluate the result against the old way of working. Build capability one verified workflow at a time.
+
+The future of engineering is not engineers versus AI. It is engineers building better systems of collaboration—with AI earning more responsibility as the evidence supports it.
+
+## The One-Sentence Playbook
+Give an agent the smallest useful context, the narrowest useful authority, a way to prove its work, and a clear path to ask for help. Every reliable AI-native workflow is a variation of that sentence.`,
+      date: "2026-10-07",
+      tags: ["AI-Native Engineering", "AI Engineering", "AI Agents", "Context Engineering", "Graph Engineering", "Subagents", "Agentic AI", "Responsible AI"],
+      readTime: "8 min read",
+      coverImage: "/images/blog/ai-native-engineering.png",
+      figures: [{ afterHeading: "use-the-right-workflow-shape", src: "/images/blog/agent-orchestration-diagram.png", alt: "An orchestrated AI workflow with specialist branches, validation, and human approval", caption: "Choose the smallest workflow shape that makes responsibility and recovery clear." }],
+      format: "Deep dive",
+      subheadings: [
+        { id: "context-is-the-foundation", title: "Context Is the Foundation", level: 1 },
+        { id: "agency-must-be-bounded", title: "Agency Must Be Bounded", level: 1 },
+        { id: "use-the-right-workflow-shape", title: "Use the Right Workflow Shape", level: 1 },
+        { id: "verification-creates-trust", title: "Verification Creates Trust", level: 1 },
+        { id: "make-learning-part-of-delivery", title: "Make Learning Part of Delivery", level: 1 },
+        { id: "the-practical-next-step", title: "The Practical Next Step", level: 1 }
+      ],
+      author: { name: "Abhishek Raj", bio: "Abhishek Raj is a software developer at RegisterKaro and part-time entrepreneur", avatar: "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U" }
     },
   ]
   

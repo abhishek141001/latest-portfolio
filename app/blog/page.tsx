@@ -41,7 +41,7 @@ export default function Blog() {
               </div>
               <time className="text-xs text-muted-foreground" dateTime={post.date}>
                 {new Date(post.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
-                <br />{post.readTime}
+                <br />{post.format && <span className="font-medium text-primary">{post.format} · </span>}{post.readTime}
               </time>
             </li>
           ))}

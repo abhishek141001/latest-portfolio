@@ -73,14 +73,16 @@ export default function Home() {
     <main className="mx-auto max-w-[1100px] px-3 py-5 text-[13px] leading-5 sm:px-5">
       <section className="border-b pb-5">
         <div className="flex items-start gap-3">
-          <Image
-            src={profileImage}
-            alt="Abhishek Raj"
-            width={48}
-            height={48}
-            className="h-12 w-12 shrink-0 rounded object-cover"
-            priority
-          />
+          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full">
+            <Image
+              src={profileImage}
+              alt="Abhishek Raj"
+              width={48}
+              height={48}
+              className="h-full w-full scale-[1.08] object-cover"
+              priority
+            />
+          </div>
           <div>
             <p className="text-xs text-muted-foreground">ABHISHEK RAJ / SOFTWARE DEVELOPER / NEW DELHI</p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">

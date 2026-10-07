@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import Link from "next/link"
 import { Metadata } from "next"
 import Script from "next/script"
+import { Fragment } from "react"
 
 // Default avatar image URL
 const DEFAULT_AVATAR = "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
@@ -133,10 +134,19 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       if (/^##\s+.+$/.test(paragraph)) {
         const headingText = paragraph.replace(/^##\s+/, "")
         const headingId = headingText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+        const figures = post.figures?.filter((figure) => figure.afterHeading === headingId) || []
         return (
-          <h2 key={index} id={headingId} className="text-2xl font-bold mt-8 mb-4 text-primary scroll-mt-20">
-            {headingText}
-          </h2>
+          <Fragment key={index}>
+            <h2 id={headingId} className="text-2xl font-bold mt-8 mb-4 text-primary scroll-mt-20">
+              {headingText}
+            </h2>
+            {figures.map((figure) => (
+              <figure key={figure.src} className="my-6 overflow-hidden rounded-lg border bg-muted/30">
+                <Image src={figure.src} alt={figure.alt} width={1600} height={900} className="h-auto w-full" />
+                <figcaption className="border-t px-4 py-3 text-sm text-muted-foreground">{figure.caption}</figcaption>
+              </figure>
+            ))}
+          </Fragment>
         )
       }
       // Check if the paragraph is a numbered subheading (e.g., "1. Title:")
@@ -279,6 +289,16 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <span>•</span>
           <span>{post.readTime}</span>
         </div>
+        {post.sourceUrl && (
+          <a
+            href={post.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
+          >
+            {post.sourceLabel || "Read the original post"} ↗
+          </a>
+        )}
       </header>
 
       {/* Table of Contents */}
