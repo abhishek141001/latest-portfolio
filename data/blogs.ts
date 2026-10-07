@@ -393,6 +393,8 @@ And if you fail? Fail fast, fail forward, and let each failure guide your next m
       excerpt: "AI-native engineering is not about handing a codebase to an agent. It is about redesigning the engineering loop so people and AI can plan, build, verify, and learn together.",
       content: `Most teams using AI are measuring the wrong thing: lines of code generated. The metric that matters is time from a customer problem to a verified outcome. AI-native engineering is the practice of redesigning that entire path—not handing a ticket to a chatbot and hoping for the best.
 
+That distinction became real for me while building browser automation, compliance workflows, and internal operational systems. In those systems, a convincing answer is useless if it routes work to the wrong place, misses a rule, or leaves an operator to clean up a silent failure. I care less about how much an agent can write and more about whether the next person can trust what it did.
+
 ## The Shift: From Typing Faster to Learning Faster
 Autocomplete made individual developers faster. Coding agents change the unit of work: an engineer can now delegate codebase exploration, first-pass implementation, test creation, and documentation. But the bottleneck moves upstream. If the requirement is fuzzy, the context is stale, or the checks are weak, an agent just reaches the wrong destination sooner.
 
@@ -445,6 +447,8 @@ The teams that win with AI will not generate the most code. They will build the 
       excerpt: "A practical guide to using coding agents for planning, implementation, testing, and review without confusing generated output for finished software.",
       content: `A coding agent that produces a thousand-line pull request in ten minutes has not saved you time if it takes two days to understand whether it is safe. Agentic coding works when the agent is treated like a fast junior collaborator with excellent recall and zero product intuition.
 
+My production work includes systems where a small change can touch customer flows, operational queues, and compliance logic at the same time. That has made me allergic to impressive-looking diffs that nobody can explain. The fastest AI-assisted change is usually the one that stays narrow enough for me to review without reconstructing the entire system in my head.
+
 ## The Brief That Prevents Expensive Rework
 Give an agent a job it can finish and a reviewer can verify. A strong brief names the user-facing outcome, files or systems in scope, invariants that must not change, acceptance checks, and the command that proves success.
 
@@ -489,6 +493,8 @@ The goal is not autonomous shipping. The goal is a development loop where a deve
       title: "Context Engineering for AI Agents: A Practical Guide for Better Results",
       excerpt: "Context engineering is the discipline of giving an AI agent the right information, tools, and constraints at the right moment—not simply filling its context window.",
       content: `The most expensive sentence in AI engineering is: "The model is smart, but it doesn't understand our business." Usually the model is not the problem. We gave it a 200-page handbook, three stale chat summaries, and a tool called execute_action. Context engineering is how you stop doing that.
+
+I have seen this outside of AI too. In compliance and operations work, the written rule is rarely the whole story: timing, service type, customer state, and exceptions change what happens next. An agent needs the same operational context a good teammate would ask for before acting. Giving it a PDF and hoping is not a system design.
 
 ## Context Is a Working Set, Not a Document Dump
 Prompt engineering is about the instruction. Context engineering is about everything available when an agent decides: task state, policies, retrieved facts, tool results, project conventions, user preferences, and memory. The design problem is ruthless selection: what must be present for the next decision, and what will distract it?
@@ -540,6 +546,8 @@ Give the agent the context you would give a competent new teammate for the next 
       excerpt: "Subagents can split research, implementation, testing, and review into focused work. The advantage comes from clear boundaries, not from adding more agents.",
       content: `If one agent is confused, five agents are not a strategy. They are a group chat with a token budget. Subagents are powerful only when they take genuinely separate work off the critical path or provide an independent check that a single agent cannot.
 
+I learned the human version of this while working across product, operations, and engineering. Splitting a task between people only helps when each person can return a clear artifact—an answer, a risk, or a decision—not another meeting. I apply the same test to subagents.
+
 ## The Litmus Test
 Before creating a subagent, finish this sentence: "I need a separate agent because it owns ________, and its output can be checked by ________." If you cannot fill both blanks, keep the work with one agent.
 
@@ -579,6 +587,8 @@ The best multi-agent system is usually smaller than the architecture diagram. St
       title: "MCP and AI Agent Tools: Building Safe, Useful Integrations",
       excerpt: "Tools turn an LLM from a conversational interface into a system that can inspect and act. The Model Context Protocol makes the integration layer clearer—but permissions still matter.",
       content: `AI agents become genuinely useful when they can read live data and take carefully bounded actions. That may mean searching documentation, querying an issue tracker, reading a database through a safe interface, or opening a pull request. Tool integration is where an AI prototype meets the real world.
+
+Building browser automations taught me that an action is never just an action. A login state expires, a page changes, a third-party response is delayed, and somebody needs to know exactly what happened. That is why I prefer agent tools that expose a small, inspectable operation over a powerful tool that can do everything badly.
 
 ## What MCP Changes
 The Model Context Protocol, commonly called MCP, gives tools and context providers a shared way to describe capabilities to AI applications. Instead of creating a custom integration for every model and client, teams can expose a consistent interface for resources, prompts, and tools.
@@ -626,6 +636,8 @@ For every tool, write one sentence describing its allowed action, validate every
       excerpt: "Graph engineering makes an agent workflow explicit: its steps, state, branches, parallel work, approval gates, retries, and stopping conditions.",
       content: `As AI tasks become multi-step, one open-ended agent loop becomes difficult to understand and even harder to debug. Graph engineering is a useful way to make the process visible. A workflow is represented as nodes that do work and edges that decide what happens next.
 
+I naturally think in graphs because production operations already are graphs: intake, validation, handoff, exception, retry, approval. The moment a workflow involves real customers or a queue of work, "let the agent keep trying" stops being a design. I want to know where work is, why it moved, and who owns the next decision.
+
 ## Why AI Agent Workflows Become Graphs
 Even a simple agent has a graph hiding inside it: receive a task, gather context, choose a tool, inspect the result, and either continue, ask for help, or finish. Naming those steps matters because it lets a team control where decisions happen and retain state safely.
 
@@ -672,6 +684,8 @@ Before adding a node, ask: what state enters, what state leaves, what can fail, 
       excerpt: "A production AI agent needs more than a clever demo. Evaluate task success, safety, latency, cost, recovery, and the quality of human handoffs.",
       content: `An AI agent is easy to admire when it solves a hand-picked example. Production is different: inputs are incomplete, tools fail, policies change, and users ask for things you did not anticipate. Evaluation is the discipline that closes the gap between an impressive demo and a reliable product.
 
+In operational software, I have found that the painful failure is rarely a visible crash. It is work that appears complete but is routed incorrectly, a field that looks valid but breaks a later process, or an edge case that only surfaces after a customer follows up. That is the bar I bring to agent evaluation: can we detect a bad result before it becomes somebody else's problem?
+
 ## Start With a Task-Level Definition of Success
 Define success from the user's perspective. For a support agent, it may be a correct, policy-compliant resolution. For a coding agent, it may be a reviewed change that passes tests and does not create regressions. A fluent response is not enough.
 
@@ -717,6 +731,8 @@ Could you explain a bad decision to a customer using the input, source, tool cal
       title: "Typed Decisions vs LLMs: When You Don't Need a Billion-Parameter Model",
       excerpt: "Not every AI workflow needs an LLM. For constrained decisions, typed outputs and parallel execution can be faster, cheaper, and easier to trust.",
       content: `We're using billion-parameter LLMs to make decisions with just three possible answers. Why? That question is the starting point for a better way to design some AI systems: use the smallest, most deterministic approach that can solve the actual problem.
+
+This is not anti-LLM. I use them when the problem is ambiguous and language-heavy. But while building rule-driven workflows, I have repeatedly found that the expensive part is not generating an answer—it is proving that the answer can safely drive the next step. If the choices are known, I want a system that makes invalid choices hard or impossible.
 
 This article expands on my original post about Jev by TypeSafe AI, which focuses on parallel decisions, typed outputs, and low-cost execution. The broader engineering idea matters even if the tools change.
 
@@ -769,6 +785,8 @@ Write down the valid outputs, the evidence needed, and the cost of a wrong answe
       title: "The AI-Native Engineering Playbook: Context, Agents, Graphs, and Trust",
       excerpt: "The durable advantage in AI-native engineering is not a single model or framework. It is a delivery system built around useful context, bounded agency, verification, and learning.",
       content: `AI-native engineering is maturing from experimentation into a practical operating model. The tools will keep changing, but the underlying lesson is stable: reliable AI systems are designed as systems. They need context, clear responsibilities, safe capabilities, verification, and feedback.
+
+My point of view comes from shipping systems where automation has to coexist with people doing real work: browser flows, business rules, internal queues, and customer-facing applications. In that world, an AI feature is only useful when it reduces work without creating a hidden support burden. This is the playbook I would use on my own production workflow—not a list of things an ideal team should do someday.
 
 ## Context Is the Foundation
 An AI agent cannot make a good decision without a current goal, relevant facts, constraints, and source-of-truth access. Context engineering should be treated as product and platform work, not as a last-minute prompt edit. Curated information, clear architecture, and trustworthy retrieval give every agent a better starting point.
