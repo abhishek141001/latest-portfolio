@@ -18,13 +18,19 @@ export default function AdminLogin() {
     setIsLoading(true)
 
     try {
-      // Add your authentication logic here
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const form = new FormData(e.currentTarget)
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.get("email"), password: form.get("password") }),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || "Invalid credentials")
       router.push("/admin/dashboard")
     } catch (error) {
       toast({
         title: "Error",
-        description: "Invalid credentials",
+        description: error instanceof Error ? error.message : "Invalid credentials",
         variant: "destructive",
       })
     } finally {
@@ -50,6 +56,7 @@ export default function AdminLogin() {
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div>
               <Input
+                name="email"
                 type="email"
                 placeholder="Email"
                 required
@@ -58,6 +65,7 @@ export default function AdminLogin() {
             </div>
             <div>
               <Input
+                name="password"
                 type="password"
                 placeholder="Password"
                 required

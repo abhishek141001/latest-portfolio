@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The AI-Native Engineer Playbook</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e8e8e8; color: #151515; font: 10.3pt/1.45 Arial, Helvetica, sans-serif; }
+  .page { background: #fff; width: 210mm; height: 297mm; padding: 17mm 18mm 15mm; position: relative; break-after: page; overflow: hidden; }
+  .page:last-child { break-after: auto; }
+  .kicker { font-size: 7.5pt; letter-spacing: 1.6px; font-weight: 700; color: #666; text-transform: uppercase; }
+  h1 { margin: 7mm 0 4mm; font-family: Georgia, serif; font-size: 32pt; line-height: 1.02; letter-spacing: -.8px; }
+  h2 { margin: 3mm 0 5mm; font-size: 21pt; line-height: 1.12; letter-spacing: -.35px; }
+  h3 { margin: 4.5mm 0 2mm; font-size: 11pt; text-transform: uppercase; letter-spacing: .5px; }
+  p { margin: 0 0 4mm; }
+  ul, ol { margin: 2.5mm 0 4.5mm; padding-left: 5mm; }
+  li { margin: 1.5mm 0; }
+  .page-no { position: absolute; bottom: 8mm; right: 18mm; font-size: 8pt; color: #777; }
+  .footer { position: absolute; bottom: 8mm; left: 18mm; font-size: 0; color: #777; letter-spacing: .3px; }
+  .footer::after { content: "AI CODING STARTER GUIDE"; font-size: 7pt; }
+  .rule { border: 0; border-top: 1px solid #222; margin: 5mm 0; }
+  .lede { font: 15pt/1.35 Georgia, serif; max-width: 145mm; }
+  .muted { color: #656565; }
+  .small { font-size: 8.8pt; }
+  .tiny { font-size: 7.8pt; }
+  .callout { border-left: 3px solid #171717; background: #f3f3f3; padding: 4.5mm 5mm; margin: 5mm 0; }
+  .warning { border-left-color: #777; }
+  .code { font: 9pt/1.48 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; background: #171717; color: #f5f5f5; padding: 5mm; margin: 4mm 0; border-radius: 2px; }
+  .template { font: 9.6pt/1.52 "SFMono-Regular", Consolas, monospace; background: #f5f5f5; border: 1px solid #d4d4d4; padding: 5mm; margin: 4mm 0; white-space: pre-wrap; }
+  .grid { display: grid; gap: 4mm; }
+  .two { grid-template-columns: 1fr 1fr; }
+  .three { grid-template-columns: repeat(3, 1fr); }
+  .card { border: 1px solid #bebebe; padding: 4.5mm; }
+  .card strong { display: block; margin-bottom: 1mm; }
+  .number { font: 24pt Georgia, serif; color: #999; line-height: .8; display: block; margin-bottom: 3mm; }
+  .pill { display: inline-block; padding: 1mm 2.2mm; border: 1px solid #777; border-radius: 12px; font-size: 7.4pt; margin: 0 1mm 1mm 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.4pt; margin: 4mm 0; }
+  th { text-align: left; font-size: 7.3pt; text-transform: uppercase; letter-spacing: .4px; background: #202020; color: #fff; }
+  th, td { border: 1px solid #bbb; padding: 2.8mm 3mm; vertical-align: top; }
+  .diagram { margin: 5mm 0; border: 1px solid #333; padding: 5mm; background: #fcfcfc; }
+  .flow { display: flex; align-items: stretch; gap: 1.4mm; }
+  .flow > div { flex: 1; border: 1px solid #444; padding: 4mm 2mm; text-align: center; font-weight: 700; font-size: 8.7pt; }
+  .flow .arrow { flex: 0; border: 0; padding: 6mm 0 0; font-size: 13pt; }
+  .swim { display: grid; grid-template-columns: 23mm 1fr; border: 1px solid #555; }
+  .swim > div { min-height: 11mm; padding: 2.5mm; border-bottom: 1px solid #aaa; }
+  .swim > div:nth-last-child(-n+2) { border-bottom: 0; }
+  .lane { background: #ededed; font-size: 8pt; font-weight: 700; text-transform: uppercase; }
+  .steps { counter-reset: step; list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2mm; }
+  .steps li { counter-increment: step; border: 1px solid #aaa; padding: 4mm; margin: 0; }
+  .steps li::before { content: counter(step, decimal-leading-zero); display: block; font-weight: 700; color: #666; font-size: 8pt; margin-bottom: 1mm; }
+  .check { list-style: none; padding-left: 0; }
+  .check li::before { content: "□"; padding-right: 2mm; font-size: 13pt; vertical-align: -1px; }
+  .cover { background: #151515; color: #fff; }
+  .cover .kicker,.cover .muted { color: #aaa; }
+  .cover h1 { font-size: 40pt; max-width: 145mm; margin-top: 28mm; }
+  .cover-box { position: absolute; right: 18mm; bottom: 25mm; width: 67mm; height: 67mm; border: 1px solid #aaa; padding: 5mm; }
+  .cover-box div { border: 1px solid #ddd; padding: 3mm; font-size: 8pt; height: 18mm; margin-bottom: 3mm; }
+  .toc li { border-bottom: 1px solid #ddd; padding: 2.4mm 0; list-style: none; display: flex; justify-content: space-between; }
+  .toc { padding: 0; }
+  .quote { font: 17pt/1.25 Georgia, serif; border-left: 2px solid #222; padding-left: 5mm; margin: 6mm 0; }
+  .page:not(.cover)::after { content: "PRACTICE THIS\A" var(--field-note); white-space: pre-line; display: block; min-height: 0; padding: 4mm 5mm; margin-top: 7mm; border: 1px solid #bcbcbc; border-left: 3px solid #222; background: #f5f5f5; font-size: 9pt; line-height: 1.48; }
+  .page:nth-of-type(2) { --field-note: "Tiny dictionary: branch = a separate version of code. Worktree = a separate folder for a branch. Test = a small computer check. Log = the app’s diary of what happened. Diff = the list of code changes."; --note-height: 40mm; }
+  .page:nth-of-type(3) { --field-note: "At your next agent checkpoint, name the stage you are in. Do not let an implementation task begin until the Understand, Map, and Brief exit conditions are true."; --note-height: 38mm; }
+  .page:nth-of-type(4) { --field-note: "Before your next investigation, write down: remote base, worktree path, service name, and environment. If any field is uncertain, resolve it before reading code."; --note-height: 43mm; }
+  .page:nth-of-type(5) { --field-note: "Create a file called docs/features/[feature].md and complete this brief. Leave unknowns visible; do not invent an answer for the agent."; --note-height: 35mm; }
+  .page:nth-of-type(6) { --field-note: "Draw the current workflow first—not the ideal future one. Circle every handoff, spreadsheet, inbox, retry, and manual correction."; --note-height: 42mm; }
+  .page:nth-of-type(7) { --field-note: "Write one invariant in the form: ‘The system must never ___.’ Turn it into a test before asking an agent to implement the flow."; --note-height: 38mm; }
+  .page:nth-of-type(8) { --field-note: "Replace one vague phrase in your next prompt (‘handle errors’, ‘follow our architecture’) with a named failure mode or a named code boundary."; --note-height: 38mm; }
+  .page:nth-of-type(9) { --field-note: "Copy this packet into your repository. Delete every line that is not true; fill every bracket from code, a schema, or the workflow owner—not from memory."; --note-height: 32mm; }
+  .page:nth-of-type(10) { --field-note: "Run the investigation prompt without edit permission. Compare the returned plan against the repository yourself before authorizing any change."; --note-height: 34mm; }
+  .page:nth-of-type(11) { --field-note: "Keep the first implementation brief smaller than you want. A useful first slice often changes one domain rule and one focused test file."; --note-height: 32mm; }
+  .page:nth-of-type(12) { --field-note: "Put a hard pause between plan and implementation. The pause is where you remove assumptions, cut scope, and make the diff reviewable."; --note-height: 37mm; }
+  .page:nth-of-type(13) { --field-note: "Before creating a subagent, finish this sentence: ‘Its output is valuable because I can verify it by ___.’ If you cannot, keep the task with the primary agent."; --note-height: 40mm; }
+  .page:nth-of-type(14) { --field-note: "Give a researcher agent a stop condition. Endless exploration is not diligence; it is unbounded cost and an invitation for unsupported conclusions."; --note-height: 34mm; }
+  .page:nth-of-type(15) { --field-note: "Sketch every branch that has a different owner, a retry, or an irreversible action. Those branches deserve explicit states—not a hidden chain of if-statements."; --note-height: 41mm; }
+  .page:nth-of-type(16) { --field-note: "Choose one metric and one alert before implementation. If a stuck or unsafe transition cannot be detected, it is not ready to automate."; --note-height: 34mm; }
+  .page:nth-of-type(17) { --field-note: "Ask the workflow owner for the example they worry about most. Add it to the matrix exactly as they describe it, even if the input is messy."; --note-height: 34mm; }
+  .page:nth-of-type(18) { --field-note: "Take one real support problem and add it to this table. If your app made that mistake once, make sure the next version does not repeat it."; --note-height: 33mm; }
+  .page:nth-of-type(19) { --field-note: "Review a diff from a clean conversation or a second agent. Fresh context is an inexpensive way to challenge implementation anchoring."; --note-height: 34mm; }
+  .page:nth-of-type(20) { --field-note: "For the most expensive failure mode, write a one-line answer to each rubric question. Missing evidence is a release decision, not a documentation issue."; --note-height: 38mm; }
+  .page:nth-of-type(21) { --field-note: "When debugging, first request a timeline—not a fix. Facts arranged in time often expose a retry loop, race condition, or configuration boundary immediately."; --note-height: 40mm; }
+  .page:nth-of-type(22) { --field-note: "Save this worksheet with the incident. The next engineer should be able to see the evidence that eliminated each wrong hypothesis."; --note-height: 34mm; }
+  .page:nth-of-type(23) { --field-note: "Before you share a change, write down: who will watch it, what looks wrong, when you will stop it, and how you will turn it off. If you cannot answer those, wait."; --note-height: 55mm; }
+  .page:nth-of-type(24) { --field-note: "Write the rollback steps while the change is still small. A rollback plan that depends on remembering the implementation is not a plan."; --note-height: 32mm; }
+  .page:nth-of-type(25) { --field-note: "After your next release, add one durable artifact: a fixture, a runbook step, an architecture note, a log field, or a sharper acceptance criterion."; --note-height: 42mm; }
+  .page:nth-of-type(26) { --field-note: "During planning, ask ‘What would make this outcome wrong for the user?’ That question shifts the conversation from code output to ownership."; --note-height: 40mm; }
+  .page:nth-of-type(27) { --field-note: "Timebox the loop for one feature this week. The aim is not to spend more time; it is to spend the first hour where errors are cheapest to catch."; --note-height: 35mm; }
+  .page:nth-of-type(28) { --field-note: "Choose a feature small enough to release or simulate this month. Practice the full loop; isolated prompting practice does not build production judgment."; --note-height: 34mm; }
+  .page:nth-of-type(29) { --field-note: "Print or pin this checklist beside your pull request. A checked box is not proof, but an unchecked box is a useful conversation starter."; --note-height: 37mm; }
+  .page:nth-of-type(30) { --field-note: "Start with one genuine workflow and make one durable improvement. The habit of shipping reliable small changes compounds faster than collecting agent tricks."; --note-height: 32mm; }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="kicker">A simple guide for new developers</div>
+  <h1>The AI Coding<br>Starter Guide</h1>
+  <p class="lede">How to use Claude Code or Codex to turn a real request into working software—without blindly trusting the AI.</p>
+  <hr class="rule" style="border-color:#777">
+  <p class="small">By Abhishek Raj<br><span class="muted">Built from 208 real coding-agent sessions at a live Indian startup doing about $10M ARR with 100,000+ paying customers.</span></p>
+  <div class="cover-box"><div>UNDERSTAND</div><div>DELEGATE</div><div>VERIFY + SHIP</div></div>
+  <div class="footer">VERSION 1.0 · OCTOBER 2026</div><div class="page-no">01</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Start here</div><h2>You do not need magic prompts.</h2>
+  <p class="lede">This guide comes from real work: 208 sessions with coding AI, 1,866 human messages, 667 code changes, and 200 pull requests at a live Indian startup doing about $10M in yearly revenue with 100,000+ paying customers.</p>
+  <table><tr><th>What the record showed</th><th>What it means</th></tr><tr><td><strong>67 characters</strong> median prompt length</td><td>Most useful steering was short; the agent already had durable context.</td></tr><tr><td><strong>21%</strong> of prompts carried screenshots</td><td>The screenshot, portal response, log, or number was often the real bug report.</td></tr><tr><td><strong>4 files</strong> median PR size</td><td>Small slices were fast to understand, verify, merge, and reverse.</td></tr><tr><td><strong>133</strong> memory files written</td><td>Reality outlived the context window instead of being reconstructed from chat.</td></tr></table>
+  <div class="callout"><strong>The thesis:</strong> the leverage was not longer prompts. It was feeding the agent reality—the business rule, precedent, raw evidence, expected number—and checking the result against reality.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">02</div>
+</section>
+
+<section class="page">
+  <div class="kicker">The big picture</div><h2>A simple loop: start right → understand → explain → build → check → share → remember</h2>
+  <div class="diagram"><div class="flow"><div>01<br>UNDERSTAND</div><div class="arrow">→</div><div>02<br>MAP</div><div class="arrow">→</div><div>03<br>BRIEF</div><div class="arrow">→</div><div>04<br>DELEGATE</div><div class="arrow">→</div><div>05<br>VERIFY</div><div class="arrow">→</div><div>06<br>SHIP</div></div></div>
+  <p>AI can make a change that looks good but is still wrong: it may be in the wrong folder, use the wrong rule, or solve a problem nobody has. Give it the right facts before you let it code.</p>
+  <table><tr><th>Step</th><th>What you do</th><th>How you know you are ready</th></tr><tr><td>Start right</td><td>Check the right folder, branch, and app.</td><td>You know which code real users are using.</td></tr><tr><td>Understand</td><td>Write who needs help, what rule matters, and what can go wrong.</td><td>You can explain the problem in normal words.</td></tr><tr><td>Explain</td><td>Show AI a similar working feature, clear limits, and proof.</td><td>The job is small and clear.</td></tr><tr><td>Check + share</td><td>Look at the screen, network, logs, and data after the change.</td><td>You can stop or undo the change if needed.</td></tr><tr><td>Remember</td><td>Write down what really happened.</td><td>Next time, you do not start from zero.</td></tr></table>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">03</div>
+</section>
+
+<section class="page">
+  <div class="kicker">01 / Start right</div><h2>First, make sure you are in the right project and branch.</h2>
+  <p>A <strong>branch</strong> is a separate version of code. A <strong>worktree</strong> is a separate folder for that version. If you look at an old branch, you can give AI a perfect task and still get the wrong answer.</p>
+  <h3>First action, every time</h3>
+  <ol class="steps"><li><strong>Fetch the remote base</strong><br>Do not treat a local branch called <code>prod</code> as production.</li><li><strong>Name the worktree</strong><br>One task, one worktree. Parallel agents do not share uncommitted edits.</li><li><strong>Read production explicitly</strong><br>Inspect the remote base when behavior must match a live path.</li><li><strong>Locate the real environment</strong><br>Confirm repository, service, worker, and data source before diagnosis.</li><li><strong>Record the base</strong><br>Put branch and commit in the task brief or memory entry.</li><li><strong>Only then investigate</strong><br>Now the agent has a trustworthy reality to inspect.</li></ol>
+  <div class="callout"><strong>Hard-won rule:</strong> never commit from a worktree while an agent is editing it. A broad <code>git add -A</code> can sweep up its partial work; wait for the owner or let that agent commit its slice.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">04</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A simple note before you ask AI to code.</h2>
+  <p>Fill this in before asking an agent to change anything. Start with who is eligible to enter the flow and why; unknowns stay visible rather than becoming the agent’s assumptions.</p>
+  <div class="template"># Business-gate brief
+
+## Gate + user decision
+Only [eligible user / entity] may [action] when [condition], because [business reason].
+
+## Product end state
+The user should be able to [observable outcome] in [time / UX budget].
+
+## Current workflow
+Today they [steps, tools, handoffs]. The friction is [cost / delay / error].
+
+## Desired outcome
+We will [observable behavior]. We will not [explicit non-goal].
+
+## Failure cost
+False approval causes: [impact].
+False rejection causes: [impact].
+
+## Precedent to match
+[existing screen / service / workflow that already does this]
+
+## Known rules
+- [rule + source of truth]
+- [rule + source of truth]
+
+## Unknowns to resolve
+- [question + owner]
+
+## Success signal
+[metric or observable user result]</div>
+  <div class="callout"><strong>Filled example:</strong> “Only customers who finish their profile can receive a personalised plan. Missing information goes to the support team, not a dead end. A support person’s change always wins.”</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">05</div>
+</section>
+
+<section class="page">
+  <div class="kicker">02 / Draw the flow</div><h2>Draw what happens, including where things can go wrong.</h2>
+  <p>A feature is not only code. It also has people, data, screens, and outside tools. Draw the handoffs first. This helps you see where someone can get stuck.</p>
+  <div class="diagram"><div class="swim"><div class="lane">Customer</div><div>Fills a sign-up form or sends a request</div><div class="lane">App</div><div>Checks the details → chooses the next step</div><div class="lane">Support team</div><div>Looks at unusual requests; can correct a choice</div><div class="lane">Customer</div><div>Gets a clear next step or a helpful message</div></div></div>
+  <h3>Mark these four things on every map</h3>
+  <div class="grid two"><div class="card"><strong>Step changes</strong>New request → checked → ready / needs help / blocked → customer told.</div><div class="card"><strong>People in charge</strong>Who can correct details? Who can change the app’s choice?</div><div class="card"><strong>Outside tools</strong>Email service, file reader, payment tool, message sender.</div><div class="card"><strong>What can go wrong</strong>Slow service, missing detail, same request twice, unsupported file.</div></div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">06</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>List the steps an item is allowed to take.</h2>
+  <div class="diagram"><div class="flow"><div>NEW</div><div class="arrow">→</div><div>CHECKED</div><div class="arrow">→</div><div>READY</div><div class="arrow">→</div><div>MESSAGE SENT</div></div><p class="tiny" style="text-align:center;margin-top:3mm">CHECKED can also become: <strong>NEEDS_HELP</strong>, <strong>BLOCKED</strong>, or <strong>TRY_AGAIN</strong></p></div>
+  <table><tr><th>Step</th><th>What can happen next</th><th>Rule</th><th>Who does it</th></tr><tr><td>NEW</td><td>CHECKED, TRY_AGAIN</td><td>All needed details arrive</td><td>App</td></tr><tr><td>CHECKED</td><td>READY, NEEDS_HELP, BLOCKED</td><td>App saves why it made the choice</td><td>App</td></tr><tr><td>NEEDS_HELP</td><td>READY, BLOCKED</td><td>A named person writes why</td><td>Support team</td></tr><tr><td>MESSAGE SENT</td><td>—</td><td>Do not send the same message twice</td><td>App</td></tr></table>
+  <div class="callout"><strong>Why this matters for agents:</strong> state transitions turn vague “handle exceptions” language into code-level constraints an agent can test.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">07</div>
+</section>
+
+<section class="page">
+  <div class="kicker">03 / Give AI the right background</div><h2>Do not throw files at AI. Tell it the few things that matter.</h2>
+  <p>More tokens do not automatically mean better work. Give the agent the smallest set of facts needed for its next correct decision: goal, gate, existing precedent, system constraints, relevant code, raw evidence, and behavior checks.</p>
+  <table><tr><th>Not helpful</th><th>Helpful</th></tr><tr><td>“Make sign-up better. Look around.”</td><td>“Follow the current sign-up path. Do not change anything yet. Tell me which pages, files, and checks are used.”</td></tr><tr><td>“Use how we already build things.”</td><td>“Put the checking rule in the same place as the existing sign-up checks. Do not overwrite a support person’s choice.”</td></tr><tr><td>“Handle missing details.”</td><td>“If a needed detail is missing, ask for help. If it is clearly wrong, show a clear message. A support person’s choice always wins.”</td></tr></table>
+  <div class="diagram"><div class="grid three"><div class="card"><strong>Intent</strong>What outcome changes?</div><div class="card"><strong>Ground truth</strong>Which rules and files are authoritative?</div><div class="card"><strong>Verification</strong>What behavior proves it works?</div></div></div>
+  <div class="callout"><strong>Name the precedent:</strong> “Match <code>X</code>” is usually stronger than a page of invented architecture. It prevents a second validator, date helper, API client, or flow from appearing beside one that already works.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">08</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>Your “here is what is going on” note.</h2>
+  <div class="template"># CONTEXT — New customer sign-up
+
+## Goal
+Help new customers finish sign-up quickly while keeping people in
+charge of unusual requests.
+
+## Architecture
+Sign-up form → sign-up service → simple checks → support queue
+→ customer message.
+
+## Precedent
+Match `src/support/manual-choice.ts`: a support person’s choice always wins.
+
+## Relevant files
+- src/signup/signup-service.ts
+- src/signup/check-details.ts
+- src/signup/status.ts
+- tests/signup/check-details.test.ts
+
+## Constraints
+- Never overwrite a support person’s correction.
+- Save a short note about every app choice.
+- Never send the same message twice.
+- No new dependency without approval.
+
+## Acceptance criteria
+- Complete details: READY.
+- Missing detail: NEEDS_HELP, not BLOCKED.
+- Clearly wrong detail: BLOCKED with a reason.
+- A person’s choice stays after the app checks again.
+
+## Out of scope
+Changing profile details automatically, redesigning the form, or changing messages.</div>
+  <p class="small"><strong>Store it:</strong> use `docs/features/signup-checks.md`, a pull-request description, or a small task file. A person should be able to read it too.</p>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">09</div>
+</section>
+
+<section class="page">
+  <div class="kicker">04 / Look first</div><h2>Ask AI to look around before it changes code.</h2>
+  <p>The first request should reduce uncertainty, not create a diff. When the problem is not yet understood, use diagnosis-only mode: ask what is wrong, ask for evidence, and explicitly forbid edits.</p>
+  <div class="code">You are investigating a feature. Do not modify files.
+
+1. Trace a sign-up request from the form to its final result.
+2. List the files that own the checks, status changes,
+   notes, and customer message.
+3. Find tests that cover each path.
+4. Identify risks, especially sending two messages or
+   overwriting a support person’s choice.
+5. Propose a minimal plan. For each step, name the file and test.
+
+Return: findings, unknowns, plan, and what you deliberately will not change.</div>
+  <h3>Give bugs as falsifiable evidence</h3>
+  <ul class="check"><li>Attach the artefact: screenshot, raw portal error, log line, or response body.</li><li>Name what happened and the exact value or behavior that should have happened.</li><li>Withhold your diagnosis until the agent has inspected the evidence.</li><li>On the second report, add a working sibling, a narrower value, or a new log—not the same complaint.</li></ul>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">10</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A small, clear change request.</h2>
+  <p>Once investigation is sound, convert the work into a bounded contract. This is what you delegate.</p>
+  <div class="template"># Implement: sign-up detail checks
+
+Make the smallest change that satisfies the acceptance criteria below.
+
+## Change
+Add detail checks in `src/signup/check-details.ts`. Return one clear
+answer: READY, NEEDS_HELP, or BLOCKED with a short reason.
+
+## Must preserve
+- A support person’s choice always wins.
+- Existing “do not send twice” behavior.
+- A short saved note for every automatic choice.
+
+## Acceptance tests
+1. complete details → READY
+2. missing detail → NEEDS_HELP
+3. clearly wrong detail → BLOCKED / WRONG_DETAIL
+4. person’s choice + wrong detail → person’s choice stays
+
+## Boundaries
+Do not change the database shape, form page, or message sender.
+Do not add packages.
+
+## Deliverable
+Implementation, focused tests, and a short explanation of changes and
+remaining risks.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">11</div>
+</section>
+
+<section class="page">
+  <div class="kicker">05 / Work in small steps</div><h2>Do not ask AI to do everything in one go.</h2>
+  <p>Long autonomous runs are useful only when each checkpoint has a small, observable output. A good workflow preserves your ability to redirect before the wrong assumption reaches five files.</p>
+  <ol class="steps"><li><strong>Investigate</strong><br>No edits. Ask for paths, behavior, tests, risks.</li><li><strong>Plan</strong><br>Review file-by-file plan and cut scope.</li><li><strong>Implement</strong><br>One bounded slice; require tests.</li><li><strong>Self-review</strong><br>Ask agent to criticize its own diff against criteria.</li><li><strong>Adversarial review</strong><br>Fresh context: find what could break.</li><li><strong>Run + inspect</strong><br>Tests, diff, logs, actual user journey.</li></ol>
+  <div class="callout"><strong>Rule of thumb:</strong> you should be able to explain every changed file in one sentence. If you cannot, the batch was too large.</div>
+  <p class="small">The exact command syntax differs between tools. The operating model does not: plan first, keep scope explicit, demand evidence, and review every consequential change.</p>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">12</div>
+</section>
+
+<section class="page">
+  <div class="kicker">06 / Use extra AI helpers</div><h2>Let helpers look around. Do not let them fight over the same code.</h2>
+  <p>Sometimes you can use more than one AI helper. Give each helper one small job with a clear name, like “find where login happens.” Do not ask three helpers to edit the same file. They will get in each other’s way.</p>
+  <table><tr><th>Good helper job</th><th>Why it is good</th><th>Bad helper job</th></tr><tr><td>“Show me every place a sign-up request can change.”</td><td>It only looks and reports facts.</td><td>“All three of you build the same feature.”</td></tr><tr><td>“Find sample data and missing checks.”</td><td>You can easily check its list.</td><td>“All of you clean up this folder.”</td></tr><tr><td>“Look at these code changes for mistakes.”</td><td>It gets a fresh pair of eyes.</td><td>“Write it and say it is good in one step.”</td></tr></table>
+  <div class="diagram"><div class="flow"><div>MAIN HELPER<br><span class="tiny">keeps the job small</span></div><div class="arrow">←</div><div>LOOKER<br><span class="tiny">finds where things live</span></div><div class="arrow">→</div><div>CHECKER<br><span class="tiny">finds missing checks</span></div><div class="arrow">→</div><div>FRESH EYES<br><span class="tiny">looks for mistakes</span></div></div></div>
+  <div class="callout"><strong>Look first, build second:</strong> let one helper only look at folders, branches, pages, and rules. Then give one other helper a small coding job.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">13</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A simple job description for an AI helper.</h2>
+  <div class="template">ROLE: Repository researcher
+
+MISSION
+Trace how a sign-up request moves from the form to a customer message. Do not edit.
+
+EVIDENCE REQUIRED
+For every claim, provide: file path, symbol/function, and a one-line
+explanation of control flow.
+
+QUESTIONS
+1. Where are statuses defined and persisted?
+2. Can checking again overwrite a support person’s choice?
+3. Which paths save a note about what happened?
+4. Which checks cover trying again and duplicate messages?
+
+OUTPUT FORMAT
+## Findings
+## Relevant files
+## Risks / unknowns
+## Suggested tests
+
+STOP WHEN
+You have answered the questions with evidence, or explicitly state
+what cannot be determined from the repository.</div>
+  <div class="grid two"><div class="card"><strong>Good output</strong>“`status.ts:moveSignup()` can send a message twice; it does not check the support person’s choice.”</div><div class="card"><strong>Weak output</strong>“The sign-up flow looks strong. Maybe add some checks.”</div></div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">14</div>
+</section>
+
+<section class="page">
+  <div class="kicker">07 / Draw tricky flows</div><h2>Use a simple map when work can branch, pause, or try again.</h2>
+  <p>For a very simple job, AI can do one thing and finish. For a tricky job, draw the path. Show what happens when it works, when it fails, when it needs a person, and when it should try again.</p>
+  <div class="diagram"><div class="grid three"><div class="card"><strong>Get details</strong><span class="tiny">form → app</span></div><div class="card"><strong>Check</strong><span class="tiny">simple rules</span></div><div class="card"><strong>Choose</strong><span class="tiny">ready / help / blocked</span></div><div class="card"><strong>Try again</strong><span class="tiny">temporary problem</span></div><div class="card"><strong>Ask a person</strong><span class="tiny">unusual request</span></div><div class="card"><strong>Tell customer</strong><span class="tiny">one clear message</span></div></div></div>
+  <table><tr><th>Draw a map when…</th><th>Keep it simple when…</th></tr><tr><td>Different people handle different paths.</td><td>One request always gives one answer.</td></tr><tr><td>Trying again could send something twice.</td><td>If it fails, you can safely show an error.</td></tr><tr><td>A person needs to approve before it continues.</td><td>Nothing needs to be saved between steps.</td></tr></table>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">15</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>Write the rules of a tricky flow before coding it.</h2>
+  <div class="template">STEP: check_signup
+Input: customer_id, form_details, support_choice
+Output: next_step, short_reason, saved_note
+
+TRANSITIONS
+- complete → ready
+- missing needed detail → needs_help
+- clearly wrong detail → blocked
+- message service is slow → try_again (max 3 attempts)
+- support_choice present → use the person’s choice
+
+INVARIANTS
+- A customer gets a message only when ready.
+- Every step saves a short note.
+- Trying again cannot send a second message.
+- The app never replaces a person’s choice.
+
+OBSERVABILITY
+- Count: how many requests reach each next step
+- Count: how many need to try again
+- Log: customer_id, old_step, new_step, short_reason
+- Alert: too many requests waiting for more than 15 minutes</div>
+  <div class="callout"><strong>Simple rule:</strong> write one sentence that says what the app must never do. Example: “Never send the same customer message twice.” That is better than saying “make it reliable.”</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">16</div>
+</section>
+
+<section class="page">
+  <div class="kicker">08 / Check it for real</div><h2>Do not only read the code. Check what the user will see.</h2>
+  <p>A test is a small computer check. It is useful, but it is not the whole answer. Also open the real screen, click through the flow, and look at the data. Do both: computer checks and real-life checks.</p>
+  <div class="diagram"><div class="grid three"><div class="card"><strong>Small check</strong>Does one rule work?</div><div class="card"><strong>Parts together</strong>Do the app pieces talk to each other?</div><div class="card"><strong>Real journey</strong>Can a person upload, review, and finish?</div></div></div>
+  <table><tr><th>Try this</th><th>You should see</th><th>This stops</th></tr><tr><td>Complete form</td><td>The customer can continue and a note is saved</td><td>A normal flow breaking</td></tr><tr><td>Missing detail</td><td>It goes to a person to help</td><td>A good customer being blocked</td></tr><tr><td>Clearly wrong detail</td><td>A clear message explains what to fix</td><td>Bad data passing quietly</td></tr><tr><td>A person changes it</td><td>Their change stays after the app runs again</td><td>The app overwriting a person</td></tr><tr><td>The message runs twice</td><td>Only one message is sent</td><td>Duplicate messages</td></tr></table>
+  <div class="callout"><strong>What to trust most:</strong> the real website or outside system, then your saved data and logs, then the code, and lastly an AI saying “done.” For a web page, check the screen, network, and console; then reload it.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">17</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A “what good looks like” table.</h2>
+  <p>Write this table before you ask AI to code. It gives you a simple picture of what “working” means.</p>
+  <table><tr><th>Try this</th><th>Start with</th><th>You should see</th><th>Type of check</th></tr><tr><td>Complete form</td><td>Name and email are present</td><td>next_step=READY</td><td>Small + parts together</td></tr><tr><td>Missing detail</td><td>`phone: null`</td><td>next_step=NEEDS_HELP</td><td>Small + real journey</td></tr><tr><td>Wrong format</td><td>`email: "hello"`</td><td>next_step=BLOCKED; clear reason</td><td>Small check</td></tr><tr><td>Person fixes it</td><td>Support choice exists</td><td>choice stays after checking again</td><td>Parts together</td></tr><tr><td>Same message twice</td><td>Same request id twice</td><td>one saved note + one message</td><td>Parts together</td></tr><tr><td>Outside service is slow</td><td>Message sender times out</td><td>TRY_AGAIN; no message yet</td><td>Parts together</td></tr></table>
+  <div class="callout"><strong>Tell AI:</strong> “Make these cases work. Then tell me which important cases I may still be missing. Do not say it is tested unless you can show me.”</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">18</div>
+</section>
+
+<section class="page">
+  <div class="kicker">09 / Ask someone to find mistakes</div><h2>Ask a fresh AI chat to try to break the change.</h2>
+  <p>The AI that wrote the code may miss its own mistake. Open a fresh AI chat and ask it to look for problems. This is extra helpful for login rules, repeated actions, lost data, and anything a user cannot easily undo.</p>
+  <div class="code">Review this diff as a production engineer. Do not rewrite it.
+
+The feature must: preserve manual overrides, emit audit entries,
+avoid duplicate messages, and send missing details to the support team.
+
+Check for:
+- behavior that violates an acceptance criterion
+- missing or misleading tests
+- unauthorized state transitions
+- race conditions / retries / duplicate events
+- sensitive data in logs
+- backwards compatibility risk
+
+For every finding, cite file + line, severity, failure scenario, and
+the smallest credible remediation. If no finding, state what you could
+not verify.</div>
+  <h3>Do not accept this review output</h3><p class="small">“Looks good,” “consider adding error handling,” or a long list without file evidence. The agent must connect each concern to a real execution path.</p>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">19</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A safety checklist before you share the change.</h2>
+  <table><tr><th>Question</th><th>Evidence to demand</th></tr><tr><td>Can an incorrect state transition happen?</td><td>State guard, test, and audit record.</td></tr><tr><td>Can a retry duplicate a side effect?</td><td>Idempotency key or unique constraint + integration test.</td></tr><tr><td>Can a human correction be lost?</td><td>Explicit precedence rule + reprocessing test.</td></tr><tr><td>Can an external outage create a bad decision?</td><td>Timeout policy, retry path, and alert.</td></tr><tr><td>Can sensitive data leak?</td><td>Log inspection; redaction or field allow-list.</td></tr><tr><td>Can we see and reverse the change?</td><td>Metrics, dashboard/query, flag or rollback plan.</td></tr></table>
+  <div class="grid two"><div class="card"><strong>Big problem</strong>Lost data, charging twice, showing private data, or something you cannot undo.</div><div class="card"><strong>Smaller problem</strong>Sending someone to the wrong place, missing a helpful note, or a visible error they can recover from.</div></div>
+  <div class="callout"><strong>Make it a habit:</strong> review the release path, not only the diff. Code can be locally correct and still fail through migration order, missing configuration, or queue behavior.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">20</div>
+</section>
+
+<section class="page">
+  <div class="kicker">10 / Fix bugs with clues</div><h2>Use facts first. Do not let AI guess a fix.</h2>
+  <p>AI is good at making believable guesses. Do not let a believable guess become a fix. First collect clues: what the user saw, the error message, and what number or result should have appeared.</p>
+  <div class="diagram"><div class="flow"><div>SYMPTOM</div><div class="arrow">→</div><div>OBSERVE</div><div class="arrow">→</div><div>HYPOTHESIZE</div><div class="arrow">→</div><div>TEST</div><div class="arrow">→</div><div>FIX</div><div class="arrow">→</div><div>REGRESSION TEST</div></div></div>
+  <h3>Example: sign-up messages are stuck</h3>
+  <div class="grid two"><div class="card"><strong>Weak request</strong>“Why are messages stuck? Fix it.”</div><div class="card"><strong>Strong request</strong>“Look at the logs and code for three customer requests. Make a timeline. Do not change code until you find what they all have in common.”</div></div>
+  <div class="callout"><strong>Rule:</strong> a fix is not complete until the original symptom can no longer recur under a test, monitor, or invariant.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">21</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A note for finding a bug step by step.</h2>
+  <div class="template"># Problem: customer messages stuck in TRY_AGAIN
+
+## Symptom
+What happened? When? Which users / records are affected?
+
+## Timeline
+time | customer_id | old_step | event | new_step | request_id
+
+## Evidence
+- logs:
+- metrics:
+- recent deploy / configuration change:
+- dependency health:
+
+## Hypotheses (ranked)
+1. [claim] — evidence for / against — next observation
+2. [claim] — evidence for / against — next observation
+
+## Fix
+Smallest change that removes the proven cause:
+
+## Regression proof
+Test added:
+Monitor / alert added:
+Runbook update:</div>
+  <p class="small"><strong>Useful agent role:</strong> ask it to normalize logs into a timeline, find common fields among failing events, and identify code paths. You retain the decision about cause and fix.</p>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">22</div>
+</section>
+
+<section class="page">
+  <div class="kicker">11 / Share safely</div><h2>Let a few people use the change before everyone does.</h2>
+  <p>“The code is live” does not mean it is good. Decide before you share it: what will you watch, when will you pause, and how will you turn it off if it hurts users?</p>
+  <div class="diagram"><div class="flow"><div>OFF</div><div class="arrow">→</div><div>ONLY US<br>10 PEOPLE</div><div class="arrow">→</div><div>SOME PEOPLE</div><div class="arrow">→</div><div>EVERYONE</div></div></div>
+  <table><tr><th>Before sharing</th><th>While sharing</th><th>After sharing</th></tr><tr><td>Off switch available<br>Simple dashboard ready<br>Undo steps written down</td><td>Start with a few people<br>Watch counts and errors<br>Look at real saved notes</td><td>Compare “needs help” numbers<br>Check for duplicate messages<br>Talk to a support person</td></tr></table>
+  <div class="callout"><strong>Simple safety rule:</strong> try it with no real customers first, then 2, then 10, then everyone. If too many people get stuck, turn it off and send them to the old helpful path.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">23</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Copy this</div><h2>A small plan for putting a change live.</h2>
+  <div class="template"># Release: sign-up detail checks
+
+## Preconditions
+- migration: none
+- flag: signup_detail_checks
+- dashboard/query: next steps by reason + message count
+- owner on call: [name]
+
+## Phased rollout
+1. Run against 10 made-up customer requests; compare to a support person’s choice.
+2. Enable for internal test account.
+3. Enable for 10% of new sign-ups for 60 minutes.
+4. Expand only if success criteria are met.
+
+## Stop / rollback conditions
+- any duplicate message
+- missing detail blocks a customer instead of asking for help
+- unexplained error rate above baseline
+
+## Recovery
+Disable flag. Send records in affected time window to manual review.
+Use audit events to reconcile outcomes.
+
+## Success after 7 days
+Manual review reduced without an increase in corrected decisions.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">24</div>
+</section>
+
+<section class="page">
+  <div class="kicker">12 / Remember what you learn</div><h2>Write down what surprised you so nobody has to learn it twice.</h2>
+  <p>Production changes teach you which assumptions were false. Capture that learning while the details are fresh, then turn it into a rule, fixture, test, runbook entry, or context file. In the field record, 133 durable memory files made this work survive context windows and agent changes.</p>
+  <div class="grid two"><div class="card"><strong>What surprised us?</strong>Which workflow detail was missing from the ticket?</div><div class="card"><strong>What did the agent assume?</strong>Which assumption was plausible but wrong?</div><div class="card"><strong>What signal was missing?</strong>Which log, metric, or audit detail would have shortened debugging?</div><div class="card"><strong>What becomes reusable?</strong>Which test fixture or brief template should be kept?</div></div>
+  <div class="callout"><strong>Memory rule:</strong> record only what was observed. Label inference, assumption, and untested claims as unverified. Keep the hypothesis you killed, the baseline failure count, the blast radius, and the external verdict verbatim.</div>
+  <p class="small">If you type an instruction twice, move it into the right durable layer: workspace instructions for standing defaults, a skill for domain maps, an agent definition for role behavior, or memory for observed facts.</p>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">25</div>
+</section>
+
+<section class="page">
+  <div class="kicker">The useful mindset</div><h2>Care about the person using it, not only the code task.</h2>
+  <p>A useful AI-native engineer is not someone who produces the most code per hour. They reduce the time from unclear problem to trusted outcome.</p>
+  <table><tr><th>Ticket mindset</th><th>FDE mindset</th></tr><tr><td>“What should I build?”</td><td>“What decision or workflow should improve?”</td></tr><tr><td>“The requirements were incomplete.”</td><td>“Here are the unknowns and the lowest-risk way to resolve them.”</td></tr><tr><td>“The tests pass.”</td><td>“The behavior is observable, safe to release, and works for the user.”</td></tr><tr><td>“The agent implemented it.”</td><td>“I can explain why this design is correct and what it cannot guarantee.”</td></tr></table>
+  <div class="quote">AI makes implementation cheaper. It makes judgment, discovery, verification, and ownership more visible.</div>
+  <div class="callout"><strong>The honest caveat:</strong> speed can hide weak review. The record contained zero explicit test requests in sampled sessions, many symptom-only re-reports, and long sessions that needed repeated compaction. Keep the fast empirical loop—but add a diff glance, targeted test, fresh review pass, and a work-in-progress limit.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">26</div>
+</section>
+
+<section class="page">
+  <div class="kicker">A simple weekly habit</div><h2>How to use this on your next small feature.</h2>
+  <ol class="steps"><li><strong>30 minutes: discovery</strong><br>Write the decision brief. Speak to the workflow owner if one fact is uncertain.</li><li><strong>30 minutes: repository trace</strong><br>Let an agent investigate without edits. Verify its file map.</li><li><strong>20 minutes: scope</strong><br>Write acceptance criteria, invariants, and out-of-scope items.</li><li><strong>45 minutes: implementation</strong><br>Delegate one bounded slice. Keep every diff explainable.</li><li><strong>30 minutes: adversarial review</strong><br>Use a fresh context to attack assumptions, tests, and failure modes.</li><li><strong>30 minutes: release design</strong><br>Choose a rollout, signals, stop condition, and recovery path.</li></ol>
+  <div class="callout"><strong>Do not optimize this schedule.</strong> It is a forcing function that keeps the highest-leverage thinking before the lowest-leverage typing. Adjust duration, not order.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">27</div>
+</section>
+
+<section class="page">
+  <div class="kicker">30-day practice plan</div><h2>Get better by making small things, not collecting tools.</h2>
+  <table><tr><th>Week</th><th>Practice</th><th>Proof of work</th></tr><tr><td>1 — Understand</td><td>Choose one existing internal or personal workflow. Interview its user or reconstruct the current process.</td><td>Decision brief + workflow map.</td></tr><tr><td>2 — Context + plan</td><td>Use Claude Code or Codex to trace a code path without edits. Create a context packet and implementation brief.</td><td>Repository map + reviewed plan.</td></tr><tr><td>3 — Build + verify</td><td>Implement one bounded feature. Write the acceptance matrix before the agent writes tests.</td><td>Small PR + test evidence + review notes.</td></tr><tr><td>4 — Ship + learn</td><td>Release safely, or simulate a release with flags, metrics, and a rollback plan.</td><td>Release plan + retrospective.</td></tr></table>
+  <h3>Rules for the month</h3>
+  <ul class="check"><li>Never ask an agent to “just build it” without a written acceptance standard.</li><li>Never merge a consequential diff you cannot explain.</li><li>For every bug, add a regression proof—not just a patch.</li><li>Save your best briefs and fixtures in the repository.</li></ul>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">28</div>
+</section>
+
+<section class="page">
+  <div class="kicker">One-page checklist</div><h2>Use this before you say “done.”</h2>
+  <div class="grid two"><div><h3>Establish + map</h3><ul class="check"><li>Fresh remote base and correct worktree confirmed</li><li>Named user, business gate, and decision</li><li>Current workflow and precedent documented</li><li>Human owner and override path clear</li><li>States and external boundaries mapped</li></ul><h3>Brief + delegate</h3><ul class="check"><li>Raw evidence and expected value attached</li><li>Acceptance criteria observable</li><li>Out-of-scope work explicit</li><li>Scout investigated before builder edits</li><li>Tasks are independently reviewable</li></ul></div><div><h3>Verify</h3><ul class="check"><li>Happy, edge, failure, and retry cases tested</li><li>Manual decisions are preserved</li><li>Fresh adversarial review completed</li><li>Screen, network, logs, database, and diff inspected</li><li>Baseline failures separated from new ones</li></ul><h3>Ship + learn</h3><ul class="check"><li>Dry run → 2 → 10 rollout exists</li><li>Signals, stop condition, and recovery owner named</li><li>Blast radius stated, including what does not change</li><li>Customer data absent from pushed artifacts</li><li>Observed learning written to durable context</li></ul></div></div>
+  <div class="callout"><strong>The standard:</strong> not “the agent finished.” Not “the build passed.” A real outcome is understandable, testable, observable, and recoverable.</div>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK</div><div class="page-no">29</div>
+</section>
+
+<section class="page">
+  <div class="kicker">Finish</div><h2>Use AI to build faster. Keep thinking for yourself.</h2>
+  <p class="lede">The durable advantage is not knowing a magic prompt or a particular tool. It is knowing how to discover a real problem, give implementation the right constraints, verify the result, and take responsibility for what reaches users.</p>
+  <hr class="rule">
+  <p>Claude Code and Codex can make a capable engineer dramatically faster. They cannot make an unclear workflow clear, decide whether a business rule is right, notice an unspoken exception, or accept the consequences of a bad release.</p>
+  <p>That remains the work. It is also the opportunity.</p>
+  <div class="callout"><strong>Next action:</strong> choose one small production-adjacent workflow this week. Complete pages 5, 7, 9, 11, 18, and 24 before asking an agent to implement anything.</div>
+  <p style="margin-top:20mm;font-family:Georgia,serif;font-size:16pt">Abhishek Raj</p><p class="muted">AI-native engineering, browser automation, and production software.</p>
+  <div class="footer">THE AI-NATIVE ENGINEER PLAYBOOK · VERSION 1.0</div><div class="page-no">30</div>
+</section>
+</body></html>

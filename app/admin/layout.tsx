@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 export default function AdminLayout({
@@ -9,17 +9,20 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const router = useRouter()
-  const isAuthenticated = false // Replace with your authentication logic
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/admin/login")
-    }
+    fetch("/api/admin/session")
+      .then((response) => response.json())
+      .then((data) => setIsAuthenticated(Boolean(data.authenticated)))
+      .catch(() => setIsAuthenticated(false))
+  }, [])
+
+  useEffect(() => {
+    if (isAuthenticated === false) router.replace("/admin/login")
   }, [isAuthenticated, router])
 
-  if (!isAuthenticated) {
-    return null
-  }
+  if (isAuthenticated !== true) return null
 
   return <div className="min-h-screen">{children}</div>
 }

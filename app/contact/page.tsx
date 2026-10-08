@@ -18,17 +18,30 @@ export default function Contact() {
     setIsSubmitting(true)
 
     try {
-      // Add your email service integration here
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const form = e.target as HTMLFormElement
+      const formData = new FormData(form)
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          subject: formData.get("subject"),
+          message: formData.get("message"),
+          website: formData.get("website"),
+        }),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || "Could not send message")
       toast({
         title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        description: result.emailSent ? "Thank you — I received your message and will get back to you soon." : "Thank you — your message was saved and I will get back to you soon.",
       })
-      ;(e.target as HTMLFormElement).reset()
+      form.reset()
     } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again later.",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again later.",
         variant: "destructive",
       })
     } finally {
@@ -95,6 +108,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <Input
+                  name="name"
                   placeholder="Your Name"
                   required
                   disabled={isSubmitting}
@@ -102,6 +116,7 @@ export default function Contact() {
               </div>
               <div>
                 <Input
+                  name="email"
                   type="email"
                   placeholder="Your Email"
                   required
@@ -110,6 +125,7 @@ export default function Contact() {
               </div>
               <div>
                 <Input
+                  name="subject"
                   placeholder="Subject"
                   required
                   disabled={isSubmitting}
@@ -117,12 +133,14 @@ export default function Contact() {
               </div>
               <div>
                 <Textarea
+                  name="message"
                   placeholder="Your Message"
                   required
                   className="min-h-[150px]"
                   disabled={isSubmitting}
                 />
               </div>
+              <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               <Button type="submit" disabled={isSubmitting} className="w-full gap-2">
                 {isSubmitting ? "Sending..." : "Send Message"}
                 <SendIcon className="h-4 w-4" />
