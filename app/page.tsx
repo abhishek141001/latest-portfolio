@@ -94,7 +94,9 @@ export default function Home() {
           </div>
         </div>
         <a
-          href="/ai-native-engineering-playbook"
+          href="/playbooks/ai-native-engineer-playbook.pdf"
+          download
+          data-analytics-event="playbook_download"
           className="playbook-banner mt-4 grid gap-3 border-2 border-primary bg-primary p-3 text-primary-foreground transition-opacity hover:opacity-90 sm:grid-cols-[1fr_auto] sm:items-center sm:p-4"
         >
           <div>
@@ -105,7 +107,7 @@ export default function Home() {
             </p>
           </div>
           <span className="inline-flex w-fit items-center gap-1.5 border border-primary-foreground/60 bg-primary-foreground px-3 py-2 text-xs font-bold text-primary">
-            <FileDown className="h-3.5 w-3.5" /> Explore the playbook
+            <FileDown className="h-3.5 w-3.5" /> Get the playbook
           </span>
         </a>
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
