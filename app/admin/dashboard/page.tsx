@@ -53,8 +53,9 @@ export default function AdminDashboard() {
   if (!data) return <div className="container py-10 text-muted-foreground">Loading analytics…</div>
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-      <div className="mb-8 flex flex-col gap-5 border-b pb-6 sm:flex-row sm:items-end sm:justify-between">
+    <main className="w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+      <div className="mx-auto w-full" style={{ maxWidth: "1200px" }}>
+        <div className="mb-8 flex flex-col gap-5 border-b pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-bold tracking-[0.14em] text-muted-foreground">LAST 30 DAYS</p>
           <h1 className="mt-1 text-3xl font-bold">Website analytics</h1>
@@ -66,12 +67,12 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {!data.configured ? (
+        {!data.configured ? (
         <div className="border border-dashed p-6">
           <h2 className="font-bold">MongoDB is not connected yet</h2>
           <p className="mt-1 text-sm text-muted-foreground">Copy <code>.env.local.example</code> to <code>.env.local</code> and add your MongoDB details. The tracker is already running; it will begin storing new events after configuration.</p>
         </div>
-      ) : (
+        ) : (
         <>
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map(({ key, label, icon: Icon }) => (
@@ -120,6 +121,7 @@ export default function AdminDashboard() {
           </section>
         </>
       )}
+      </div>
     </main>
   )
 }
