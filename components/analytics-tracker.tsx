@@ -33,6 +33,10 @@ export function AnalyticsTracker() {
   const pathname = usePathname()
 
   useEffect(() => {
+    // The dashboard is private operational UI, not a visitor-facing page. Its
+    // own navigation and scrolling would otherwise distort the public metrics.
+    if (pathname.startsWith("/admin")) return
+
     const sessionId = storedId(SESSION_KEY, "session")
     const visitorId = storedId(VISITOR_KEY, "visitor")
     const pageStartedAt = Date.now()

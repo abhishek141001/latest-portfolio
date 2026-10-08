@@ -53,8 +53,8 @@ export default function AdminDashboard() {
   if (!data) return <div className="container py-10 text-muted-foreground">Loading analytics…</div>
 
   return (
-    <main className="container max-w-6xl py-8">
-      <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
+    <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+      <div className="mb-8 flex flex-col gap-5 border-b pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-bold tracking-[0.14em] text-muted-foreground">LAST 30 DAYS</p>
           <h1 className="mt-1 text-3xl font-bold">Website analytics</h1>
@@ -73,21 +73,22 @@ export default function AdminDashboard() {
         </div>
       ) : (
         <>
-          <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map(({ key, label, icon: Icon }) => (
-              <div key={key} className="border p-4">
+              <div key={key} className="min-h-[126px] border bg-card p-5">
                 <div className="flex items-center justify-between text-muted-foreground"><span className="text-xs font-bold uppercase tracking-wide">{label}</span><Icon className="h-4 w-4" /></div>
                 <p className="mt-3 text-3xl font-bold">{data.summary?.[key] ?? 0}</p>
               </div>
             ))}
           </section>
 
-          <section className="mt-6 grid gap-6 lg:grid-cols-2">
+          <section className="mt-6 grid gap-4 lg:grid-cols-2">
             <Panel title="Traffic by day">
-              <div className="flex h-40 items-end gap-1">
-                {data.dailyTraffic?.map((day) => <div key={day._id} title={`${day._id}: ${day.views} views`} className="flex flex-1 flex-col justify-end"><div className="bg-primary" style={{ height: `${Math.max(4, (day.views / maxDailyViews) * 100)}%` }} /></div>)}
+              {data.dailyTraffic?.length ? <><div className="flex h-40 items-end gap-1 border-b border-muted-foreground/20">
+                {data.dailyTraffic.map((day) => <div key={day._id} title={`${day._id}: ${day.views} views`} className="flex h-full flex-1 flex-col justify-end"><div className="min-h-[4px] bg-primary transition-all" style={{ height: `${Math.max(4, (day.views / maxDailyViews) * 100)}%` }} /></div>)}
               </div>
-              <p className="mt-2 text-xs text-muted-foreground">Each bar is one day. Hover a bar for its view count.</p>
+              <div className="mt-2 flex justify-between text-xs text-muted-foreground"><span>{data.dailyTraffic[0]?._id}</span><span>{data.dailyTraffic[data.dailyTraffic.length - 1]?._id}</span></div></> : <Empty text="No public page views recorded yet." />}
+              <p className="mt-3 text-xs text-muted-foreground">Each bar is one day. Hover a bar for its view count.</p>
             </Panel>
             <Panel title="How far people scroll">
               <div className="space-y-3">
@@ -100,12 +101,12 @@ export default function AdminDashboard() {
             </Panel>
           </section>
 
-          <section className="mt-6 grid gap-6 lg:grid-cols-2">
+          <section className="mt-6 grid gap-4 lg:grid-cols-2">
             <RankedList title="Most visited pages" empty="No page views recorded yet." items={data.topPages?.map((item) => ({ label: item._id, value: item.views })) || []} />
             <RankedList title="Sections people viewed" empty="No section views recorded yet." items={data.topSections?.map((item) => ({ label: item._id || "Unnamed section", value: item.views })) || []} />
           </section>
 
-          <section className="mt-6 grid gap-6 lg:grid-cols-2">
+          <section className="mt-6 grid gap-4 lg:grid-cols-2">
             <Panel title="Recent visitor journeys">
               <div className="space-y-3">
                 {data.recentJourneys?.length ? data.recentJourneys.map((journey) => <div key={journey._id} className="border p-3"><p className="text-xs text-muted-foreground">{new Date(journey.lastSeen).toLocaleString()}</p><p className="mt-1 text-sm">{journey.journey.slice(0, 8).map((event) => event.type === "section_view" ? event.section : event.type === "scroll_depth" ? `${event.value}% scroll` : event.type === "download" ? `Downloaded: ${event.label}` : event.path).filter(Boolean).join(" → ")}</p></div>) : <Empty text="No journeys recorded yet." />}
@@ -124,7 +125,7 @@ export default function AdminDashboard() {
 }
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
-  return <div className="border p-5"><div className="mb-4 flex items-center gap-2"><MousePointerClick className="h-4 w-4" /><h2 className="font-bold">{title}</h2></div>{children}</div>
+  return <div className="min-h-[220px] border bg-card p-5"><div className="mb-5 flex items-center gap-2"><MousePointerClick className="h-4 w-4" /><h2 className="font-bold">{title}</h2></div>{children}</div>
 }
 
 function Empty({ text }: { text: string }) {
