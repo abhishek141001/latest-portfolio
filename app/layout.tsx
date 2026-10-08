@@ -7,26 +7,27 @@ import { Analytics } from '@vercel/analytics/react'
 import Script from "next/script"
 import { ResumeVisitTracker } from "@/components/resume-visit-tracker"
 import { AnalyticsTracker } from "@/components/analytics-tracker"
+import { siteConfig } from "@/lib/site"
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://abhishekrajportfolio.vercel.app'),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: 'Abhishek Raj',
     template: '%s | Abhishek Raj'
   },
-  description: 'Software developer building tax engines, browser automations, scraping systems, and AI products.',
-  keywords: ['Software Developer', 'Web Development', 'React', 'Next.js', 'TypeScript', 'Node.js'],
+  description: siteConfig.description,
+  keywords: ['AI-native engineering', 'AI coding agents', 'context engineering', 'software developer', 'Next.js', 'TypeScript'],
   authors: [{ name: 'Abhishek Raj' }],
   creator: 'Abhishek Raj',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://abhishekrajportfolio.vercel.app',
+    url: siteConfig.url,
     siteName: 'Abhishek Raj',
   },
   twitter: {
     card: 'summary_large_image',
-    creator: '@ojhaabhishekraj',
+    creator: siteConfig.xHandle,
   },
   robots: {
     index: true,
@@ -39,6 +40,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
 }
 
 export default function RootLayout({
@@ -49,6 +53,31 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        <Script
+          id="website-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  name: siteConfig.name,
+                  url: siteConfig.url,
+                  description: siteConfig.description,
+                },
+                {
+                  "@type": "Person",
+                  name: siteConfig.name,
+                  url: siteConfig.url,
+                  sameAs: [siteConfig.githubUrl, siteConfig.linkedinUrl, "https://x.com/ojhaabhishekraj"],
+                  jobTitle: "Software Developer",
+                  knowsAbout: ["AI-native engineering", "AI coding agents", "Next.js", "Browser automation"],
+                },
+              ],
+            }),
+          }}
+        />
         <Providers>
           <div className="flex min-h-screen flex-col">
             <Navbar />

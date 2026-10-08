@@ -8,6 +8,7 @@ import Link from "next/link"
 import { Metadata } from "next"
 import Script from "next/script"
 import { Fragment } from "react"
+import { absoluteUrl, siteConfig } from "@/lib/site"
 
 // Default avatar image URL
 const DEFAULT_AVATAR = "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     : post.excerpt
 
   const publishedDate = new Date(post.date).toISOString()
-  const modifiedDate = new Date().toISOString() // You could track this separately
+  const modifiedDate = publishedDate
 
   return {
     title: `${post.title} | Abhishek Raj`,
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       address: false,
       telephone: false,
     },
-    metadataBase: new URL('https://abhishekrajportfolio.vercel.app'),
+    metadataBase: new URL(siteConfig.url),
     alternates: {
       canonical: `/blog/${post.slug}`,
     },
@@ -203,22 +204,18 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       "author": {
         "@type": "Person",
         "name": post.author.name,
-        "url": "https://abhishekrajportfolio.vercel.app",
+        "url": siteConfig.url,
         "image": post.author.avatar
       },
       "publisher": {
         "@type": "Organization",
-        "name": "Abhishek Raj",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://abhishekrajportfolio.vercel.app/logo.png"
-        }
+        "name": "Abhishek Raj"
       },
       "datePublished": new Date(post.date).toISOString(),
-      "dateModified": new Date().toISOString(),
+      "dateModified": new Date(post.date).toISOString(),
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://abhishekrajportfolio.vercel.app/blog/${post.slug}`
+        "@id": absoluteUrl(`/blog/${post.slug}`)
       },
       "keywords": post.tags.join(', '),
       "articleSection": "Technology",
