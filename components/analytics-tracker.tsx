@@ -19,6 +19,13 @@ function storedId(key: string, prefix: string) {
   return next
 }
 
+export function getAnalyticsIdentity() {
+  return {
+    sessionId: storedId(SESSION_KEY, "session"),
+    visitorId: storedId(VISITOR_KEY, "visitor"),
+  }
+}
+
 function send(events: AnalyticsEvent[]) {
   if (!events.length) return
   const payload = JSON.stringify({ events })
@@ -37,8 +44,7 @@ export function AnalyticsTracker() {
     // own navigation and scrolling would otherwise distort the public metrics.
     if (pathname.startsWith("/admin")) return
 
-    const sessionId = storedId(SESSION_KEY, "session")
-    const visitorId = storedId(VISITOR_KEY, "visitor")
+    const { sessionId, visitorId } = getAnalyticsIdentity()
     const pageStartedAt = Date.now()
     const sentScrollDepths = new Set<number>()
     const viewedSections = new Set<string>()

@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react"
 import { Download, Mail, X } from "lucide-react"
+import { getAnalyticsIdentity } from "@/components/analytics-tracker"
 
 const PLAYBOOK_URL = "/playbooks/ai-native-engineer-playbook.pdf"
 
@@ -20,7 +21,7 @@ export function PlaybookEmailGate() {
       const response = await fetch("/api/playbook/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "homepage" }),
+        body: JSON.stringify({ email, source: "homepage", ...getAnalyticsIdentity() }),
       })
       const body = await response.json().catch(() => ({}))
       if (!response.ok) throw new Error(body.error || "Could not save your email.")
@@ -39,7 +40,7 @@ export function PlaybookEmailGate() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        data-analytics-event="playbook_download"
+        data-analytics-event="playbook_download_intent"
         className="playbook-banner mt-4 grid w-full gap-3 border-2 border-primary bg-primary p-3 text-left text-primary-foreground transition-opacity hover:opacity-90 sm:grid-cols-[1fr_auto] sm:items-center sm:p-4"
       >
         <span>

@@ -7,25 +7,28 @@ import { Download, Eye, FileText, LogOut, Mail, MousePointerClick, Users } from 
 
 type DashboardData = {
   configured: boolean
-  summary?: { pageViews: number; sessions: number; downloads: number; leads: number }
+  summary?: { pageViews: number; sessions: number; downloads: number; leads: number; playbookLeads: number; contactLeads: number; leadConversionRate: number }
   topPages?: { _id: string; views: number }[]
   topSections?: { _id: string; views: number }[]
   scrollDepth?: { _id: number; hits: number }[]
   dailyTraffic?: { _id: string; views: number }[]
   recentJourneys?: { _id: string; lastSeen: string; journey: { type: string; path: string; section?: string; value?: number; label?: string }[] }[]
   recentContacts?: { _id: string; name: string; email: string; subject: string; createdAt: string; emailSent: boolean }[]
+  recentPlaybookLeads?: { _id: string; email: string; source: string; createdAt: string; lastRequestedAt: string; sessions: number; pages: string[]; maxScroll: number; downloaded: boolean; journey: { type: string; path: string; section?: string; value?: number; label?: string; occurredAt: string }[] }[]
 }
 
 const cards = [
   { key: "pageViews", label: "Page views", icon: Eye },
   { key: "sessions", label: "Visitor sessions", icon: Users },
   { key: "downloads", label: "Playbook downloads", icon: Download },
+  { key: "playbookLeads", label: "Playbook leads", icon: Mail },
   { key: "leads", label: "Captured leads", icon: Mail },
 ] as const
 
 export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [error, setError] = useState("")
+  const [leadSearch, setLeadSearch] = useState("")
   const router = useRouter()
 
   useEffect(() => {
@@ -43,6 +46,7 @@ export default function AdminDashboard() {
   }, [router])
 
   const maxDailyViews = useMemo(() => Math.max(1, ...(data?.dailyTraffic?.map((day) => day.views) || [1])), [data])
+  const filteredPlaybookLeads = useMemo(() => (data?.recentPlaybookLeads || []).filter((lead) => lead.email.toLowerCase().includes(leadSearch.trim().toLowerCase())), [data, leadSearch])
 
   async function logout() {
     await fetch("/api/admin/logout", { method: "POST" })
@@ -74,13 +78,34 @@ export default function AdminDashboard() {
         </div>
         ) : (
         <>
-          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {cards.map(({ key, label, icon: Icon }) => (
               <div key={key} className="min-h-[126px] border bg-card p-5">
                 <div className="flex items-center justify-between text-muted-foreground"><span className="text-xs font-bold uppercase tracking-wide">{label}</span><Icon className="h-4 w-4" /></div>
                 <p className="mt-3 text-3xl font-bold">{data.summary?.[key] ?? 0}</p>
               </div>
             ))}
+          </section>
+
+          <section className="mt-6 border bg-card p-5">
+            <div className="flex flex-col gap-4 border-b pb-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs font-bold tracking-[0.14em] text-muted-foreground">PAID-TRAFFIC READINESS</p>
+                <h2 className="mt-1 text-lg font-bold">Playbook lead funnel</h2>
+                <p className="mt-1 text-sm text-muted-foreground">{data.summary?.playbookLeads || 0} email captures from {data.summary?.sessions || 0} visitor sessions in the last 30 days.</p>
+              </div>
+              <div className="border px-4 py-3 text-right"><p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Visitor → lead</p><p className="mt-1 text-2xl font-bold">{data.summary?.leadConversionRate || 0}%</p></div>
+            </div>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-muted-foreground">Every row links an email to its tracked browsing activity after capture.</p>
+              <input value={leadSearch} onChange={(event) => setLeadSearch(event.target.value)} placeholder="Search email…" aria-label="Search playbook leads" className="w-full border bg-background px-3 py-2 text-sm outline-none focus:border-foreground sm:max-w-xs" />
+            </div>
+            <div className="mt-4 divide-y border-y">
+              {filteredPlaybookLeads.length ? filteredPlaybookLeads.map((lead) => <details key={lead._id} className="group py-3">
+                <summary className="flex cursor-pointer list-none flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-semibold">{lead.email}</p><p className="mt-0.5 text-xs text-muted-foreground">Captured {new Date(lead.createdAt).toLocaleString()} · {lead.source}</p></div><div className="flex flex-wrap gap-2 text-xs"><Badge>{lead.sessions} session{lead.sessions === 1 ? "" : "s"}</Badge><Badge>{lead.pages.length} page{lead.pages.length === 1 ? "" : "s"}</Badge><Badge>{lead.maxScroll}% max scroll</Badge><Badge>{lead.downloaded ? "Downloaded" : "Download not recorded"}</Badge></div></summary>
+                <div className="mt-4 grid gap-4 border-t pt-4 lg:grid-cols-2"><div><p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Pages viewed</p><p className="mt-1 text-sm">{lead.pages.length ? lead.pages.join(" · ") : "No tracked page views yet."}</p></div><div><p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Recent journey</p><p className="mt-1 text-sm">{lead.journey.map((event) => event.type === "section_view" ? event.section : event.type === "scroll_depth" ? `${event.value}% scroll` : event.type === "download" ? "Download started" : event.path).filter(Boolean).join(" → ") || "No activity recorded yet."}</p></div></div>
+              </details>) : <p className="p-4 text-sm text-muted-foreground">{leadSearch ? "No lead matches that email." : "No playbook leads captured yet."}</p>}
+            </div>
           </section>
 
           <section className="mt-6 grid gap-4 lg:grid-cols-2">
@@ -132,6 +157,10 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 
 function Empty({ text }: { text: string }) {
   return <p className="text-sm text-muted-foreground">{text}</p>
+}
+
+function Badge({ children }: { children: React.ReactNode }) {
+  return <span className="border px-2 py-1 text-muted-foreground">{children}</span>
 }
 
 function RankedList({ title, items, empty }: { title: string; items: { label: string; value: number }[]; empty: string }) {

@@ -12,12 +12,13 @@ export async function GET() {
   const contacts = db.collection("contact_submissions")
   const playbookLeads = db.collection("playbook_leads")
   const publicEvent = { occurredAt: { $gte: since }, path: { $not: /^\/admin(?:\/|$)/ } }
-  const [pageViews, sessions, downloads, contactLeads, playbookLeadCount, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts] = await Promise.all([
+  const [pageViews, sessions, playbookDownloads, contactLeads, playbookLeadCount, leadDocuments, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts] = await Promise.all([
     events.countDocuments({ ...publicEvent, type: "page_view" }),
     events.distinct("sessionId", publicEvent).then((items) => items.length),
-    events.countDocuments({ ...publicEvent, type: "download", label: "playbook_download" }),
+    playbookLeads.countDocuments({ downloadStartedAt: { $gte: since } }),
     contacts.countDocuments({ createdAt: { $gte: since } }),
     playbookLeads.countDocuments({ createdAt: { $gte: since } }),
+    playbookLeads.find({ createdAt: { $gte: since } }, { projection: { email: 1, source: 1, createdAt: 1, lastRequestedAt: 1, downloadStartedAt: 1, sessionIds: 1, visitorIds: 1, lastSessionId: 1, lastVisitorId: 1 } }).sort({ lastRequestedAt: -1 }).limit(100).toArray(),
     events.aggregate([{ $match: { ...publicEvent, type: "page_view" } }, { $group: { _id: "$path", views: { $sum: 1 } } }, { $sort: { views: -1 } }, { $limit: 8 }]).toArray(),
     events.aggregate([{ $match: { ...publicEvent, type: "section_view" } }, { $group: { _id: "$section", views: { $sum: 1 } } }, { $sort: { views: -1 } }, { $limit: 8 }]).toArray(),
     events.aggregate([{ $match: { ...publicEvent, type: "scroll_depth" } }, { $group: { _id: { value: "$value", sessionId: "$sessionId" } } }, { $group: { _id: "$_id.value", hits: { $sum: 1 } } }, { $sort: { _id: 1 } }]).toArray(),
@@ -26,5 +27,44 @@ export async function GET() {
     contacts.find({}, { projection: { name: 1, email: 1, subject: 1, createdAt: 1, emailSent: 1 } }).sort({ createdAt: -1 }).limit(10).toArray(),
   ])
 
-  return NextResponse.json({ configured: true, summary: { pageViews, sessions, downloads, leads: contactLeads + playbookLeadCount }, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts })
+  const recentPlaybookLeads = await Promise.all(leadDocuments.map(async (lead) => {
+    const visitorIds = Array.isArray(lead.visitorIds) ? lead.visitorIds : lead.lastVisitorId ? [lead.lastVisitorId] : []
+    const leadEvents = visitorIds.length
+      ? await events.find({ ...publicEvent, visitorId: { $in: visitorIds } }, { projection: { type: 1, path: 1, section: 1, value: 1, label: 1, occurredAt: 1, sessionId: 1 } }).sort({ occurredAt: 1 }).limit(50).toArray()
+      : []
+    const pages = Array.from(new Set(leadEvents.filter((event) => event.type === "page_view").map((event) => event.path)))
+    const maxScroll = Math.max(0, ...leadEvents.filter((event) => event.type === "scroll_depth").map((event) => event.value || 0))
+    return {
+      _id: lead._id,
+      email: lead.email,
+      source: lead.source || "homepage",
+      createdAt: lead.createdAt,
+      lastRequestedAt: lead.lastRequestedAt || lead.createdAt,
+      sessions: Array.from(new Set(leadEvents.map((event) => event.sessionId))).length,
+      pages,
+      maxScroll,
+      downloaded: Boolean(lead.downloadStartedAt),
+      journey: leadEvents.slice(-12),
+    }
+  }))
+
+  return NextResponse.json({
+    configured: true,
+    summary: {
+      pageViews,
+      sessions,
+      downloads: playbookDownloads,
+      leads: contactLeads + playbookLeadCount,
+      playbookLeads: playbookLeadCount,
+      contactLeads,
+      leadConversionRate: sessions ? Math.round((playbookLeadCount / sessions) * 1000) / 10 : 0,
+    },
+    topPages,
+    topSections,
+    scrollDepth,
+    dailyTraffic,
+    recentJourneys,
+    recentContacts,
+    recentPlaybookLeads,
+  })
 }

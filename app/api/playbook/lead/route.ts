@@ -5,6 +5,8 @@ import { getDb, isMongoConfigured } from "@/lib/mongodb"
 const leadSchema = z.object({
   email: z.string().trim().email().max(254),
   source: z.literal("homepage").optional(),
+  sessionId: z.string().min(12).max(100),
+  visitorId: z.string().min(12).max(100),
 })
 
 export async function POST(request: Request) {
@@ -18,11 +20,20 @@ export async function POST(request: Request) {
     const db = await getDb()
     const email = input.email.toLowerCase()
 
+    const now = new Date()
     await db.collection("playbook_leads").updateOne(
       { email },
       {
-        $set: { email, source: input.source || "homepage", lastRequestedAt: new Date() },
-        $setOnInsert: { createdAt: new Date() },
+        $set: {
+          email,
+          source: input.source || "homepage",
+          lastRequestedAt: now,
+          downloadStartedAt: now,
+          lastSessionId: input.sessionId,
+          lastVisitorId: input.visitorId,
+        },
+        $addToSet: { sessionIds: input.sessionId, visitorIds: input.visitorId },
+        $setOnInsert: { createdAt: now },
       },
       { upsert: true },
     )
