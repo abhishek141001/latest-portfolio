@@ -12,10 +12,9 @@ export async function GET() {
   const contacts = db.collection("contact_submissions")
   const playbookLeads = db.collection("playbook_leads")
   const publicEvent = { occurredAt: { $gte: since }, path: { $not: /^\/admin(?:\/|$)/ } }
-  const [pageViews, sessions, playbookDownloads, contactLeads, playbookLeadCount, leadDocuments, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts] = await Promise.all([
+  const [pageViews, sessions, contactLeads, playbookLeadCount, leadDocuments, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts] = await Promise.all([
     events.countDocuments({ ...publicEvent, type: "page_view" }),
     events.distinct("sessionId", publicEvent).then((items) => items.length),
-    playbookLeads.countDocuments({ downloadStartedAt: { $gte: since } }),
     contacts.countDocuments({ createdAt: { $gte: since } }),
     playbookLeads.countDocuments({ createdAt: { $gte: since } }),
     playbookLeads.find({ createdAt: { $gte: since } }, { projection: { email: 1, source: 1, createdAt: 1, lastRequestedAt: 1, downloadStartedAt: 1, sessionIds: 1, visitorIds: 1, lastSessionId: 1, lastVisitorId: 1 } }).sort({ lastRequestedAt: -1 }).limit(100).toArray(),
@@ -43,7 +42,8 @@ export async function GET() {
       sessions: Array.from(new Set(leadEvents.map((event) => event.sessionId))).length,
       pages,
       maxScroll,
-      downloaded: Boolean(lead.downloadStartedAt),
+      hasJourney: visitorIds.length > 0,
+      downloaded: Boolean(lead.downloadStartedAt || lead.lastRequestedAt || lead.createdAt),
       journey: leadEvents.slice(-12),
     }
   }))
@@ -53,7 +53,9 @@ export async function GET() {
     summary: {
       pageViews,
       sessions,
-      downloads: playbookDownloads,
+      // Before individual download starts were recorded, a saved lead immediately
+      // redirected to the PDF. Those legacy captures therefore represent starts too.
+      downloads: playbookLeadCount,
       leads: contactLeads + playbookLeadCount,
       playbookLeads: playbookLeadCount,
       contactLeads,
