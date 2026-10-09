@@ -10,12 +10,14 @@ export async function GET() {
   const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
   const events = db.collection("analytics_events")
   const contacts = db.collection("contact_submissions")
+  const playbookLeads = db.collection("playbook_leads")
   const publicEvent = { occurredAt: { $gte: since }, path: { $not: /^\/admin(?:\/|$)/ } }
-  const [pageViews, sessions, downloads, leads, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts] = await Promise.all([
+  const [pageViews, sessions, downloads, contactLeads, playbookLeadCount, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts] = await Promise.all([
     events.countDocuments({ ...publicEvent, type: "page_view" }),
     events.distinct("sessionId", publicEvent).then((items) => items.length),
     events.countDocuments({ ...publicEvent, type: "download", label: "playbook_download" }),
     contacts.countDocuments({ createdAt: { $gte: since } }),
+    playbookLeads.countDocuments({ createdAt: { $gte: since } }),
     events.aggregate([{ $match: { ...publicEvent, type: "page_view" } }, { $group: { _id: "$path", views: { $sum: 1 } } }, { $sort: { views: -1 } }, { $limit: 8 }]).toArray(),
     events.aggregate([{ $match: { ...publicEvent, type: "section_view" } }, { $group: { _id: "$section", views: { $sum: 1 } } }, { $sort: { views: -1 } }, { $limit: 8 }]).toArray(),
     events.aggregate([{ $match: { ...publicEvent, type: "scroll_depth" } }, { $group: { _id: { value: "$value", sessionId: "$sessionId" } } }, { $group: { _id: "$_id.value", hits: { $sum: 1 } } }, { $sort: { _id: 1 } }]).toArray(),
@@ -24,5 +26,5 @@ export async function GET() {
     contacts.find({}, { projection: { name: 1, email: 1, subject: 1, createdAt: 1, emailSent: 1 } }).sort({ createdAt: -1 }).limit(10).toArray(),
   ])
 
-  return NextResponse.json({ configured: true, summary: { pageViews, sessions, downloads, leads }, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts })
+  return NextResponse.json({ configured: true, summary: { pageViews, sessions, downloads, leads: contactLeads + playbookLeadCount }, topPages, topSections, scrollDepth, dailyTraffic, recentJourneys, recentContacts })
 }

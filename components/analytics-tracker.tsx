@@ -72,9 +72,9 @@ export function AnalyticsTracker() {
     document.querySelectorAll("main section, [data-analytics-section]").forEach((section) => sectionObserver.observe(section))
 
     const onClick = (event: MouseEvent) => {
-      const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[data-analytics-event], a[href$='.pdf']")
-      if (!anchor) return
-      send([{ type: "download", ...base(), label: anchor.dataset.analyticsEvent || anchor.textContent?.trim().slice(0, 120) || "Download" }])
+      const target = (event.target as HTMLElement).closest<HTMLElement>("[data-analytics-event], a[href$='.pdf']")
+      if (!target) return
+      send([{ type: "download", ...base(), label: target.dataset.analyticsEvent || target.textContent?.trim().slice(0, 120) || "Download" }])
     }
 
     const onPageHide = () => send([{ type: "page_exit", ...base(), durationSeconds: Math.round((Date.now() - pageStartedAt) / 1000) }])

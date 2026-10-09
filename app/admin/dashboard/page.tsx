@@ -20,7 +20,7 @@ const cards = [
   { key: "pageViews", label: "Page views", icon: Eye },
   { key: "sessions", label: "Visitor sessions", icon: Users },
   { key: "downloads", label: "Playbook downloads", icon: Download },
-  { key: "leads", label: "Contact messages", icon: Mail },
+  { key: "leads", label: "Captured leads", icon: Mail },
 ] as const
 
 export default function AdminDashboard() {

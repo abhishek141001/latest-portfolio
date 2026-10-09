@@ -1,10 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowUpRight, FileDown, Github, Linkedin, Twitter } from "lucide-react"
+import { ArrowUpRight, Github, Linkedin, Twitter } from "lucide-react"
 import { blogs } from "@/data/blogs"
 import { projects } from "@/data/projects"
 import { Metadata } from "next"
 import profileImage from "../assets/abhishekraj.png"
+import { PlaybookEmailGate } from "@/components/playbook-email-gate"
 
 export const metadata: Metadata = {
   title: "Abhishek Raj | Software Developer",
@@ -93,23 +94,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <a
-          href="/playbooks/ai-native-engineer-playbook.pdf"
-          download
-          data-analytics-event="playbook_download"
-          className="playbook-banner mt-4 grid gap-3 border-2 border-primary bg-primary p-3 text-primary-foreground transition-opacity hover:opacity-90 sm:grid-cols-[1fr_auto] sm:items-center sm:p-4"
-        >
-          <div>
-            <p className="text-[10px] font-bold tracking-[0.14em] text-primary-foreground/70">FREE · 30-PAGE GUIDE FOR NEW DEVELOPERS</p>
-            <p className="mt-1 text-base font-bold sm:text-lg">Learn to build with Claude Code or Codex without blindly trusting AI.</p>
-            <p className="mt-1 max-w-3xl text-xs leading-5 text-primary-foreground/80">
-              Real workflows, simple examples, diagrams, and checklists—based on 208 AI coding sessions at an Indian startup with 100,000+ paying customers.
-            </p>
-          </div>
-          <span className="inline-flex w-fit items-center gap-1.5 border border-primary-foreground/60 bg-primary-foreground px-3 py-2 text-xs font-bold text-primary">
-            <FileDown className="h-3.5 w-3.5" /> Get the playbook
-          </span>
-        </a>
+        <PlaybookEmailGate />
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
           {socialLinks.map(({ href, label, icon: Icon }) => (
             <Link key={label} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
