@@ -1,6 +1,6 @@
 # Blog SEO and search console handoff
 
-The new collection adds 50 distinct engineering guides, grouped into 10 topic hubs at `/blog/topics/<topic>`. Articles use server-rendered Markdown, crawlable citations and internal links, canonical URLs, unique descriptions, article and breadcrumb JSON-LD, author links, dates, and social cards. All articles remain available in `/blog`, `/sitemap.xml`, and `/feed.xml`.
+The planned collection contains 50 distinct engineering guides across 10 topic clusters. The current delivery contains 30 completed guides across six populated topic hubs at `/blog/topics/<topic>`. Remaining topics stay unpublished until their articles are complete. See [the progress checkpoint](blog-progress.md). Articles use server-rendered Markdown, crawlable citations and internal links, canonical URLs, unique descriptions, article and breadcrumb JSON-LD, author links, dates, and social cards. All articles remain available in `/blog`, `/sitemap.xml`, and `/feed.xml`.
 
 ## Configure ownership
 
@@ -30,7 +30,7 @@ Use Search Console to learn which questions receive impressions, then improve th
 ## Repository maintenance
 
 - Edit one article in `data/articles/<slug>.json`.
-- `node scripts/validate-articles.mjs` checks the complete collection's count, depth, source references, metadata, and internal links. It writes a validation report to `docs/article-validation.json`.
+- `node scripts/validate-articles.mjs` checks the complete 50-article target. While the collection is in progress, use `node scripts/validate-articles.mjs --partial --report` to validate completed articles and save their report to `docs/article-validation.json`.
 - `node scripts/generate-article-index.mjs` refreshes static imports after adding or removing article files. This also runs before normal builds.
 - `node scripts/check-blog-renderer.cjs` checks Markdown rendering and injection boundaries.
 - `npx tsc --noEmit` checks types; `npm run build` checks production compilation and static rendering.

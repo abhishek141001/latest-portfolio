@@ -1,0 +1,248 @@
+{
+  "checked": "2026-11-10",
+  "targetCount": 50,
+  "count": 30,
+  "complete": false,
+  "articles": [
+    {
+      "slug": "agent-handoffs-shared-state",
+      "agentTask": "/root/article_08",
+      "words": 1561,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "agent-loop-state-machine",
+      "agentTask": "/root/article_01",
+      "words": 1642,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "agentic-rag-vs-classic-rag",
+      "agentTask": "/root/article_24",
+      "words": 1652,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 3
+    },
+    {
+      "slug": "ai-agent-audit-logs",
+      "agentTask": "/root/article_30",
+      "words": 1492,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-cost-budgets",
+      "agentTask": "/root/article_12",
+      "words": 1618,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-evaluation-datasets",
+      "agentTask": "/root/article_16",
+      "words": 1609,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-incident-response",
+      "agentTask": "/root/article_15",
+      "words": 1569,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-latency-optimization",
+      "agentTask": "/root/article_13",
+      "words": 1556,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-memory-architecture",
+      "agentTask": "/root/article_05",
+      "words": 1563,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 3
+    },
+    {
+      "slug": "ai-agent-observability-tracing",
+      "agentTask": "/root/article_11",
+      "words": 1552,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-rate-limits-backpressure",
+      "agentTask": "/root/article_14",
+      "words": 1597,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-regression-ci",
+      "agentTask": "/root/article_19",
+      "words": 1533,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-tool-design",
+      "agentTask": "/root/article_04",
+      "words": 1472,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "durable-ai-agent-workflows",
+      "agentTask": "/root/article_06",
+      "words": 1547,
+      "sources": 6,
+      "citations": 6,
+      "internalLinks": 3
+    },
+    {
+      "slug": "event-driven-ai-agents",
+      "agentTask": "/root/article_10",
+      "words": 1528,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "human-in-the-loop-agent-approvals",
+      "agentTask": "/root/article_09",
+      "words": 1575,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "hybrid-search-rag-agents",
+      "agentTask": "/root/article_21",
+      "words": 1556,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "least-privilege-agent-tools",
+      "agentTask": "/root/article_27",
+      "words": 1547,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "llm-judge-calibration",
+      "agentTask": "/root/article_17",
+      "words": 1562,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "multi-tenant-ai-agent-security",
+      "agentTask": "/root/article_29",
+      "words": 1625,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "online-evaluation-ai-agents",
+      "agentTask": "/root/article_20",
+      "words": 1521,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "parallel-agent-orchestration",
+      "agentTask": "/root/article_07",
+      "words": 1560,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "planner-executor-agent-architecture",
+      "agentTask": "/root/article_03",
+      "words": 1636,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 3
+    },
+    {
+      "slug": "prompt-injection-agent-defense",
+      "agentTask": "/root/article_26",
+      "words": 1644,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "rag-chunking-document-ingestion",
+      "agentTask": "/root/article_22",
+      "words": 1590,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "rag-freshness-deletion-consistency",
+      "agentTask": "/root/article_25",
+      "words": 1651,
+      "sources": 4,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "rag-reranking-context-selection",
+      "agentTask": "/root/article_23",
+      "words": 1484,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "sandboxing-ai-code-execution",
+      "agentTask": "/root/article_28",
+      "words": 1597,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "single-agent-vs-multi-agent-systems",
+      "agentTask": "/root/article_02",
+      "words": 1519,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "testing-ai-agent-tool-use",
+      "agentTask": "/root/article_18",
+      "words": 1558,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    }
+  ]
+}

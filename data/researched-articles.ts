@@ -15,8 +15,23 @@ import article11 from "./articles/ai-agent-cost-budgets.json"
 import article12 from "./articles/ai-agent-latency-optimization.json"
 import article13 from "./articles/ai-agent-rate-limits-backpressure.json"
 import article14 from "./articles/ai-agent-incident-response.json"
+import article15 from "./articles/ai-agent-evaluation-datasets.json"
+import article16 from "./articles/llm-judge-calibration.json"
+import article17 from "./articles/testing-ai-agent-tool-use.json"
+import article18 from "./articles/ai-agent-regression-ci.json"
+import article19 from "./articles/online-evaluation-ai-agents.json"
+import article20 from "./articles/hybrid-search-rag-agents.json"
+import article21 from "./articles/rag-chunking-document-ingestion.json"
+import article22 from "./articles/rag-reranking-context-selection.json"
+import article23 from "./articles/agentic-rag-vs-classic-rag.json"
+import article24 from "./articles/rag-freshness-deletion-consistency.json"
+import article25 from "./articles/prompt-injection-agent-defense.json"
+import article26 from "./articles/least-privilege-agent-tools.json"
+import article27 from "./articles/sandboxing-ai-code-execution.json"
+import article28 from "./articles/multi-tenant-ai-agent-security.json"
+import article29 from "./articles/ai-agent-audit-logs.json"
 
-const drafts = [article0, article1, article2, article3, article4, article5, article6, article7, article8, article9, article10, article11, article12, article13, article14]
+const drafts = [article0, article1, article2, article3, article4, article5, article6, article7, article8, article9, article10, article11, article12, article13, article14, article15, article16, article17, article18, article19, article20, article21, article22, article23, article24, article25, article26, article27, article28, article29]
 export const researchedArticles: Blog[] = drafts.map((draft) => ({
   ...draft,
   format: "Deep dive",

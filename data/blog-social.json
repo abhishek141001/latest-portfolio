@@ -1,0 +1,182 @@
+[
+  {
+    "slug": "building-modern-web-applications-with-nextjs",
+    "title": "Building Modern Web Applications with Next.js"
+  },
+  {
+    "slug": "mastering-typescript-for-modern-web-development",
+    "title": "Mastering TypeScript for Modern Web Development"
+  },
+  {
+    "slug": "building-accessible-web-applications",
+    "title": "Building Accessible Web Applications: A Developer's Guide"
+  },
+  {
+    "slug": "optimizing-web-performance-in-2024",
+    "title": "Optimizing Web Performance in 2024: A Practical Guide"
+  },
+  {
+    "slug": "real-feedback-ai-code-editors",
+    "title": "Real Feedback on AI Code Editors: Using Cursor, Copilot, Rooh Code and Codeium in Production"
+  },
+  {
+    "slug": "real-struggles-building-product-from-scratch",
+    "title": "The Real Struggles of Building a Product from Scratch"
+  },
+  {
+    "slug": "ai-native-engineering-from-ai-assistance-to-ai-collaboration",
+    "title": "AI-Native Engineering: Moving From AI Assistance to AI Collaboration"
+  },
+  {
+    "slug": "agentic-coding-workflows-that-ship-reliable-software",
+    "title": "Agentic Coding Workflows: How to Ship Reliable Software With AI Agents"
+  },
+  {
+    "slug": "context-engineering-for-ai-agents-practical-guide",
+    "title": "Context Engineering for AI Agents: A Practical Guide for Better Results"
+  },
+  {
+    "slug": "when-to-use-subagents-ai-engineering",
+    "title": "When to Use Subagents in AI Engineering—and When Not To"
+  },
+  {
+    "slug": "mcp-tools-ai-agents-safe-integration",
+    "title": "MCP and AI Agent Tools: Building Safe, Useful Integrations"
+  },
+  {
+    "slug": "graph-engineering-ai-agent-workflows",
+    "title": "Graph Engineering for AI Agents: Design Workflows, Not Just Prompts"
+  },
+  {
+    "slug": "evaluating-ai-agents-production",
+    "title": "How to Evaluate AI Agents in Production: Metrics That Actually Matter"
+  },
+  {
+    "slug": "typed-decisions-vs-llms-jev-typesafe-ai",
+    "title": "Typed Decisions vs LLMs: When You Don't Need a Billion-Parameter Model"
+  },
+  {
+    "slug": "ai-native-engineering-playbook-2026",
+    "title": "The AI-Native Engineering Playbook: Context, Agents, Graphs, and Trust"
+  },
+  {
+    "slug": "agent-loop-state-machine",
+    "title": "Designing an AI Agent Loop as a State Machine"
+  },
+  {
+    "slug": "single-agent-vs-multi-agent-systems",
+    "title": "Single Agent vs Multi-Agent Systems: An Architecture Decision Guide"
+  },
+  {
+    "slug": "planner-executor-agent-architecture",
+    "title": "Planner-Executor Agents: Plans, Validation, and Replanning"
+  },
+  {
+    "slug": "ai-agent-tool-design",
+    "title": "AI Agent Tool Design: Schemas, Contracts, and Error Semantics"
+  },
+  {
+    "slug": "ai-agent-memory-architecture",
+    "title": "AI Agent Memory Architecture: Working, Episodic, and Semantic Memory"
+  },
+  {
+    "slug": "durable-ai-agent-workflows",
+    "title": "Durable AI Agent Workflows: Checkpoints, Replay, and Recovery"
+  },
+  {
+    "slug": "parallel-agent-orchestration",
+    "title": "Parallel Agent Orchestration: Fan-Out, Fan-In, and Backpressure"
+  },
+  {
+    "slug": "agent-handoffs-shared-state",
+    "title": "Agent Handoffs: Shared State, Ownership, and Context Contracts"
+  },
+  {
+    "slug": "human-in-the-loop-agent-approvals",
+    "title": "Human-in-the-Loop Agents: Designing Useful Approval Gates"
+  },
+  {
+    "slug": "event-driven-ai-agents",
+    "title": "Event-Driven AI Agents: Queues, Delivery Semantics, and Recovery"
+  },
+  {
+    "slug": "ai-agent-observability-tracing",
+    "title": "AI Agent Observability: Traces, Metrics, and Debugging"
+  },
+  {
+    "slug": "ai-agent-cost-budgets",
+    "title": "AI Agent Cost Management: Budgets, Attribution, and Cost per Task"
+  },
+  {
+    "slug": "ai-agent-latency-optimization",
+    "title": "AI Agent Latency Optimization: Critical Paths and Tail Latency"
+  },
+  {
+    "slug": "ai-agent-rate-limits-backpressure",
+    "title": "AI Agent Rate Limits: Backpressure and Admission Control"
+  },
+  {
+    "slug": "ai-agent-incident-response",
+    "title": "AI Agent Incident Response: Kill Switches, Rollback, and Recovery"
+  },
+  {
+    "slug": "ai-agent-evaluation-datasets",
+    "title": "Building AI Agent Evaluation Datasets Without Data Leakage"
+  },
+  {
+    "slug": "llm-judge-calibration",
+    "title": "LLM-as-a-Judge: Calibration, Bias, and Reliable Scoring"
+  },
+  {
+    "slug": "testing-ai-agent-tool-use",
+    "title": "Testing AI Agent Tool Use: Simulators, Contracts, and Side Effects"
+  },
+  {
+    "slug": "ai-agent-regression-ci",
+    "title": "AI Agent Regression Testing in CI: Gates That Catch Real Failures"
+  },
+  {
+    "slug": "online-evaluation-ai-agents",
+    "title": "Online Evaluation for AI Agents: Experiments and Guardrails"
+  },
+  {
+    "slug": "hybrid-search-rag-agents",
+    "title": "Hybrid Search for RAG Agents: BM25, Vectors, and Fusion"
+  },
+  {
+    "slug": "rag-chunking-document-ingestion",
+    "title": "RAG Chunking and Document Ingestion: Preserve Meaning and Provenance"
+  },
+  {
+    "slug": "rag-reranking-context-selection",
+    "title": "RAG Reranking: Selecting Evidence Under a Context Budget"
+  },
+  {
+    "slug": "agentic-rag-vs-classic-rag",
+    "title": "Agentic RAG vs Classic RAG: When Iterative Retrieval Helps"
+  },
+  {
+    "slug": "rag-freshness-deletion-consistency",
+    "title": "RAG Freshness: Updates, Deletion, and Index Consistency"
+  },
+  {
+    "slug": "prompt-injection-agent-defense",
+    "title": "Prompt Injection in AI Agents: Trust Boundaries and Defenses"
+  },
+  {
+    "slug": "least-privilege-agent-tools",
+    "title": "Least Privilege for AI Agents: Scoped Credentials and Capability Design"
+  },
+  {
+    "slug": "sandboxing-ai-code-execution",
+    "title": "Sandboxing AI Code Execution: Isolation and Network Controls"
+  },
+  {
+    "slug": "multi-tenant-ai-agent-security",
+    "title": "Multi-Tenant AI Agents: Data Isolation Across Retrieval and Tools"
+  },
+  {
+    "slug": "ai-agent-audit-logs",
+    "title": "AI Agent Audit Logs: Provenance, Privacy, and Action Accountability"
+  }
+]

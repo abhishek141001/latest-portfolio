@@ -43,4 +43,4 @@ for (const file of files) {
 }
 if (errors.length) { console.error(errors.join('\n')); process.exitCode = 1 }
 else console.log(`Validated ${rows.length} articles: ${rows.reduce((sum, row) => sum + row.words, 0).toLocaleString()} words, ${rows.reduce((sum, row) => sum + row.sources, 0)} source references.`)
-if (!partial && !errors.length) fs.writeFileSync('docs/article-validation.json', JSON.stringify({ checked: '2026-11-10', count: rows.length, articles: rows }, null, 2) + '\n')
+if ((!partial || process.argv.includes('--report')) && !errors.length) fs.writeFileSync('docs/article-validation.json', JSON.stringify({ checked: '2026-11-10', targetCount: plan.length, count: rows.length, complete: rows.length === plan.length, articles: rows }, null, 2) + '\n')
