@@ -40,8 +40,10 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  alternates: { types: { "application/rss+xml": "/feed.xml" } },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
   },
 }
 

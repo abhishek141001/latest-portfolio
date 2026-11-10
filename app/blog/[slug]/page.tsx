@@ -1,346 +1,91 @@
-// 'use client' removed to make this a server component
 import { Badge } from "@/components/ui/badge"
 import { blogs } from "@/data/blogs"
 import Image from "next/image"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { notFound } from 'next/navigation'
+import { notFound } from "next/navigation"
 import Link from "next/link"
-import { Metadata } from "next"
-import Script from "next/script"
-import { Fragment } from "react"
+import type { Metadata } from "next"
 import { absoluteUrl, siteConfig } from "@/lib/site"
+import { jsonLd, renderBlogMarkdown, wordCount } from "@/lib/blog-markdown"
+import { topicClusters } from "@/lib/blog-topics"
 
-// Default avatar image URL
-const DEFAULT_AVATAR = "https://media.licdn.com/dms/image/v2/D5603AQEfYoJxdIN1fA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724933283200?e=1755734400&v=beta&t=ElkRWO96EGrWuMiBQsU7hTSkENcteEdg53FVJcAwO8U"
-const DEFAULT_AUTHOR = {
-  name: "Anonymous",
-  avatar: DEFAULT_AVATAR,
-  bio: "No bio available"
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return blogs.map(({ slug }) => ({ slug }))
 }
 
-// Generate metadata for each blog post
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = blogs.find((p) => p.slug === params.slug)
-  
-  if (!post) {
-    return {
-      title: 'Blog Post Not Found | Abhishek Raj',
-      description: 'The requested blog post could not be found.',
-      robots: {
-        index: false,
-        follow: false,
-      }
-    }
-  }
-
-  // Clean content for meta description (remove markdown and limit length)
-  const cleanContent = post.content
-    .replace(/\*\*.*?\*\*/g, '') // Remove bold text
-    .replace(/##\s+/g, '') // Remove headings
-    .replace(/\n+/g, ' ') // Replace newlines with spaces
-    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-    .trim()
-    .substring(0, 160) // Limit to 160 characters for SEO
-
-  const metaDescription = cleanContent.length < post.content.length 
-    ? cleanContent + '...' 
-    : post.excerpt
-
-  const publishedDate = new Date(post.date).toISOString()
-  const modifiedDate = publishedDate
-
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const post = blogs.find(post => post.slug === params.slug)
+  if (!post) return { title: "Article not found", robots: { index: false, follow: false } }
+  const url = absoluteUrl(`/blog/${post.slug}`)
+  const image = post.coverImage && !post.coverImage.startsWith('data:') ? absoluteUrl(post.coverImage) : absoluteUrl(`/blog/${post.slug}/opengraph-image`)
   return {
-    title: `${post.title} | Abhishek Raj`,
-    description: metaDescription,
-    keywords: post.tags.join(', '),
-    authors: [{ name: post.author.name }],
-    creator: post.author.name,
-    publisher: 'Abhishek Raj',
-    formatDetection: {
-      email: false,
-      address: false,
-      telephone: false,
-    },
-    metadataBase: new URL(siteConfig.url),
-    alternates: {
-      canonical: `/blog/${post.slug}`,
-    },
+    title: post.title,
+    description: post.excerpt,
+    authors: [{ name: post.author.name, url: absoluteUrl('/about') }],
+    keywords: post.tags,
+    alternates: { canonical: url },
     openGraph: {
-      title: post.title,
-      description: metaDescription,
-      type: 'article',
-      publishedTime: publishedDate,
-      modifiedTime: modifiedDate,
-      authors: [post.author.name],
-      tags: post.tags,
-      siteName: 'Abhishek Raj - Software Developer',
-      locale: 'en_US',
-      images: post.coverImage ? [
-        {
-          url: post.coverImage,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-          type: 'image/jpeg',
-        }
-      ] : [],
+      title: post.title, description: post.excerpt, url, type: "article",
+      publishedTime: post.date, modifiedTime: post.modifiedDate || post.date,
+      authors: [absoluteUrl('/about')], tags: post.tags, siteName: siteConfig.name,
+      images: [{ url: image, width: 1200, height: 630, alt: post.title }],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: metaDescription,
-      creator: '@ojhaabhishekraj', // Replace with your Twitter handle
-      site: '@ojhaabhishekraj', // Replace with your Twitter handle
-      images: post.coverImage ? [post.coverImage] : [],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-   
-    other: {
-      'article:published_time': publishedDate,
-      'article:modified_time': modifiedDate,
-      'article:author': post.author.name,
-      'article:section': 'Technology',
-      'article:tag': post.tags.join(', '),
-      'og:image:width': '1200',
-      'og:image:height': '630',
-      'twitter:image:alt': post.title,
-    },
+    twitter: { card: "summary_large_image", title: post.title, description: post.excerpt, creator: siteConfig.xHandle, images: [image] },
   }
 }
 
 export default function PostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
-  const post = blogs.find((p) => p.slug === slug)
-
-  if (!post) {
-    notFound()
-  }
-
-  const author = post.author || DEFAULT_AUTHOR
-
-  // Function to process content and identify subheadings
-  const processContent = (content: string) => {
-    return content.split("\n").map((paragraph, index) => {
-      // Check if the paragraph is a markdown heading (## Title)
-      if (/^##\s+.+$/.test(paragraph)) {
-        const headingText = paragraph.replace(/^##\s+/, "")
-        const headingId = headingText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-        const figures = post.figures?.filter((figure) => figure.afterHeading === headingId) || []
-        return (
-          <Fragment key={index}>
-            <h2 id={headingId} className="text-2xl font-bold mt-8 mb-4 text-primary scroll-mt-20">
-              {headingText}
-            </h2>
-            {figures.map((figure) => (
-              <figure key={figure.src} className="my-6 overflow-hidden rounded-lg border bg-muted/30">
-                <Image src={figure.src} alt={figure.alt} width={1600} height={900} className="h-auto w-full" />
-                <figcaption className="border-t px-4 py-3 text-sm text-muted-foreground">{figure.caption}</figcaption>
-              </figure>
-            ))}
-          </Fragment>
-        )
-      }
-      // Check if the paragraph is a numbered subheading (e.g., "1. Title:")
-      else if (/^\d+\.\s+.+:$/.test(paragraph)) {
-        const headingId = paragraph.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-        return (
-          <h2 key={index} id={headingId} className="text-2xl font-bold mt-8 mb-4 text-primary scroll-mt-20">
-            {paragraph}
-          </h2>
-        )
-      }
-      // Check if the paragraph is a bullet point
-      else if (paragraph.trim().startsWith("-")) {
-        const bulletText = paragraph.replace(/^-\s*/, "")
-        return (
-          <li key={index} className="ml-6 mb-2 list-disc">
-            {processBoldText(bulletText)}
-          </li>
-        )
-      }
-      // Regular paragraph
-      else if (paragraph.trim()) {
-        return (
-          <p key={index} className="mb-4 text-lg leading-relaxed">
-            {processBoldText(paragraph)}
-          </p>
-        )
-      }
-      // Empty line
-      return <br key={index} />
-    })
-  }
-
-  // Function to process bold text (**text**)
-  const processBoldText = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/g)
-    return parts.map((part, index) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        const boldText = part.slice(2, -2)
-        return <strong key={index} className="font-bold">{boldText}</strong>
-      }
-      return part
-    })
-  }
-
-  // Generate structured data for SEO
-  const generateStructuredData = () => {
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": post.title,
-      "description": post.excerpt,
-      "image": post.coverImage,
-      "author": {
-        "@type": "Person",
-        "name": post.author.name,
-        "url": siteConfig.url,
-        "image": post.author.avatar
+  const post = blogs.find(post => post.slug === params.slug)
+  if (!post) notFound()
+  const { html, headings } = renderBlogMarkdown(post.content, post.figures, new Set(blogs.map(article => article.slug)))
+  const cluster = topicClusters.find(cluster => cluster.slug === post.cluster)
+  const explicitRelated = (post.relatedSlugs || []).map(slug => blogs.find(candidate => candidate.slug === slug)).filter((candidate): candidate is typeof post => Boolean(candidate))
+  const related = [...explicitRelated, ...blogs.filter(candidate => candidate.slug !== post.slug && !explicitRelated.some(item => item.slug === candidate.slug) && (post.cluster ? candidate.cluster === post.cluster : candidate.tags.some(tag => post.tags.includes(tag))))].slice(0, 3)
+  const url = absoluteUrl(`/blog/${post.slug}`)
+  const image = post.coverImage && !post.coverImage.startsWith('data:') ? absoluteUrl(post.coverImage) : absoluteUrl(`/blog/${post.slug}/opengraph-image`)
+  const crumbs = [{ name: 'Home', url: absoluteUrl('/') }, { name: 'Blog', url: absoluteUrl('/blog') }, ...(cluster ? [{ name: cluster.title, url: absoluteUrl(`/blog/topics/${cluster.slug}`) }] : []), { name: post.title, url }]
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting', '@id': `${url}#article`, headline: post.title,
+        description: post.excerpt, image: [image], url,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        author: { '@type': 'Person', name: post.author.name, url: absoluteUrl('/about') },
+        publisher: { '@type': 'Person', name: siteConfig.name, url: siteConfig.url },
+        datePublished: post.date, dateModified: post.modifiedDate || post.date,
+        articleSection: cluster?.title || 'Software Engineering', keywords: post.tags,
+        wordCount: wordCount(post.content), timeRequired: `PT${Math.ceil(wordCount(post.content) / 220)}M`,
+        inLanguage: 'en', citation: post.sources?.map(source => source.url),
+        isAccessibleForFree: true,
       },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Abhishek Raj"
-      },
-      "datePublished": new Date(post.date).toISOString(),
-      "dateModified": new Date(post.date).toISOString(),
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": absoluteUrl(`/blog/${post.slug}`)
-      },
-      "keywords": post.tags.join(', '),
-      "articleSection": "Technology",
-      "wordCount": post.content.split(' ').length,
-      "timeRequired": post.readTime,
-      "inLanguage": "en-US"
-    }
-
-    return JSON.stringify(structuredData)
+      { '@type': 'BreadcrumbList', itemListElement: crumbs.map((crumb, index) => ({ '@type': 'ListItem', position: index + 1, name: crumb.name, item: crumb.url })) },
+    ],
   }
-
   return (
-    <>
-      {/* Structured Data for SEO */}
-      <Script
-        id="structured-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: generateStructuredData(),
-        }}
-      />
-      
-      <article className="container py-12 md:py-16 px-2 md:px-4 lg:px-20">
-      {/* Cover Image */}
-      {post.coverImage && (
-        <div className="relative w-full h-[300px] md:h-[400px] mb-8 rounded-lg overflow-hidden">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      )}
-
-      {/* Header */}
-      <header className="text-start mb-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-          {post.title}
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-4">{post.excerpt}</p>
-        
-        {/* Author Info */}
-        <div className="flex items-start gap-4 mb-4">
-          <Avatar className="h-10 w-10 mt-1">
-            <AvatarImage src={author.avatar} alt={author.name} />
-            <AvatarFallback>{author.name.slice(0, 2)}</AvatarFallback>
-          </Avatar>
-          <div>
-            <p className="font-medium mb-2">{author.name}</p>
-            {author.bio && (
-              <div className="text-sm text-muted-foreground">
-                {author.bio}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-6 text-sm text-muted-foreground">
-          <time dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </time>
-          <span>•</span>
-          <span>{post.readTime}</span>
-        </div>
-        {post.sourceUrl && (
-          <a
-            href={post.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
-          >
-            {post.sourceLabel || "Read the original post"} ↗
-          </a>
-        )}
+    <article className="mx-auto max-w-4xl px-4 py-10 md:py-16">
+      <script id="article-structured-data" type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
+      <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted-foreground">
+        <ol className="flex flex-wrap gap-2">
+          {crumbs.map((crumb, index) => <li key={crumb.url}>{index > 0 && <span aria-hidden="true" className="mr-2">/</span>}{index === crumbs.length - 1 ? <span aria-current="page">{crumb.name}</span> : <Link href={new URL(crumb.url).pathname} className="hover:underline">{crumb.name}</Link>}</li>)}
+        </ol>
+      </nav>
+      {post.coverImage && <div className="relative mb-8 h-60 overflow-hidden rounded-lg md:h-96"><Image src={post.coverImage} alt={post.title} fill className="object-cover" priority sizes="(max-width: 896px) 100vw, 896px" /></div>}
+      <header className="mb-8">
+        {cluster && <Link href={`/blog/topics/${cluster.slug}`} className="text-sm font-semibold text-primary hover:underline">{cluster.title}</Link>}
+        <h1 className="mb-4 mt-2 text-3xl font-extrabold tracking-tight md:text-4xl">{post.title}</h1>
+        <p className="mb-5 text-xl text-muted-foreground">{post.excerpt}</p>
+        <p className="text-sm"><Link href="/about" rel="author" className="font-semibold hover:underline">{post.author.name}</Link> · <time dateTime={post.date}>{new Date(`${post.date}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time> · {post.readTime}</p>
+        {post.aiAssisted && <p className="mt-3 text-sm text-muted-foreground">Prepared with AI research assistance. Sources are linked throughout; worked examples are illustrative unless stated otherwise. <Link href="/blog/editorial-policy" className="underline">Editorial approach</Link>.</p>}
+        {post.sourceUrl && <a href={post.sourceUrl} className="mt-3 inline-block text-sm text-primary underline">{post.sourceLabel || 'Read the original post'}</a>}
       </header>
-
-      {/* Table of Contents */}
-      {post.subheadings && post.subheadings.length > 0 && (
-        <nav className="mb-8 p-4 md:p-6 bg-muted/50 rounded-lg">
-          <h2 className="text-lg font-semibold mb-3">Table of Contents</h2>
-          <ul className="space-y-2">
-            {post.subheadings.map((heading) => (
-              <li key={heading.id}>
-                <Link 
-                  href={`#${heading.id}`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {heading.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-
-      {/* Main Content */}
-      <div className="prose prose-lg max-w-none">
-        <div className="text-lg leading-relaxed">
-          {processContent(post.content)}
-        </div>
-
-        {/* Tags Section */}
-        <div className="mt-8 pt-6 border-t">
-          <h3 className="text-lg font-semibold mb-3">Tags</h3>
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="mt-12 text-center text-sm text-muted-foreground">
-        <p>Thank you for reading! Stay tuned for more articles.</p>
-      </footer>
+      {headings.length > 0 && <nav aria-label="Table of contents" className="mb-8 rounded-lg border bg-muted/30 p-5"><h2 className="mb-3 font-semibold">In this article</h2><ul className="space-y-2 text-sm">{headings.filter(heading => heading.level === 2).map(heading => <li key={heading.id}><a href={`#${heading.id}`} className="text-primary hover:underline">{heading.title}</a></li>)}</ul></nav>}
+      <div className="blog-content" dangerouslySetInnerHTML={{ __html: html }} />
+      {post.sources && <section aria-labelledby="reference-list" className="mt-10 border-t pt-6"><h2 id="reference-list" className="mb-3 text-xl font-bold">Source reference list</h2><ul className="space-y-2 text-sm">{post.sources.map(source => <li key={source.url}><a href={source.url} className="break-words text-primary underline">{source.title}</a></li>)}</ul></section>}
+      <div className="mt-8 flex flex-wrap gap-2">{post.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}</div>
+      {related.length > 0 && <section aria-labelledby="related-reading" className="mt-10 border-t pt-6"><h2 id="related-reading" className="mb-4 text-xl font-bold">Related reading</h2><ul className="space-y-4">{related.map(article => <li key={article.slug}><Link href={`/blog/${article.slug}`} className="font-semibold text-primary hover:underline">{article.title}</Link><p className="mt-1 text-sm text-muted-foreground">{article.excerpt}</p></li>)}</ul></section>}
+      <footer className="mt-10 border-t pt-6 text-sm text-muted-foreground">Found an issue or have a question? <Link href="/contact" className="text-primary underline">Send a correction</Link>. <Link href="/blog" className="ml-3 text-primary underline">Browse all articles</Link>.</footer>
     </article>
-    </>
   )
 }

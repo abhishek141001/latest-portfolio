@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "slug": "agent-loop-state-machine",
+    "title": "Designing an AI Agent Loop as a State Machine",
+    "cluster": "agent-architecture",
+    "angle": "Explicit states, stop conditions, bounded loops and a support-ticket walkthrough."
+  },
+  {
+    "id": 2,
+    "slug": "single-agent-vs-multi-agent-systems",
+    "title": "Single Agent vs Multi-Agent Systems: An Architecture Decision Guide",
+    "cluster": "agent-architecture",
+    "angle": "Coordination costs, error propagation and a quantitative decision example."
+  },
+  {
+    "id": 3,
+    "slug": "planner-executor-agent-architecture",
+    "title": "Planner-Executor Agents: Plans, Validation, and Replanning",
+    "cluster": "agent-architecture",
+    "angle": "Versioned plans, executable steps, stale plans and acceptance conditions."
+  },
+  {
+    "id": 4,
+    "slug": "ai-agent-tool-design",
+    "title": "AI Agent Tool Design: Schemas, Contracts, and Error Semantics",
+    "cluster": "agent-architecture",
+    "angle": "Tool API contracts with typed validation and safe mutation boundaries."
+  },
+  {
+    "id": 5,
+    "slug": "ai-agent-memory-architecture",
+    "title": "AI Agent Memory Architecture: Working, Episodic, and Semantic Memory",
+    "cluster": "agent-architecture",
+    "angle": "Lifecycle, retrieval, TTL, conflicting memories and deletion."
+  },
+  {
+    "id": 6,
+    "slug": "durable-ai-agent-workflows",
+    "title": "Durable AI Agent Workflows: Checkpoints, Replay, and Recovery",
+    "cluster": "orchestration",
+    "angle": "Failure recovery and deterministic replay vs model resampling."
+  },
+  {
+    "id": 7,
+    "slug": "parallel-agent-orchestration",
+    "title": "Parallel Agent Orchestration: Fan-Out, Fan-In, and Backpressure",
+    "cluster": "orchestration",
+    "angle": "Concurrency math, join semantics and straggler cancellation."
+  },
+  {
+    "id": 8,
+    "slug": "agent-handoffs-shared-state",
+    "title": "Agent Handoffs: Shared State, Ownership, and Context Contracts",
+    "cluster": "orchestration",
+    "angle": "Handoff envelope, ownership fencing and provenance."
+  },
+  {
+    "id": 9,
+    "slug": "human-in-the-loop-agent-approvals",
+    "title": "Human-in-the-Loop Agents: Designing Useful Approval Gates",
+    "cluster": "orchestration",
+    "angle": "Approval snapshots, expiry, TOCTOU and resumption."
+  },
+  {
+    "id": 10,
+    "slug": "event-driven-ai-agents",
+    "title": "Event-Driven AI Agents: Queues, Delivery Semantics, and Recovery",
+    "cluster": "orchestration",
+    "angle": "At-least-once delivery, outbox, deduplication and poison messages."
+  },
+  {
+    "id": 11,
+    "slug": "ai-agent-observability-tracing",
+    "title": "AI Agent Observability: Traces, Metrics, and Debugging",
+    "cluster": "agent-operations",
+    "angle": "Trace design, cardinality, redaction and actionable dashboards."
+  },
+  {
+    "id": 12,
+    "slug": "ai-agent-cost-budgets",
+    "title": "AI Agent Cost Management: Budgets, Attribution, and Cost per Task",
+    "cluster": "agent-operations",
+    "angle": "Preflight reserves, tool costs and successful-outcome economics."
+  },
+  {
+    "id": 13,
+    "slug": "ai-agent-latency-optimization",
+    "title": "AI Agent Latency Optimization: Critical Paths and Tail Latency",
+    "cluster": "agent-operations",
+    "angle": "Latency decomposition, parallelism constraints and streaming."
+  },
+  {
+    "id": 14,
+    "slug": "ai-agent-rate-limits-backpressure",
+    "title": "AI Agent Rate Limits: Backpressure and Admission Control",
+    "cluster": "agent-operations",
+    "angle": "Token vs request budgets, fair queuing and overload."
+  },
+  {
+    "id": 15,
+    "slug": "ai-agent-incident-response",
+    "title": "AI Agent Incident Response: Kill Switches, Rollback, and Recovery",
+    "cluster": "agent-operations",
+    "angle": "Containment, feature gates, state recovery and postmortems."
+  },
+  {
+    "id": 16,
+    "slug": "ai-agent-evaluation-datasets",
+    "title": "Building AI Agent Evaluation Datasets Without Data Leakage",
+    "cluster": "evaluation",
+    "angle": "Dataset design, splits, labels and evolving failure sets."
+  },
+  {
+    "id": 17,
+    "slug": "llm-judge-calibration",
+    "title": "LLM-as-a-Judge: Calibration, Bias, and Reliable Scoring",
+    "cluster": "evaluation",
+    "angle": "Rubrics, human agreement, pairwise bias and uncertainty."
+  },
+  {
+    "id": 18,
+    "slug": "testing-ai-agent-tool-use",
+    "title": "Testing AI Agent Tool Use: Simulators, Contracts, and Side Effects",
+    "cluster": "evaluation",
+    "angle": "Stateful simulators, fault injection and effects assertions."
+  },
+  {
+    "id": 19,
+    "slug": "ai-agent-regression-ci",
+    "title": "AI Agent Regression Testing in CI: Gates That Catch Real Failures",
+    "cluster": "evaluation",
+    "angle": "Version matrices, nondeterminism and statistical release gates."
+  },
+  {
+    "id": 20,
+    "slug": "online-evaluation-ai-agents",
+    "title": "Online Evaluation for AI Agents: Experiments and Guardrails",
+    "cluster": "evaluation",
+    "angle": "Canary, A/B units, delayed outcomes and sequential pitfalls."
+  },
+  {
+    "id": 21,
+    "slug": "hybrid-search-rag-agents",
+    "title": "Hybrid Search for RAG Agents: BM25, Vectors, and Fusion",
+    "cluster": "retrieval",
+    "angle": "Rank fusion, filters and retrieval evaluation."
+  },
+  {
+    "id": 22,
+    "slug": "rag-chunking-document-ingestion",
+    "title": "RAG Chunking and Document Ingestion: Preserve Meaning and Provenance",
+    "cluster": "retrieval",
+    "angle": "Structure-aware chunking, parsing, metadata and updates."
+  },
+  {
+    "id": 23,
+    "slug": "rag-reranking-context-selection",
+    "title": "RAG Reranking: Selecting Evidence Under a Context Budget",
+    "cluster": "retrieval",
+    "angle": "Candidate depth, relevance, diversity, latency and abstention."
+  },
+  {
+    "id": 24,
+    "slug": "agentic-rag-vs-classic-rag",
+    "title": "Agentic RAG vs Classic RAG: When Iterative Retrieval Helps",
+    "cluster": "retrieval",
+    "angle": "Retrieval planning, stopping and comparative evaluation."
+  },
+  {
+    "id": 25,
+    "slug": "rag-freshness-deletion-consistency",
+    "title": "RAG Freshness: Updates, Deletion, and Index Consistency",
+    "cluster": "retrieval",
+    "angle": "Tombstones, access revocation, versions and stale caches."
+  },
+  {
+    "id": 26,
+    "slug": "prompt-injection-agent-defense",
+    "title": "Prompt Injection in AI Agents: Trust Boundaries and Defenses",
+    "cluster": "security",
+    "angle": "Untrusted retrieved text and confused deputy threats."
+  },
+  {
+    "id": 27,
+    "slug": "least-privilege-agent-tools",
+    "title": "Least Privilege for AI Agents: Scoped Credentials and Capability Design",
+    "cluster": "security",
+    "angle": "Capability grants, OAuth scopes and credential lifecycle."
+  },
+  {
+    "id": 28,
+    "slug": "sandboxing-ai-code-execution",
+    "title": "Sandboxing AI Code Execution: Isolation and Network Controls",
+    "cluster": "security",
+    "angle": "Isolation layers, resource limits, egress and secret handling."
+  },
+  {
+    "id": 29,
+    "slug": "multi-tenant-ai-agent-security",
+    "title": "Multi-Tenant AI Agents: Data Isolation Across Retrieval and Tools",
+    "cluster": "security",
+    "angle": "Tenant context propagation, ACL enforcement and negative tests."
+  },
+  {
+    "id": 30,
+    "slug": "ai-agent-audit-logs",
+    "title": "AI Agent Audit Logs: Provenance, Privacy, and Action Accountability",
+    "cluster": "security",
+    "angle": "Event schema, tamper evidence, retention and sensitive data."
+  },
+  {
+    "id": 31,
+    "slug": "structured-output-validation",
+    "title": "Structured LLM Outputs: JSON Schema and Semantic Validation",
+    "cluster": "ai-engineering",
+    "angle": "Schema vs business correctness, refusal handling and retries."
+  },
+  {
+    "id": 32,
+    "slug": "llm-model-routing",
+    "title": "LLM Model Routing: Quality, Cost, and Fallback Decisions",
+    "cluster": "ai-engineering",
+    "angle": "Routing policies and task-level evaluation, no current price claims."
+  },
+  {
+    "id": 33,
+    "slug": "llm-caching-agent-systems",
+    "title": "LLM Caching for Agent Systems: Exact, Semantic, and Prompt Caches",
+    "cluster": "ai-engineering",
+    "angle": "Correctness keys, identity, invalidation and cache economics."
+  },
+  {
+    "id": 34,
+    "slug": "llm-fine-tuning-vs-rag",
+    "title": "Fine-Tuning vs RAG vs Prompting: Choosing the Right Intervention",
+    "cluster": "ai-engineering",
+    "angle": "Knowledge vs behavior, evaluation and dataset requirements."
+  },
+  {
+    "id": 35,
+    "slug": "llm-gateway-architecture",
+    "title": "LLM Gateway Architecture: Reliability, Policy, and Provider Abstraction",
+    "cluster": "ai-engineering",
+    "angle": "Normalized errors, routing, observability and semantic mismatches."
+  },
+  {
+    "id": 36,
+    "slug": "idempotency-ai-agent-actions",
+    "title": "Idempotency for AI Agent Actions: Preventing Duplicate Side Effects",
+    "cluster": "reliability",
+    "angle": "Stable action identities, request hashing and ambiguous timeouts."
+  },
+  {
+    "id": 37,
+    "slug": "ai-agent-retries-timeouts",
+    "title": "AI Agent Retries and Timeouts: Deadlines, Jitter, and Retry Budgets",
+    "cluster": "reliability",
+    "angle": "Nested retry amplification, retry classes and cancellation."
+  },
+  {
+    "id": 38,
+    "slug": "agent-workflow-compensating-transactions",
+    "title": "Compensating Transactions for AI Agent Workflows",
+    "cluster": "reliability",
+    "angle": "Sagas, partial effects, irreversibility and recovery ledger."
+  },
+  {
+    "id": 39,
+    "slug": "ai-agent-state-versioning",
+    "title": "AI Agent State Versioning: Migrations and In-Flight Runs",
+    "cluster": "reliability",
+    "angle": "Schema migration, checkpoint compatibility and rollback."
+  },
+  {
+    "id": 40,
+    "slug": "agent-circuit-breakers-fallbacks",
+    "title": "Circuit Breakers for AI Agents: Fallbacks and Degraded Service",
+    "cluster": "reliability",
+    "angle": "Dependency health, half-open probes and truthful degraded output."
+  },
+  {
+    "id": 41,
+    "slug": "browser-agent-reliability",
+    "title": "Reliable Browser Agents: Locators, Verification, and Recovery",
+    "cluster": "applications",
+    "angle": "DOM state, stale elements, side effects and postconditions."
+  },
+  {
+    "id": 42,
+    "slug": "coding-agent-pull-request-workflow",
+    "title": "Coding Agents in Pull Requests: Isolation, Tests, and Review",
+    "cluster": "applications",
+    "angle": "Worktrees, untrusted repo context, acceptance and CI gates."
+  },
+  {
+    "id": 43,
+    "slug": "customer-support-agent-design",
+    "title": "Customer Support AI Agents: Grounding, Escalation, and Safe Actions",
+    "cluster": "applications",
+    "angle": "Ticket lifecycle, policy retrieval and refund authorization."
+  },
+  {
+    "id": 44,
+    "slug": "document-processing-ai-agents",
+    "title": "Document Processing with AI Agents: Extraction and Reconciliation",
+    "cluster": "applications",
+    "angle": "OCR, field provenance, crosschecks and review queues."
+  },
+  {
+    "id": 45,
+    "slug": "research-agents-citation-verification",
+    "title": "Research Agents: Source Discovery, Citation Verification, and Synthesis",
+    "cluster": "applications",
+    "angle": "Evidence ledger, source quality and claim-level verification."
+  },
+  {
+    "id": 46,
+    "slug": "mcp-vs-rest-agent-tools",
+    "title": "MCP vs REST for Agent Tools: Protocol and Integration Tradeoffs",
+    "cluster": "platform-design",
+    "angle": "MCP capabilities vs existing APIs, lifecycle and security."
+  },
+  {
+    "id": 47,
+    "slug": "multi-agent-task-scheduling",
+    "title": "Multi-Agent Task Scheduling: Dependencies, Leases, and Fairness",
+    "cluster": "platform-design",
+    "angle": "DAG scheduling, lease expiry and fencing."
+  },
+  {
+    "id": 48,
+    "slug": "agent-context-window-management",
+    "title": "Agent Context Window Management: Compaction and Evidence Retention",
+    "cluster": "platform-design",
+    "angle": "Context packet selection, compaction loss and provenance."
+  },
+  {
+    "id": 49,
+    "slug": "build-vs-buy-agent-platform",
+    "title": "Build vs Buy an AI Agent Platform: A Practical Evaluation Framework",
+    "cluster": "platform-design",
+    "angle": "Exit costs, eval-based procurement and operational ownership."
+  },
+  {
+    "id": 50,
+    "slug": "ai-agent-production-readiness",
+    "title": "AI Agent Production Readiness: From Prototype to Operated Service",
+    "cluster": "platform-design",
+    "angle": "Concrete rollout criteria, task SLOs, oncall and readiness evidence."
+  }
+]

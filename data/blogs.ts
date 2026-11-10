@@ -1,38 +1,8 @@
-// data/posts.js
-
-// Define the Blog interface
-interface Blog {
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  date: string;
-  tags: string[];
-  readTime: string;
-  format?: "Quick read" | "Deep dive";
-  coverImage?: string;
-  sourceUrl?: string;
-  sourceLabel?: string;
-  figures?: {
-    afterHeading: string;
-    src: string;
-    alt: string;
-    caption: string;
-  }[];
-  subheadings?: {
-    id: string;
-    title: string;
-    level: number;
-  }[];
-  author: {
-    name: string;
-    bio: string;
-    avatar?: string;
-  };
-}
+import type { Blog } from "@/lib/blog-types"
+import { researchedArticles } from "./researched-articles"
 
 // Blog data
-export const blogs: Blog[] = [
+const existingBlogs: Blog[] = [
     {
       slug: "building-modern-web-applications-with-nextjs",
       title: "Building Modern Web Applications with Next.js",
@@ -828,3 +798,5 @@ Give an agent the smallest useful context, the narrowest useful authority, a way
     },
   ]
   
+
+export const blogs: Blog[] = [...existingBlogs, ...researchedArticles]

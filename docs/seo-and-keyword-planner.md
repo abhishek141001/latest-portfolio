@@ -12,7 +12,7 @@ This site publishes at `https://www.caffeineoperator.online`. Its canonical tags
 
 ## One-time Google setup
 
-1. Add `https://www.caffeineoperator.online` as a Domain property in Google Search Console. Verify it through DNS if possible.
+1. Add `caffeineoperator.online` as a Domain property in Google Search Console and verify through DNS. For an HTML tag instead, use the URL-prefix property `https://www.caffeineoperator.online`.
 2. Submit `https://www.caffeineoperator.online/sitemap.xml` in Search Console.
 3. Create a Google Ads account with billing enabled. Keyword Planner data comes from Google Ads.
 4. In the Google Ads API Center, request or use an approved developer token.
@@ -21,7 +21,7 @@ This site publishes at `https://www.caffeineoperator.online`. Its canonical tags
 
 ## Keyword workflow
 
-For every article, select one primary query and 3–6 closely related queries from Keyword Planner. Record monthly volume, competition, and the intent (learn, compare, or hire). Use the primary query naturally in the page title, H1, opening paragraph, URL only when a new URL is warranted, one H2, image alt text where relevant, and internal links. Do not repeat phrases unnaturally.
+For every article, select one primary query and 3–6 closely related queries from Keyword Planner. Record monthly volume, competition, and the intent (learn, compare, or hire). Use the query naturally where it describes the topic. Keep titles and headings clear, preserve existing URLs, and write image alt text to describe the actual image. Avoid keyword quotas or repetitive phrases. Search demand for the new guide collection has not yet been measured.
 
 Current content clusters to research:
 
@@ -39,3 +39,5 @@ Current content clusters to research:
 4. Add internal links from relevant existing articles.
 5. Publish only articles that answer a specific search question better than the existing result.
 6. Re-submit important updated URLs in Search Console and measure changes after 2–4 weeks.
+
+See [the blog SEO handoff](blog-seo-handoff.md) for the 50-guide collection, Bing verification, live checks, and maintenance commands.
