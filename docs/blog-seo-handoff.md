@@ -1,6 +1,6 @@
 # Blog SEO and search console handoff
 
-The planned collection contains 50 distinct engineering guides across 10 topic clusters. The current delivery contains 30 completed guides across six populated topic hubs at `/blog/topics/<topic>`. Remaining topics stay unpublished until their articles are complete. See [the progress checkpoint](blog-progress.md). Articles use server-rendered Markdown, crawlable citations and internal links, canonical URLs, unique descriptions, article and breadcrumb JSON-LD, author links, dates, and social cards. All articles remain available in `/blog`, `/sitemap.xml`, and `/feed.xml`.
+The collection adds 50 completed engineering guides across 10 topic hubs at `/blog/topics/<topic>`, alongside the original 15 posts. See [the completion record](blog-progress.md). Articles use server-rendered Markdown, crawlable citations and internal links, canonical URLs, unique descriptions, article and breadcrumb JSON-LD, author links, dates, and social cards. All articles remain available in `/blog`, `/sitemap.xml`, and `/feed.xml`.
 
 ## Configure ownership
 
@@ -26,6 +26,10 @@ These articles were prepared with AI research assistance. Each has linked primar
 Review technical examples against your own stack before adopting them. Update `modifiedDate` only when content actually changes. Keep factual corrections and source updates substantive; do not refresh dates merely to suggest freshness.
 
 Use Search Console to learn which questions receive impressions, then improve the corresponding article rather than creating near-duplicate keyword variations. Search demand has not been measured with Keyword Planner, and this collection makes no search-volume or ranking claims. Track impressions, clicks, queries, indexed pages, and useful reader actions over time.
+
+## Article catalog
+
+[The SEO catalog](blog-catalog.csv) lists each new article's canonical URL, title, description, tags, word count, and related links. Use it to review coverage and match Search Console queries to the right guide. Regenerate it with `node scripts/export-blog-catalog.mjs` after editing article metadata.
 
 ## Repository maintenance
 

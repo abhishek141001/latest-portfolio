@@ -29,15 +29,19 @@ for (const file of files) {
   assert(article.tags.length >= 3 && article.tags.length <= 5)
   assert(article.researchNote, 'Missing research provenance')
   assert(article.relatedSlugs.length >= 2 && article.relatedSlugs.every(slug => slug !== article.slug && plannedSlugs.has(slug)), 'Invalid related article')
-  let external = 0, internal = 0
+  let external = 0, internal = 0, questions = 0
   markdown.walkTokens(markdown.lexer(article.content), token => {
+   if (token.type === 'heading') {
+    assert(token.depth !== 1, 'Article body must not add another H1')
+    if (token.depth === 3 && token.text.endsWith('?')) questions++
+   }
    if (token.type !== 'link') return
    if (token.href.startsWith('https://')) external++
    else if (token.href.startsWith('/blog/')) { internal++; assert(plannedSlugs.has(token.href.slice(6).split('#')[0]), `Broken internal link: ${token.href}`) }
    else assert(token.href.startsWith('#'), `Unexpected link: ${token.href}`)
   })
   assert(external >= 3 && internal >= 2, `Insufficient links: ${external} citations, ${internal} internal links`)
-  assert(!/^# /m.test(article.content), 'Article body must not add another H1')
+  assert(questions >= 2, 'At least two FAQ questions required')
   rows.push({ slug: article.slug, agentTask: `/root/article_${String(entry.id).padStart(2, '0')}`, words, sources: urls.size, citations: external, internalLinks: internal })
  } catch(error) { errors.push(`${file}: ${error.message}`) }
 }

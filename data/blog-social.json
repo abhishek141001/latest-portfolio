@@ -178,5 +178,85 @@
   {
     "slug": "ai-agent-audit-logs",
     "title": "AI Agent Audit Logs: Provenance, Privacy, and Action Accountability"
+  },
+  {
+    "slug": "structured-output-validation",
+    "title": "Structured LLM Outputs: JSON Schema and Semantic Validation"
+  },
+  {
+    "slug": "llm-model-routing",
+    "title": "LLM Model Routing: Quality, Cost, and Fallback Decisions"
+  },
+  {
+    "slug": "llm-caching-agent-systems",
+    "title": "LLM Caching for Agent Systems: Exact, Semantic, and Prompt Caches"
+  },
+  {
+    "slug": "llm-fine-tuning-vs-rag",
+    "title": "Fine-Tuning vs RAG vs Prompting: Choosing the Right Intervention"
+  },
+  {
+    "slug": "llm-gateway-architecture",
+    "title": "LLM Gateway Architecture: Reliability, Policy, and Provider Abstraction"
+  },
+  {
+    "slug": "idempotency-ai-agent-actions",
+    "title": "Idempotency for AI Agent Actions: Preventing Duplicate Side Effects"
+  },
+  {
+    "slug": "ai-agent-retries-timeouts",
+    "title": "AI Agent Retries and Timeouts: Deadlines, Jitter, and Retry Budgets"
+  },
+  {
+    "slug": "agent-workflow-compensating-transactions",
+    "title": "Compensating Transactions for AI Agent Workflows"
+  },
+  {
+    "slug": "ai-agent-state-versioning",
+    "title": "AI Agent State Versioning: Migrations and In-Flight Runs"
+  },
+  {
+    "slug": "agent-circuit-breakers-fallbacks",
+    "title": "Circuit Breakers for AI Agents: Fallbacks and Degraded Service"
+  },
+  {
+    "slug": "browser-agent-reliability",
+    "title": "Reliable Browser Agents: Locators, Verification, and Recovery"
+  },
+  {
+    "slug": "coding-agent-pull-request-workflow",
+    "title": "Coding Agents in Pull Requests: Isolation, Tests, and Review"
+  },
+  {
+    "slug": "customer-support-agent-design",
+    "title": "Customer Support AI Agents: Grounding, Escalation, and Safe Actions"
+  },
+  {
+    "slug": "document-processing-ai-agents",
+    "title": "Document Processing with AI Agents: Extraction and Reconciliation"
+  },
+  {
+    "slug": "research-agents-citation-verification",
+    "title": "Research Agents: Source Discovery, Citation Verification, and Synthesis"
+  },
+  {
+    "slug": "mcp-vs-rest-agent-tools",
+    "title": "MCP vs REST for Agent Tools: Protocol and Integration Tradeoffs"
+  },
+  {
+    "slug": "multi-agent-task-scheduling",
+    "title": "Multi-Agent Task Scheduling: Dependencies, Leases, and Fairness"
+  },
+  {
+    "slug": "agent-context-window-management",
+    "title": "Agent Context Window Management: Compaction and Evidence Retention"
+  },
+  {
+    "slug": "build-vs-buy-agent-platform",
+    "title": "Build vs Buy an AI Agent Platform: A Practical Evaluation Framework"
+  },
+  {
+    "slug": "ai-agent-production-readiness",
+    "title": "AI Agent Production Readiness: From Prototype to Operated Service"
   }
 ]

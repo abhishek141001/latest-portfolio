@@ -1,9 +1,25 @@
 {
   "checked": "2026-11-10",
   "targetCount": 50,
-  "count": 30,
-  "complete": false,
+  "count": 50,
+  "complete": true,
   "articles": [
+    {
+      "slug": "agent-circuit-breakers-fallbacks",
+      "agentTask": "/root/article_40",
+      "words": 1614,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "agent-context-window-management",
+      "agentTask": "/root/article_48",
+      "words": 1623,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
     {
       "slug": "agent-handoffs-shared-state",
       "agentTask": "/root/article_08",
@@ -19,6 +35,14 @@
       "sources": 5,
       "citations": 5,
       "internalLinks": 2
+    },
+    {
+      "slug": "agent-workflow-compensating-transactions",
+      "agentTask": "/root/article_38",
+      "words": 1647,
+      "sources": 4,
+      "citations": 5,
+      "internalLinks": 3
     },
     {
       "slug": "agentic-rag-vs-classic-rag",
@@ -85,6 +109,14 @@
       "internalLinks": 2
     },
     {
+      "slug": "ai-agent-production-readiness",
+      "agentTask": "/root/article_50",
+      "words": 1498,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
       "slug": "ai-agent-rate-limits-backpressure",
       "agentTask": "/root/article_14",
       "words": 1597,
@@ -101,12 +133,68 @@
       "internalLinks": 2
     },
     {
+      "slug": "ai-agent-retries-timeouts",
+      "agentTask": "/root/article_37",
+      "words": 1612,
+      "sources": 5,
+      "citations": 6,
+      "internalLinks": 2
+    },
+    {
+      "slug": "ai-agent-state-versioning",
+      "agentTask": "/root/article_39",
+      "words": 1619,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
       "slug": "ai-agent-tool-design",
       "agentTask": "/root/article_04",
       "words": 1472,
       "sources": 4,
       "citations": 4,
       "internalLinks": 2
+    },
+    {
+      "slug": "browser-agent-reliability",
+      "agentTask": "/root/article_41",
+      "words": 1569,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "build-vs-buy-agent-platform",
+      "agentTask": "/root/article_49",
+      "words": 1586,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "coding-agent-pull-request-workflow",
+      "agentTask": "/root/article_42",
+      "words": 1671,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "customer-support-agent-design",
+      "agentTask": "/root/article_43",
+      "words": 1679,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "document-processing-ai-agents",
+      "agentTask": "/root/article_44",
+      "words": 1518,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 3
     },
     {
       "slug": "durable-ai-agent-workflows",
@@ -141,6 +229,14 @@
       "internalLinks": 2
     },
     {
+      "slug": "idempotency-ai-agent-actions",
+      "agentTask": "/root/article_36",
+      "words": 1656,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
       "slug": "least-privilege-agent-tools",
       "agentTask": "/root/article_27",
       "words": 1547,
@@ -149,11 +245,59 @@
       "internalLinks": 2
     },
     {
+      "slug": "llm-caching-agent-systems",
+      "agentTask": "/root/article_33",
+      "words": 1550,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 3
+    },
+    {
+      "slug": "llm-fine-tuning-vs-rag",
+      "agentTask": "/root/article_34",
+      "words": 1578,
+      "sources": 5,
+      "citations": 5,
+      "internalLinks": 2
+    },
+    {
+      "slug": "llm-gateway-architecture",
+      "agentTask": "/root/article_35",
+      "words": 1632,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 3
+    },
+    {
       "slug": "llm-judge-calibration",
       "agentTask": "/root/article_17",
       "words": 1562,
       "sources": 4,
       "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "llm-model-routing",
+      "agentTask": "/root/article_32",
+      "words": 1515,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "mcp-vs-rest-agent-tools",
+      "agentTask": "/root/article_46",
+      "words": 1531,
+      "sources": 6,
+      "citations": 6,
+      "internalLinks": 2
+    },
+    {
+      "slug": "multi-agent-task-scheduling",
+      "agentTask": "/root/article_47",
+      "words": 1542,
+      "sources": 5,
+      "citations": 5,
       "internalLinks": 2
     },
     {
@@ -221,6 +365,14 @@
       "internalLinks": 2
     },
     {
+      "slug": "research-agents-citation-verification",
+      "agentTask": "/root/article_45",
+      "words": 1590,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
       "slug": "sandboxing-ai-code-execution",
       "agentTask": "/root/article_28",
       "words": 1597,
@@ -232,6 +384,14 @@
       "slug": "single-agent-vs-multi-agent-systems",
       "agentTask": "/root/article_02",
       "words": 1519,
+      "sources": 4,
+      "citations": 4,
+      "internalLinks": 2
+    },
+    {
+      "slug": "structured-output-validation",
+      "agentTask": "/root/article_31",
+      "words": 1612,
       "sources": 4,
       "citations": 4,
       "internalLinks": 2
